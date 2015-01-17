@@ -13,6 +13,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	/**
+	 * This is by no means final, but I was thinking maybe two drivers might be an interesting idea.
+	 *
+	 */
 	private XboxController drive_controller = new XboxController(1);
 	private XboxController lift_controller = new XboxController(2);
 		Button lockButton;
@@ -28,7 +32,7 @@ public class OI {
     	fineAdjustButton = new JoystickButton(lift_controller, XboxController.TRIGGERS);
     	lockButton = new JoystickButton(drive_controller, XboxController.A);
     	
-        //Instantiate
+        //Instantiate the Commands
         raiseElevatorButton.whenPressed(new RaiseElevator(0));
         lowerElevatorButton.whenPressed(new LowerElevator(0));
         fineAdjustButton.whileHeld(new EnableFineAdjustment());
