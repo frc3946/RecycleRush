@@ -1,21 +1,19 @@
 package org.usfirst.frc.team3946.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3946.robot.Robot;
 
-public class SetElevatorSetpoint extends Command {
-  
-	private int level;
+import edu.wpi.first.wpilibj.command.Command;
+
+public class  RaiseElevatorLevel extends Command {
 	
-    public SetElevatorSetpoint(int setpoint) {
-        requires(Robot.elevator);
-        level = setpoint;
+    public RaiseElevatorLevel() {
+    	requires(Robot.elevator);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
         Robot.elevator.enable();
-        Robot.elevator.setLevel(level);
+        Robot.elevator.raiseLevel();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -29,7 +27,7 @@ public class SetElevatorSetpoint extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.elevator.disable();
+    	Robot.elevator.stop();
     }
 
     // Called when another command which requires one or more of the same

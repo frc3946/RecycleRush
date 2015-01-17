@@ -19,7 +19,7 @@ import org.usfirst.frc.team3946.robot.subsystems.*;
 public class Robot extends IterativeRobot {
     Command autonomousCommand;
     
-    public static DriveTrain drivetrain;
+    public static Drivetrain drivetrain;
     public static Strafe strafe;
     public static Elevator elevator;
     public static OI oi;
@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
     	// Initialize all subsystems.
-    	drivetrain = new DriveTrain();
+    	drivetrain = new Drivetrain();
     	strafe = new Strafe();
         elevator = new Elevator();
         oi = new OI();

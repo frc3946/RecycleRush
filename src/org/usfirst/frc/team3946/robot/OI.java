@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -16,24 +15,28 @@ public class OI {
 
 	private XboxController controller = new XboxController(1);
 		Button lockButton;
-		Button setElevatorButton;
-		Button fineAdjustButton;
-
+		Button raiseElevatorButton;
+		Button lowerElevatorButton;
+		
     public OI() {
     	
     	//Controller Buttons
-    	setElevatorButton = new JoystickButton(controller, XboxController.TRIGGERS);
-    	fineAdjustButton = new JoystickButton(controller, XboxController.RIGHT_STICK);
+    	raiseElevatorButton = new JoystickButton(controller, XboxController.RIGHT_BUMPER);
+    	lowerElevatorButton = new JoystickButton(controller, XboxController.LEFT_BUMPER);
     	lockButton = new JoystickButton(controller, XboxController.A);
     	
         //Instantiate the Commands
-        setElevatorButton.whenPressed(new SetElevatorSetpoint(0));
-        fineAdjustButton.whileHeld(new EnableFineAdjustment());
+        raiseElevatorButton.whenPressed(new RaiseElevatorLevel());
+        lowerElevatorButton.whenPressed(new LowerElevatorLevel());
+
         lockButton.whenPressed(new LockElevator()); 
         
         //SmartDashboard Buttons
-        SmartDashboard.putData("Elevator Top", new SetElevatorSetpoint(0));
-        SmartDashboard.putData("Enable Fine Adjustment", new EnableFineAdjustment());
+        SmartDashboard.putData("Raise Elevator", new RaiseElevatorLevel());
+        SmartDashboard.putData("Lower Elevator", new LowerElevatorLevel());
+        SmartDashboard.putData("Floor", new SetElevatorSetpoint(0));
+        SmartDashboard.putData("Platform", new SetElevatorSetpoint(1));
+        SmartDashboard.putData("Step", new SetElevatorSetpoint(2));
         SmartDashboard.putData("Lock", new LockElevator());
       
     }
