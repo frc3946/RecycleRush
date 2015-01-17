@@ -5,11 +5,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3946.robot.Robot;
 
 /**
- *
+ * TODO: Figure out how to use the triggers.
  */
-public class  ElevateWithTriggers extends Command {
+public class  ElevateWithDpad extends Command {
 
-    public ElevateWithTriggers() {
+    public ElevateWithDpad() {
         requires(Robot.elevator);
     }
 

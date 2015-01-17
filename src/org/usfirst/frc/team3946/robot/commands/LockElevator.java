@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3946.robot.Robot;
 
 /**
- *	Brake to stop the elevator without using the motor.
+ *	Separate brake used to stop the elevator without using the motor.
  */
 public class  LockElevator extends Command {
 
