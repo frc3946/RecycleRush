@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveTrain extends Subsystem {
+public class Drivetrain extends Subsystem {
     private SpeedController leftMotor, rightMotor;
     private RobotDrive drive;
     private AnalogInput leftRangeFinder, rightRangeFinder;
     private Gyro gyro;
 
-    public DriveTrain() {
+    public Drivetrain() {
     	super();
     	leftMotor = new Talon(1);
     	rightMotor = new Talon(2);
