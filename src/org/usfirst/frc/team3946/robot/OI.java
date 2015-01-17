@@ -13,41 +13,33 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	/**
-	 * This is by no means final, but I was thinking maybe two drivers might be an interesting idea.
-	 *
-	 */
-	private XboxController drive_controller = new XboxController(1);
-	private XboxController lift_controller = new XboxController(2);
+
+	private XboxController controller = new XboxController(1);
 		Button lockButton;
-		Button raiseElevatorButton;
-		Button lowerElevatorButton;
+		Button setElevatorButton;
 		Button fineAdjustButton;
 
     public OI() {
     	
     	//Controller Buttons
-    	raiseElevatorButton = new JoystickButton(lift_controller, XboxController.RIGHT_BUMPER);
-    	lowerElevatorButton = new JoystickButton(lift_controller, XboxController.LEFT_BUMPER);
-    	fineAdjustButton = new JoystickButton(lift_controller, XboxController.TRIGGERS);
-    	lockButton = new JoystickButton(drive_controller, XboxController.A);
+    	setElevatorButton = new JoystickButton(controller, XboxController.TRIGGERS);
+    	fineAdjustButton = new JoystickButton(controller, XboxController.RIGHT_STICK);
+    	lockButton = new JoystickButton(controller, XboxController.A);
     	
         //Instantiate the Commands
-        raiseElevatorButton.whenPressed(new RaiseElevator(0));
-        lowerElevatorButton.whenPressed(new LowerElevator(0));
+        setElevatorButton.whenPressed(new SetElevatorSetpoint(0));
         fineAdjustButton.whileHeld(new EnableFineAdjustment());
-        lockButton.whenPressed(new LockElevation()); 
+        lockButton.whenPressed(new LockElevator()); 
         
         //SmartDashboard Buttons
-        SmartDashboard.putData("Raise Elevator", new RaiseElevator(0));
-        SmartDashboard.putData("Lower Elevator", new LowerElevator(0));
+        SmartDashboard.putData("Elevator Top", new SetElevatorSetpoint(0));
         SmartDashboard.putData("Enable Fine Adjustment", new EnableFineAdjustment());
-        SmartDashboard.putData("Lock", new LockElevation());
+        SmartDashboard.putData("Lock", new LockElevator());
       
     }
     
     public XboxController getXboxController() {
-    	return drive_controller;
+    	return controller;
     }
 }
 

@@ -20,6 +20,7 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     
     public static DriveTrain drivetrain;
+    public static Strafe strafe;
     public static Elevator elevator;
     public static OI oi;
 
@@ -30,6 +31,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	// Initialize all subsystems.
     	drivetrain = new DriveTrain();
+    	strafe = new Strafe();
         elevator = new Elevator();
         oi = new OI();
 
@@ -38,6 +40,7 @@ public class Robot extends IterativeRobot {
         
         // Show what command the subsystem is running on the SmartDashboard.
         SmartDashboard.putData(drivetrain);
+        SmartDashboard.putData(strafe);
         SmartDashboard.putData(elevator);
     }
 
@@ -93,6 +96,7 @@ public class Robot extends IterativeRobot {
     
     public void log() {
     	drivetrain.log();
+    	strafe.log();
     	elevator.log();
     }
 }

@@ -1,65 +1,63 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
+import org.usfirst.frc.team3946.robot.Robot;
 import org.usfirst.frc.team3946.robot.commands.*;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.buttons.XboxController;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
-/**
- *
- */
 public class DriveTrain extends Subsystem {
-    private SpeedController left_motor, right_motor, 
-    						strafe_motor;
+    private SpeedController leftMotor, rightMotor;
     private RobotDrive drive;
-    private AnalogInput left_rangefinder, 
-						right_rangefinder;
+    private AnalogInput leftRangeFinder, rightRangeFinder;
     private Gyro gyro;
 
     public DriveTrain() {
     	super();
-    	left_motor = new Talon(1);
-    	right_motor = new Talon(2);
-    	strafe_motor = new Talon(3);
-    	drive = new RobotDrive(left_motor, right_motor);
-    	left_rangefinder = new AnalogInput(1);
-    	right_rangefinder = new AnalogInput(2);
+    	leftMotor = new Talon(1);
+    	rightMotor = new Talon(2);
+    	drive = new RobotDrive(leftMotor, rightMotor);
+    	leftRangeFinder = new AnalogInput(1);
+    	rightRangeFinder = new AnalogInput(2);
     	gyro = new Gyro(1);
     	
-    	LiveWindow.addActuator("Drivetrain", "Left Motor", (Talon) left_motor);
-    	LiveWindow.addActuator("Drivetrain", "Right Motor", (Talon) right_motor);
-    	LiveWindow.addActuator("Drivetrain", "Strafe Motor", (Talon) strafe_motor);
-    	LiveWindow.addSensor("Drivetrain", "Left Rangefinder", (AnalogInput) left_rangefinder);
-        LiveWindow.addSensor("Drivetrain", "Right Rangefinder", (AnalogInput) right_rangefinder);
+		// Show everything in the LiveWindow
+    	LiveWindow.addActuator("Drivetrain", "Left Motor", (Talon) leftMotor);
+    	LiveWindow.addActuator("Drivetrain", "Right Motor", (Talon) rightMotor);
+    	LiveWindow.addSensor("Drivetrain", "Left Rangefinder", (AnalogInput) leftRangeFinder);
+        LiveWindow.addSensor("Drivetrain", "Right Rangefinder", (AnalogInput) rightRangeFinder);
         LiveWindow.addSensor("Drivetrain", "Gyro", gyro);
     }
     public void initDefaultCommand() {
-        setDefaultCommand(new HDrive());
+        setDefaultCommand(new DriveWithJoystick());
 	
     }
     
     public void log() {
     	SmartDashboard.putNumber("Gyro", gyro.getAngle());
     }
+        
     /**Arcade style driving for the drivetrain.
 	 * @param left speed in range [-1,1]
 	 * @param right speed in range [-1,1]
 	 */
-    public void drive(double left, double right) {
-    	drive.arcadeDrive(left, right);
+    public void drive(double move, double rotate) {
+    	drive.arcadeDrive(move, rotate);
     }
     
     /**
-	 * @param drive_controller xbox joystick to use to drive arcade style.
+	 * @param controller xbox joystick to use to drive arcade style.
 	 */
-    public void drive(XboxController drive_controller) {
-    	//drive(-drive_controller.getLeftStickX(), -drive_controller.getLeftStickY());
+    public void drive(XboxController controller) {
+    	drive(controller.getLeftStickY(), controller.getLeftStickX());
+    }
+    
+    public void stop() {
+    	Robot.drivetrain.drive(0, 0);
     }
     
     /**
@@ -74,13 +72,15 @@ public class DriveTrain extends Subsystem {
 	 */
 	public void reset() {
 		gyro.reset();
+		//leftRangeFinder.reset();
+		//rightRangeFinder.reset();
 	}
 	
 	/**
-	 * @return The distance to the obstacle detected by the rangefinder. 
+	 * @return The distance to the obstacle detected by the range finders. 
 	 */
 	public double getDistanceToObstacle() {
-		return(left_rangefinder.getAverageVoltage() + right_rangefinder.getAverageVoltage());
+		return(leftRangeFinder.getAverageVoltage() + rightRangeFinder.getAverageVoltage());
 	}
 
 }

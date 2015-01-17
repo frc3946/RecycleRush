@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3946.robot.Robot;
 
 /**
- *
+ *	TODO: Figure make code for a configurable setpoint.
  */
-public class  LowerElevator extends Command {
+public class  SetElevatorSetpoint extends Command {
 	private double setpoint;
 	
-    public LowerElevator(double setpoint) {
+    public SetElevatorSetpoint(double setpoint) {
     	this.setpoint = setpoint;
     	requires(Robot.elevator);
     }
