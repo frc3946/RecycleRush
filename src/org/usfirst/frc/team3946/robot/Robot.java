@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3946.robot;
 
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -23,6 +24,7 @@ public class Robot extends IterativeRobot {
     public static Strafe strafe;
     public static Elevator elevator;
     public static OI oi;
+    public static Gyro gyro;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -36,7 +38,7 @@ public class Robot extends IterativeRobot {
         oi = new OI();
 
         // Instantiate the command used for the autonomous period.
-        autonomousCommand = new Autonomous();
+        autonomousCommand = new AutonomousCenter();
         
         // Show what command the subsystem is running on the SmartDashboard.
         SmartDashboard.putData(drivetrain);

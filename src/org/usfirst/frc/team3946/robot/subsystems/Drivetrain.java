@@ -56,6 +56,16 @@ public class Drivetrain extends Subsystem {
     	drive(controller.getLeftStickY(), controller.getLeftStickX());
     }
     
+    public void setMotors(double leftMotorSpeed, double rightMotorSpeed) {
+    	leftMotor.set(leftMotorSpeed);
+    	rightMotor.set(rightMotorSpeed);
+    }
+    
+    public void turn(double turnSpeed) {
+    	leftMotor.set(turnSpeed);
+    	rightMotor.set(-turnSpeed);
+    }
+    
     public void stop() {
     	Robot.drivetrain.drive(0, 0);
     }
@@ -68,7 +78,7 @@ public class Drivetrain extends Subsystem {
 	}
 
 	/**
-	 * Reset the robots sensors to the zero states.
+	 * Reset the robots sensors,including gyro, to the zero states.
 	 */
 	public void reset() {
 		gyro.reset();
