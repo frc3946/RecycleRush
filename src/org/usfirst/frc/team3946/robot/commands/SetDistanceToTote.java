@@ -12,6 +12,8 @@ import org.usfirst.frc.team3946.robot.Robot;
  * PID controller to run a simple PID loop that is only enabled while this
  * command is running. The input is the averaged values of the left and right
  * encoders.
+ * 
+ * Need to test range finders before we can work on this.
  */
 public class SetDistanceToTote extends Command {
 	private PIDController pid;

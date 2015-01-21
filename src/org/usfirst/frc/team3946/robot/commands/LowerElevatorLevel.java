@@ -8,7 +8,7 @@ public class LowerElevatorLevel extends Command {
 
 	public LowerElevatorLevel() {
 	   	requires(Robot.elevator);
-	   }
+	}
 	
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -28,7 +28,6 @@ public class LowerElevatorLevel extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.elevator.stop();
-
     }
 
     // Called when another command which requires one or more of the same

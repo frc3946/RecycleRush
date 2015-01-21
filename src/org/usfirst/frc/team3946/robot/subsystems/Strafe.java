@@ -1,12 +1,14 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
 import org.usfirst.frc.team3946.robot.commands.*;
-
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.buttons.XboxController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+/**
+ *	TODO: Add a deadband to prevent unintended motion.
+ */
 public class Strafe extends Subsystem {
 	private SpeedController strafeMotor;
 

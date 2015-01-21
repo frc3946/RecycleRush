@@ -23,12 +23,11 @@ public class OI {
     	//Controller Buttons
     	raiseElevatorButton = new JoystickButton(controller, XboxController.RIGHT_BUMPER);
     	lowerElevatorButton = new JoystickButton(controller, XboxController.LEFT_BUMPER);
-    	lockButton = new JoystickButton(controller, XboxController.A);
+    	lockButton = new JoystickButton(controller, XboxController.X);
     	
         //Instantiate the Commands
         raiseElevatorButton.whenPressed(new RaiseElevatorLevel());
         lowerElevatorButton.whenPressed(new LowerElevatorLevel());
-
         lockButton.whenPressed(new LockElevator()); 
         
         //SmartDashboard Buttons

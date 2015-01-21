@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
 import org.usfirst.frc.team3946.robot.Robot;
+import org.usfirst.frc.team3946.robot.RobotMap;
 import org.usfirst.frc.team3946.robot.commands.*;
 
 import edu.wpi.first.wpilibj.*;
@@ -10,6 +11,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ *	TODO: Add a deadband to prevent unintended motion.
+ */
 public class Drivetrain extends Subsystem {
     private SpeedController leftMotor, rightMotor;
     private RobotDrive drive;
@@ -18,12 +22,13 @@ public class Drivetrain extends Subsystem {
 
     public Drivetrain() {
     	super();
-    	leftMotor = new Talon(1);
-    	rightMotor = new Talon(2);
+    	leftMotor = new Talon(RobotMap.leftMotor);
+    	rightMotor = new Talon(RobotMap.rightMotor);
+    	leftRangeFinder = new AnalogInput(RobotMap.leftRangeFinder);
+    	rightRangeFinder = new AnalogInput(RobotMap.rightRangeFinder);
+    	gyro = new Gyro(RobotMap.gyro);
+    	
     	drive = new RobotDrive(leftMotor, rightMotor);
-    	leftRangeFinder = new AnalogInput(1);
-    	rightRangeFinder = new AnalogInput(2);
-    	gyro = new Gyro(1);
     	
 		// Show everything in the LiveWindow
     	LiveWindow.addActuator("Drivetrain", "Left Motor", (Talon) leftMotor);
@@ -42,15 +47,15 @@ public class Drivetrain extends Subsystem {
     }
         
     /**Arcade style driving for the drivetrain.
-	 * @param left speed in range [-1,1]
-	 * @param right speed in range [-1,1]
+	 * @param move for forward/backward motion.
+	 * @param rotate for rotation
 	 */
     public void drive(double move, double rotate) {
     	drive.arcadeDrive(move, rotate);
     }
     
     /**
-	 * @param controller xbox joystick to use to drive arcade style.
+	 * @param controller Xbox joystick to use to drive arcade style.
 	 */
     public void drive(XboxController controller) {
     	drive(controller.getLeftStickY(), controller.getLeftStickX());
@@ -82,8 +87,8 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void reset() {
 		gyro.reset();
-		//leftRangeFinder.reset();
-		//rightRangeFinder.reset();
+		leftRangeFinder.resetAccumulator();
+		rightRangeFinder.resetAccumulator();
 	}
 	
 	/**
