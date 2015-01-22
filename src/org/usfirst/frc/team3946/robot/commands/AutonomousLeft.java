@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3946.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.usfirst.frc.team3946.robot.RobotMap;
 
 /**
  *
@@ -19,6 +18,6 @@ public class AutonomousLeft extends CommandGroup {
     	addSequential(new RaiseElevatorLevel());
     	addSequential(new LockElevator());
     	//move forward
-    	addSequential (new AutoDrive(x));
+    	addSequential (new AutoDriveForward(1.4));
     }
 }

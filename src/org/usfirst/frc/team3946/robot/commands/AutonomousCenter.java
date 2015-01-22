@@ -21,11 +21,11 @@ public class AutonomousCenter extends CommandGroup {
     	//turn right
     	addSequential(new Turn(90));
     	//move forward
-    	addSequential (new AutoDrive(x));
+    	addSequential (new AutoDriveForward(1.4));
     	//turn left
     	addSequential(new Turn(90));
     	//move forward
-    	addSequential (new AutoDrive(x));
+    	addSequential (new AutoDriveForward(x));
     	addSequential (new Turn(90));
     }
 }
