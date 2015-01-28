@@ -1,9 +1,8 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
-import org.usfirst.frc.team3946.robot.RobotMap;
-
+import static org.usfirst.frc.team3946.robot.RobotMap.*;
+import libraries.XboxController;
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.buttons.XboxController;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -13,9 +12,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *	
  */
 public class Elevator extends PIDSubsystem {
-    private SpeedController liftMotor;
-    private Potentiometer pot;
-    private DigitalInput upperLimitSwitch, lowerLimitSwitch;
+    Talon motor;
+    Potentiometer pot;
+    DigitalInput upperLimit, 
+    			 lowerLimit;
     
     int level;
     double[] potVoltage;
@@ -26,16 +26,16 @@ public class Elevator extends PIDSubsystem {
         setAbsoluteTolerance(0.005);
         getPIDController().setContinuous(false);
 
-        upperLimitSwitch = new DigitalInput(RobotMap.upperLimitSwitch);
-        lowerLimitSwitch = new DigitalInput(RobotMap.lowerLimitSwitch);
-        pot = new AnalogPotentiometer(RobotMap.pot);
-        liftMotor = new Talon(RobotMap.liftMotor);
+        upperLimit = new DigitalInput(uLimitSwitch);
+        lowerLimit = new DigitalInput(lLimitSwitch);
+        pot = new AnalogPotentiometer(liftPot);
+        motor = new Talon(liftTalon);
         
         // Show everything in the LiveWindow
-        LiveWindow.addSensor("Elevator", "Upper Limit Switch", upperLimitSwitch);
-        LiveWindow.addSensor("Elevator", "Lower Limit Switch", lowerLimitSwitch);
+        LiveWindow.addSensor("Elevator", "Upper Limit Switch", upperLimit);
+        LiveWindow.addSensor("Elevator", "Lower Limit Switch", lowerLimit);
         LiveWindow.addSensor("Elevator", "Potentiometer", (AnalogPotentiometer) pot);
-        LiveWindow.addActuator("Elevator", "Motor", (Talon) liftMotor);
+        LiveWindow.addActuator("Elevator", "Motor", (Talon) motor);
         LiveWindow.addActuator("Elevator", "PID", getPIDController());
         
         // Array for potentiometer voltages that represent set heights.
@@ -43,13 +43,13 @@ public class Elevator extends PIDSubsystem {
         level = 0;
         potVoltage = new double[8];
         potVoltage[0] = 0.0;	// floor
-        potVoltage[1] = 0.3;	// platform
-        potVoltage[2] = 1.0;	// step
-        potVoltage[3] = 1.5;	// two totes
-        potVoltage[4] = 2.0;	// three totes
-     	potVoltage[5] = 3.0;    // four totes
-     	potVoltage[6] = 4.0;	// five totes
-     	potVoltage[7] = 5.0;	// six totes
+        potVoltage[1] = 0.0;	// platform
+        potVoltage[2] = 0.0;	// step
+        potVoltage[3] = 0.0;	// two totes
+        potVoltage[4] = 0.0;	// three totes
+     	potVoltage[5] = 0.0;    // four totes
+     	potVoltage[6] = 0.0;	// five totes
+     	potVoltage[7] = 0.0;	// six totes
     }
     
     public void initDefaultCommand() {}
@@ -61,15 +61,15 @@ public class Elevator extends PIDSubsystem {
     // Manual Control Stuff
     
     public void elevate(double input) {
-    	liftMotor.set(input);
+    	motor.set(input);
     }
     
     public void elevate(XboxController controller) {
-    	elevate(controller.getDPadY());
+    	elevate(controller.getThrottle());
     }    
     
     public void stop() {
-    	liftMotor.set(0);
+    	motor.set(0);
     }
     
     // Automatic Control Stuff
@@ -88,11 +88,10 @@ public class Elevator extends PIDSubsystem {
      */
     protected void usePIDOutput(double output) {
         // Turns motor off when limit switches are engaged.
-    	if (upperLimitSwitch.get() == true ||
-        	lowerLimitSwitch.get() == true) {
-    		liftMotor.set(0);
-        }else{
-        	liftMotor.set(output);
+    	if (upperLimit.get() == true || lowerLimit.get() == true) {
+    		motor.set(0);
+        } else {
+        	motor.set(output);
         }
     }
     

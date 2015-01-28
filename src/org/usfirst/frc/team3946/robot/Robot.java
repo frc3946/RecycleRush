@@ -1,14 +1,14 @@
 package org.usfirst.frc.team3946.robot;
 
-import edu.wpi.first.wpilibj.Gyro;
+import org.usfirst.frc.team3946.robot.commands.*;
+import org.usfirst.frc.team3946.robot.subsystems.*;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team3946.robot.commands.*;
-import org.usfirst.frc.team3946.robot.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,31 +19,28 @@ import org.usfirst.frc.team3946.robot.subsystems.*;
  */
 public class Robot extends IterativeRobot {
     Command autonomousCommand;
-    
-    public static Drivetrain drivetrain;
-    public static Strafe strafe;
-    public static Elevator elevator;
+    private final SendableChooser autonomousChooser = new SendableChooser();
     public static OI oi;
-    public static Gyro gyro;
-
+    public static Drivetrain drivetrain;
+    public static Elevator elevator;
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
-    public void robotInit() {
+    public void robotInit() {  	
     	// Initialize all subsystems.
     	drivetrain = new Drivetrain();
-    	strafe = new Strafe();
-        elevator = new Elevator();
+    	elevator = new Elevator();
         oi = new OI();
 
-        // Instantiate the command used for the autonomous period.
-        autonomousCommand = new AutonomousCenter();
+        autonomousChooser.addDefault("Center", new AutonomousCenter());
+        autonomousChooser.addObject("Left", new AutonomousLeft());
+        autonomousChooser.addObject("Right", new AutonomousRight());
+        SmartDashboard.putData("Autonomous Mode", autonomousChooser);
         
         // Show what command the subsystem is running on the SmartDashboard.
         SmartDashboard.putData(drivetrain);
-        SmartDashboard.putData(strafe);
-        SmartDashboard.putData(elevator);
     }
 
     /**
@@ -61,7 +58,13 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
         //if (autonomousCommand != null) 
-        autonomousCommand.start();
+    	Object selection = autonomousChooser.getSelected();
+    	if (selection != null && selection instanceof Command) {
+            autonomousCommand = (Command) selection;
+            autonomousCommand.start();
+    	} else {
+    		System.out.println("No autonomous mode selected.");
+    	}
     }
 
     /**
@@ -69,7 +72,6 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        log();
     }
 
     public void teleopInit() {
@@ -77,8 +79,10 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        //if (autonomousCommand != null) 
-        autonomousCommand.cancel();
+        if (autonomousCommand != null) {
+        	autonomousCommand.cancel();
+        }
+        Robot.drivetrain.getSlideDrive().resetGyro();
     }
 
     /**
@@ -86,7 +90,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        log();
     }
 
     /**
@@ -94,11 +97,5 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
-    }
-    
-    public void log() {
-    	drivetrain.log();
-    	strafe.log();
-    	elevator.log();
     }
 }
