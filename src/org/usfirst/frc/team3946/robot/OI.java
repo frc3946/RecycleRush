@@ -54,7 +54,7 @@ public class OI {
         lowerElevatorButton = new JoystickButton(liftController, XboxController.LeftBumper);
         	lowerElevatorButton.whenPressed(new LowerElevatorLevel());
         lockElevatorButton = new JoystickButton(liftController, XboxController.A);
-            lockElevatorButton.whenPressed(new LockElevatorPosition()); 
+        	lockElevatorButton.whenPressed(new LockElevatorPosition()); 
 
         // SmartDashboard Buttons
         SmartDashboard.putData("Reset Gyro", new ResetGyro());

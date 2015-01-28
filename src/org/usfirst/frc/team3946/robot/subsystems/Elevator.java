@@ -15,7 +15,7 @@ public class Elevator extends PIDSubsystem {
     Talon motor;
     Potentiometer pot;
     DigitalInput upperLimit, 
-    			 lowerLimit;
+    		lowerLimit;
     
     int level;
     double[] potVoltage;
