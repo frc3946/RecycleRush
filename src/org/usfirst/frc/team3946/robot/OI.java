@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
 
-	public XboxController driveController;
+	public XboxController driveController = new XboxController(0);
 		
 		Button enableFieldCentricControl;
 		Button enableArcadeControl;
@@ -23,18 +23,15 @@ public class OI {
 		Button strafeLeftButton;
 		Button strafeRightButton;
 		
-	public XboxController liftController;
+	public XboxController liftController = new XboxController(1);;
 		
 		Button raiseElevatorButton;
 		Button lowerElevatorButton;
 		Button lockElevatorButton;
 		
     public OI() {
-    	
-    	driveController = new XboxController(0);
-    		driveController.setDeadband(0.2);
-    	liftController = new XboxController(1);
-			liftController.setDeadband(0.2);
+   		driveController.setDeadband(0.2);
+		liftController.setDeadband(0.2);
     	
     	// Drive Control Buttons
     	enableFieldCentricControl = new JoystickButton(driveController, XboxController.Start);
