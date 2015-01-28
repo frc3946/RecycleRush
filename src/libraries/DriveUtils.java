@@ -14,12 +14,8 @@ public final class DriveUtils {
      * @return the limited number
      */
     public static double limit(double num) {
-        if (num > 1.0) {
-            return 1.0;
-        }
-        if (num < -1.0) {
-            return -1.0;
-        }
+        if (num > 1.0) return 1.0;
+        if (num < -1.0) return -1.0;
         return num;
     }
 
@@ -49,10 +45,9 @@ public final class DriveUtils {
      */
     public static void normalize(double wheelSpeeds[]) {
         double maxMagnitude = abs(wheelSpeeds[0]);
-        int i;
         // Loops through each number to find the biggest absolute value.
-        for (i = 1; i < wheelSpeeds.length; i++) {
-            double temp = abs(wheelSpeeds[i]);
+        for (double i : wheelSpeeds) {
+            double temp = abs(i);
             if (maxMagnitude < temp) {
                 maxMagnitude = temp;
             }
@@ -60,8 +55,8 @@ public final class DriveUtils {
         // If the maximum is greater than 1.0, reduce all the values down 
         // proportionally so the maximum becomes 1.0.
         if (maxMagnitude > 1.0) {
-            for (i = 0; i < wheelSpeeds.length; i++) {
-                wheelSpeeds[i] = wheelSpeeds[i] / maxMagnitude;
+            for (double i : wheelSpeeds) {
+               i = i / maxMagnitude;
             }
         }
     }
