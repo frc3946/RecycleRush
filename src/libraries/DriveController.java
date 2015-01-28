@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.MotorSafetyHelper;
  * definition for a simple {@link #drive(double, double)} method that all
  * DriveControllers must implement.
  *
- * @see DriveMethods
+ * @see DriveMethod
  * @see ThreeWheelDriveController
  */
 public abstract class DriveController implements MotorSafety {

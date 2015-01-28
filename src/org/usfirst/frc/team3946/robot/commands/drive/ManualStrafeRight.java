@@ -1,9 +1,9 @@
 package org.usfirst.frc.team3946.robot.commands.drive;
 
+import static org.usfirst.frc.team3946.robot.Robot.*;
 import org.usfirst.frc.team3946.robot.subsystems.Drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
-import static org.usfirst.frc.team3946.robot.Robot.*;
 
 /**
  * Command that drives the robot right sideways. 

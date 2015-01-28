@@ -7,13 +7,13 @@ import static org.usfirst.frc.team3946.robot.Robot.*;
 /**
  *
  */
-public class TurnCommand extends Command {
+public class TurnToAngle extends Command {
 	
 	double desiredAngle;
 	double distanceToGo;
 	double currentAngle;
 
-    public TurnCommand(double angle) {
+    public TurnToAngle(double angle) {
     	requires(drivetrain);
     	desiredAngle = angle;
 
@@ -31,7 +31,7 @@ public class TurnCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(abs(distanceToGo) <= 1.5){
+    	if(abs(distanceToGo) <= 2.0){
     		return true;
     	} else {
     		return false;

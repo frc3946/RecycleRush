@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3946.robot.commands.drive;
 
-import org.usfirst.frc.team3946.robot.Robot;
+import static org.usfirst.frc.team3946.robot.Robot.*;
 import org.usfirst.frc.team3946.robot.subsystems.Drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -13,7 +13,7 @@ public class ManualStrafeLeft extends Command {
 
     public ManualStrafeLeft() {
         // This command drives, so it requires the drivetrain.
-        requires(Robot.drivetrain);
+        requires(drivetrain);
     }
 
     /**
@@ -27,7 +27,7 @@ public class ManualStrafeLeft extends Command {
      * power.
      */
     protected void execute() {
-        Robot.drivetrain.getSlideDrive().strafe(Drivetrain.STRAFE_SPEED);
+        drivetrain.getSlideDrive().strafe(Drivetrain.STRAFE_SPEED);
     }
 
     /**
@@ -43,7 +43,7 @@ public class ManualStrafeLeft extends Command {
      * Stops the motors.
      */
     protected void end() {
-        Robot.drivetrain.getSlideDrive().stop();
+        drivetrain.getSlideDrive().stop();
     }
 
     /**

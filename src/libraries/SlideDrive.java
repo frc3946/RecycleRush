@@ -7,19 +7,19 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * A {@link DriveMethods} that uses a {@link ThreeWheelDriveController} (which
+ * A {@link DriveMethod} that uses a {@link ThreeWheelDriveController} (which
  * controls three speed controllers to drive using a gyro to maintain orientation
  * and drive relative to the field.
  *
  * @see ThreeWheelDriveController
- * @see DriveMethods
+ * @see DriveMethod
  */
-public class SlideDrive extends DriveMethods {
+public class SlideDrive extends DriveMethod {
 
     /**
      * The {@link SlideDrive} requires a
      * {@link ThreeWheelDriveController} so the normal
-     * {@link DriveMethods#controller} is hidden.
+     * {@link DriveMethod#controller} is hidden.
      */
     protected final ThreeWheelDriveController controller;
     /**

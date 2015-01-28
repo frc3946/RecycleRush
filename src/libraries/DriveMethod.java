@@ -13,17 +13,17 @@ package libraries;
  * 
  * @see DriveController
  */
-public abstract class DriveMethods {
+public abstract class DriveMethod {
 
     protected DriveController controller;
 
     /**
-     * Creates a new {@link DriveMethods} that controls the specified
+     * Creates a new {@link DriveMethod} that controls the specified
      * {@link DriveController}.
      *
      * @param controller the drive controller to use
      */
-    public DriveMethods(DriveController controller) {
+    public DriveMethod(DriveController controller) {
         this.controller = controller;
     }
 

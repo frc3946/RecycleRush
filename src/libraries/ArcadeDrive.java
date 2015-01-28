@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.GenericHID;
  * is used for rotation. The algorithm also has the ability to square the inputs
  * to decrease the sensitivity at low speeds.
  *
- * @see DriveMethods
+ * @see DriveMethod
  */
-public class ArcadeDrive extends DriveMethods {
+public class ArcadeDrive extends DriveMethod {
 
     /**
      * Creates a new {@link ArcadeDrive} that controls the specified
