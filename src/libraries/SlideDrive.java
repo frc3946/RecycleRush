@@ -22,6 +22,7 @@ public class SlideDrive extends DriveMethod {
      * {@link DriveMethod#controller} is hidden.
      */
     protected final ThreeWheelDriveController controller;
+    
     /**
      * The {@link Gyro} that the {@link SlideDrive} uses for
      * field-oriented driving and keeping the correct orientation.
@@ -34,22 +35,26 @@ public class SlideDrive extends DriveMethod {
      * disabled to allow the robot to turn.
      */
     public final double ROTATION_DEADBAND = 0.05;
+    
     /**
      * The proportional constant of the PID algorithm. This value is multiplied
      * by the error.
      */
     public static final double ROTATION_P = 0.01;
+    
     /**
      * The integral constant of the PID algorithm. This value is multiplied by
      * the sum of the error over time. This is used to make the robot turn more
      * if it is taking a long time to reach its target.
      */
     public static final double ROTATION_I = 0.0;
+    
     /**
      * The derivative constant of the PID algorithm. This value is multiplied by
      * the rate of change of the error.
      */
     public static final double ROTATION_D = 0.0;
+    
     /**
      * The feed-forward constant of the PID algorithm. This value seems to be
      * multiplied by the setpoint, which doesn't make much sense. I don't really
@@ -71,7 +76,7 @@ public class SlideDrive extends DriveMethod {
      */
     public SlideDrive(ThreeWheelDriveController controller, Gyro gyro) {
         super(controller);
-        // Necessary because we hide the controller field inherited from DriveAlgorithm.
+        
         this.controller = controller;
         this.gyro = gyro;
         rotationPIDController = new PIDController(
@@ -226,7 +231,7 @@ public class SlideDrive extends DriveMethod {
             // If the rotation rate is greater than the deadband disable the PID
             // controller. Otherwise, return the latest value from the
             // controller.
-            if (Math.abs(rotationSpeed) >= ROTATION_DEADBAND) {
+            if (abs(rotationSpeed) >= ROTATION_DEADBAND) {
                 rotationPIDController.disable();
             } else {
                 return rotationSpeedPID;
@@ -234,7 +239,7 @@ public class SlideDrive extends DriveMethod {
         } else {
             // If the rotation rate is less than the deadband, turn on the PID
             // controller and set its setpoint to the current angle.
-            if (Math.abs(rotationSpeed) < ROTATION_DEADBAND) {
+            if (abs(rotationSpeed) < ROTATION_DEADBAND) {
                 gyroOffset = gyro.getAngle();
                 rotationPIDController.setSetpoint(gyroOffset);
                 rotationPIDController.enable();
