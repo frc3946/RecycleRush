@@ -60,7 +60,7 @@ public class XboxController extends Joystick {
     
     /**
      * Get the value of the axis.
-     * @param axis The axis to read [1-6].
+     * @param axis The axis to read [0-5].
      * @return The value of the axis.
      */
     public double getRawAxis(int axis) {
