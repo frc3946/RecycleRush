@@ -21,8 +21,8 @@ public class OI {
     public OI() {
     	
     	//Controller Buttons
-    	raiseElevatorButton = new JoystickButton(controller, XboxController.RIGHT_BUMPER);
-    	lowerElevatorButton = new JoystickButton(controller, XboxController.LEFT_BUMPER);
+    	raiseElevatorButton = new JoystickButton(controller, XboxController.RightBumper);
+    	lowerElevatorButton = new JoystickButton(controller, XboxController.LeftBumper);
     	lockButton = new JoystickButton(controller, XboxController.X);
     	
         //Instantiate the Commands

@@ -1,59 +1,46 @@
-
-package edu.wpi.first.wpilibj.buttons;
+package edu.wpi.first.wpilibj.alternatives;
 
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
- * XBox controller wrapper for a joystick.
- * @author Matthew.Lythgoe
+ * Xbox 360 USB controller wrapper for the Joystick class.
+ * @author Cameron Ordone
  */
 public class XboxController extends Joystick {
     
-    public static final int A = 0;
-    public static final int B = 1;
-    public static final int X = 2;
-    public static final int Y = 3;
-    public static final int LEFT_BUMPER = 4;
-    public static final int RIGHT_BUMPER = 5;
-    public static final int BACK = 6;
-    public static final int START = 7;
-    public static final int LEFT_STICK = 8;
-    public static final int RIGHT_STICK = 9;
+    /**
+     * Buttons
+     */
+    public static final int A = 1;
+    public static final int B = 2;
+    public static final int X = 3;
+    public static final int Y = 4;
+    public static final int LeftBumper = 5;
+    public static final int RightBumper = 6;
+    public static final int Back = 7;
+    public static final int Start = 8;
+    public static final int LeftStick = 9;
+    public static final int RightStick = 10;
     
-    public static final int LEFT_X = 1;
-    public static final int LEFT_Y = 2;
-    public static final int TRIGGERS = 3;
-    public static final int RIGHT_X = 4;
-    public static final int RIGHT_Y = 5;
-    public static final int D_PAD_X = 6;
-    public static final int D_PAD_Y = 7;
-    
+    /**
+     * Axis
+     */
+    public static final int LeftX = 0;
+    public static final int LeftY = 1;
+    public static final int LeftTrigger = 2;
+    public static final int RightTrigger = 3;
+    public static final int RightX = 4;
+    public static final int RightY = 5;
+
     public XboxController(int port) {
         super(port);
     }
- 
-    /**
-     * Read the value of the right joystick's X axis.
-     * @return the value of the right joystick's X axis.
-     */
-    public double getRightStickX() {
-        return getRawAxis(RIGHT_X);
-    }
-
-    /**
-     * Read the value of the right joystick's Y axis.
-     * @return the value of the right joystick's Y axis.
-     */
-    public double getRightStickY() {
-        return getRawAxis(RIGHT_Y);
-    }
-
-    /**
+   /**
      * Read the value of the left joystick's X axis.
      * @return the value of the left joystick's X axis.
      */
     public double getLeftStickX() {
-        return getRawAxis(LEFT_X);
+        return getRawAxis(LeftX);
     }
 
     /**
@@ -61,25 +48,49 @@ public class XboxController extends Joystick {
      * @return the value of the left joystick's Y axis.
      */
     public double getLeftStickY() {
-        return getRawAxis(LEFT_Y);
+        return getRawAxis(LeftY);
     }
     
     /**
-     * Read the value of the d-pad's X axis.
-     * @return the value of the d-pad's X axis.
+     * Read the value of the right joystick's X axis.
+     * @return the value of the right joystick's X axis.
      */
-    public double getDPadX() {
-        return getRawAxis(D_PAD_X);
-    }
-    
-    /**
-     * Read the value of the d-pad's Y axis.
-     * @return the value of the d-pad's Y axis.
-     */
-    public double getDPadY() {
-        return getRawAxis(D_PAD_Y);
+    public double getRightStickX() {
+        return getRawAxis(RightX);
     }
 
+    /**
+     * Read the value of the right joystick's Y axis.
+     * @return the value of the right joystick's Y axis.
+     */
+    public double getRightStickY() {
+        return getRawAxis(RightY);
+    }
+
+    /**
+     * Read the value of the left trigger.
+     * @return the value of the left trigger.
+     */
+    public double getLeftTrigger() {
+    	return getRawAxis(LeftTrigger);
+    }
+    
+    /**
+     * Read the value of the right trigger.
+     * @return the value of the right trigger.
+     */
+    public double getRightTrigger() {
+    	return getRawAxis(RightTrigger);
+    }
+    
+    /**
+     * Read the value of the d-pad.
+     * @return the value of the d-pad.
+     */
+    public double getDPad() {
+    	return getPOV();
+    }
+    
     /**
      * Read the state of the A button.
      * @return the state of the A button.
@@ -113,35 +124,35 @@ public class XboxController extends Joystick {
     }
 
     /**
-     * Read the state of the back button.
-     * @return the state of the back button.
+     * Read the state of the Back button.
+     * @return the state of the Back button.
      */
     public boolean getBackButton() {
-        return getRawButton(BACK);
+        return getRawButton(Back);
     }
 
     /**
-     * Read the state of the start button.
-     * @return the state of the start button.
+     * Read the state of the Start button.
+     * @return the state of the Start button.
      */
     public boolean getStartButton() {
-        return getRawButton(START);
+        return getRawButton(Start);
     }
 
     /**
-     * Read the state of the right bumper button.
-     * @return the state of the right bumper button.
+     * Read the state of the right bumper.
+     * @return the state of the right bumper.
      */
-    public boolean getRightBumperButton() {
-        return getRawButton(RIGHT_BUMPER);
+    public boolean getRightBumper() {
+        return getRawButton(RightBumper);
     }
 
     /**
-     * Read the state of the left bumper button.
-     * @return the state of the left bumper button.
+     * Read the state of the left bumper.
+     * @return the state of the left bumper.
      */
-    public boolean getLeftBumperButton() {
-        return getRawButton(LEFT_BUMPER);
+    public boolean getLeftBumper() {
+        return getRawButton(LeftBumper);
     }
 
     /**
@@ -149,7 +160,7 @@ public class XboxController extends Joystick {
      * @return the state of the left stick button.
      */
     public boolean getLeftStickButton() {
-        return getRawButton(LEFT_STICK);
+        return getRawButton(LeftStick);
     }
 
     /**
@@ -157,22 +168,6 @@ public class XboxController extends Joystick {
      * @return the state of the right stick button.
      */
     public boolean getRightStickButton() {
-        return getRawButton(RIGHT_STICK);
+        return getRawButton(RightStick);
     } 
-        
-    /**
-     * Read the state of the right trigger.
-     * @return the state of the right trigger.
-     */
-    public double getRightTrigger() {
-        return -Math.min(getRawAxis(TRIGGERS), 0);
-    }
-
-    /**
-     * Read the state of the left trigger.
-     * @return the state of the left trigger.
-     */
-    public double getLeftTrigger() {
-        return Math.max(getRawAxis(TRIGGERS), 0);
-    }
 }
