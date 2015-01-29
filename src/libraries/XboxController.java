@@ -23,7 +23,7 @@ public class XboxController extends Joystick {
     public static final int RightStick = 10;
     
     /**
-     * Axis
+     * Axes
      */
     public static final int LeftX = 0;
     public static final int LeftY = 1;
@@ -121,7 +121,8 @@ public class XboxController extends Joystick {
     
     /**
      * Read the value of the d-pad.
-     * @return the value of the d-pad.
+     * @return the angle of the DPad in degrees,
+     * or -1 if the DPad is not pressed.
      */
     public int getDPad() {
     	return getPOV();

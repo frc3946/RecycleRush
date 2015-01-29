@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
+ * Heart of the slide drive code. All calculations are done here.
+ * 
  * A {@link DriveMethod} that uses a {@link ThreeWheelDriveController} (which
  * controls three speed controllers to drive using a gyro to maintain orientation
  * and drive relative to the field.
@@ -56,9 +58,9 @@ public class SlideDrive extends DriveMethod {
     public static final double ROTATION_D = 0.0;
     
     /**
-     * The feed-forward constant of the PID algorithm. This value seems to be
-     * multiplied by the setpoint, which doesn't make much sense. I don't really
-     * know what it is supposed to do so I just leave it at 0.
+     * The feed-forward constant of the PID algorithm. This value purely feeds 
+     * the command signal forward through the control loop, adding to the loop's output 
+     * based directly off of a command input without dependence on prior feedback.
      */
     public static final double ROTATION_F = 0.0;
     private double rotationSpeedPID = 0.0;
@@ -122,6 +124,27 @@ public class SlideDrive extends DriveMethod {
     public void slideDrive_Cartesian(double x, double y, double rotation) {
         slideDrive_Cartesian(x, y, rotation, gyro.getAngle() - gyroOffset);
         
+    }
+    
+    /**
+     * Moves the robot forward and sideways at the specified speeds.
+     *
+     * @param x The sideways (strafe) speed (negative = left, positive = right)
+     * @param y The forward speed (negative = backward, positive = forward)
+     *
+     */
+    public void slideDrive_Cartesian(double x, double y) {
+        slideDrive_Cartesian(x, y, 0);
+    }
+
+    /**
+     * Moves the robot sideways at the specified speed.
+     *
+     * @param speed The speed and direction to strafe (negative = left, positive =
+     * right)
+     */
+    public void strafe(double speed) {
+        slideDrive_Cartesian(speed, 0);
     }
 
     public void slideDrive_Orientation(double x, double y, double angle) {
@@ -193,27 +216,6 @@ public class SlideDrive extends DriveMethod {
 
         controller.drive(wheelSpeeds[0], wheelSpeeds[1], wheelSpeeds[2]);
     }
-    
-    /**
-     * Moves the robot forward and sideways at the specified speeds.
-     *
-     * @param x The sideways (strafe) speed (negative = left, positive = right)
-     * @param y The forward speed (negative = backward, positive = forward)
-     *
-     */
-    public void slideDrive_Cartesian(double x, double y) {
-        slideDrive_Cartesian(x, y, 0);
-    }
-
-    /**
-     * Moves the robot sideways at the specified speed.
-     *
-     * @param speed The speed and direction to strafe (negative = left, positive =
-     * right)
-     */
-    public void strafe(double speed) {
-        slideDrive_Cartesian(speed, 0);
-    }
 
     /**
      * Gets the corrected rotation speed based on the gyro heading and the
@@ -221,7 +223,6 @@ public class SlideDrive extends DriveMethod {
      * gyro correction is turned off.
      *
      * @param rotationSpeed
-     * @return
      */
     private double getRotationPID(double rotationSpeed) {
         // If the controller is already enabled, check to see if it should be 
