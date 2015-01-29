@@ -1,102 +1,47 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
-import org.usfirst.frc.team3946.robot.Robot;
-import org.usfirst.frc.team3946.robot.RobotMap;
-import org.usfirst.frc.team3946.robot.commands.*;
+import org.usfirst.frc.team3946.robot.commands.drive.FieldCentricDrivingCommand;
 
+import libraries.*;
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.buttons.XboxController;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import static org.usfirst.frc.team3946.robot.RobotMap.*;
 
-/**
- *	TODO: Add a deadband to prevent unintended motion.
- */
 public class Drivetrain extends Subsystem {
-    private SpeedController leftMotor, rightMotor;
-    private RobotDrive drive;
-    private AnalogInput leftRangeFinder, rightRangeFinder;
-    private Gyro gyro;
+
+    public static final double STRAFE_SPEED = 0.6;
+
+    public Talon left = new Talon(driveLeftTalon);
+    public Talon right = new Talon(driveRightTalon);
+    public Talon strafe = new Talon(driveStrafeTalon);
+    public BetterGyro gyro = new BetterGyro(driveGyro);
+
+    private final WheelController leftWheel = new WheelController(left);
+    private final WheelController rightWheel = new WheelController(right);
+    private final WheelController strafeWheel = new WheelController(strafe);
+    private final ThreeWheelDriveController driveController = new ThreeWheelDriveController(
+            leftWheel, 
+            rightWheel, 
+            strafeWheel
+    );
+
+    private final SlideDrive slideDrive = new SlideDrive(driveController, gyro);
+    private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveController);
 
     public Drivetrain() {
-    	super();
-    	leftMotor = new Talon(RobotMap.leftMotor);
-    	rightMotor = new Talon(RobotMap.rightMotor);
-    	leftRangeFinder = new AnalogInput(RobotMap.leftRangeFinder);
-    	rightRangeFinder = new AnalogInput(RobotMap.rightRangeFinder);
-    	gyro = new Gyro(RobotMap.gyro);
-    	
-    	drive = new RobotDrive(leftMotor, rightMotor);
-    	
-		// Show everything in the LiveWindow
-    	LiveWindow.addActuator("Drivetrain", "Left Motor", (Talon) leftMotor);
-    	LiveWindow.addActuator("Drivetrain", "Right Motor", (Talon) rightMotor);
-    	LiveWindow.addSensor("Drivetrain", "Left Rangefinder", (AnalogInput) leftRangeFinder);
-        LiveWindow.addSensor("Drivetrain", "Right Rangefinder", (AnalogInput) rightRangeFinder);
-        LiveWindow.addSensor("Drivetrain", "Gyro", gyro);
+        rightWheel.setInverted(true);
     }
+    
     public void initDefaultCommand() {
-        setDefaultCommand(new DriveWithJoystick());
-	
+        setDefaultCommand(new FieldCentricDrivingCommand());
+        gyro.setPIDSourceParameter(PIDSource.PIDSourceParameter.kAngle);
     }
     
-    public void log() {
-    	SmartDashboard.putNumber("Gyro", gyro.getAngle());
+    public SlideDrive getSlideDrive() {
+        return slideDrive;
     }
-        
-    /**Arcade style driving for the drivetrain.
-	 * @param move for forward/backward motion.
-	 * @param rotate for rotation
-	 */
-    public void drive(double move, double rotate) {
-    	drive.arcadeDrive(move, rotate);
-    }
-    
-    /**
-	 * @param controller Xbox joystick to use to drive arcade style.
-	 */
-    public void drive(XboxController controller) {
-    	drive(controller.getLeftStickY(), controller.getLeftStickX());
-    }
-    
-    public void setMotors(double leftMotorSpeed, double rightMotorSpeed) {
-    	leftMotor.set(leftMotorSpeed);
-    	rightMotor.set(rightMotorSpeed);
-    }
-    
-    public void turn(double turnSpeed) {
-    	leftMotor.set(turnSpeed);
-    	rightMotor.set(-turnSpeed);
-    }
-    
-    public void stop() {
-    	Robot.drivetrain.drive(0, 0);
-    }
-    
-    /**
-	 * @return The robots heading in degrees.
-	 */
-	public double getHeading() {
-		return gyro.getAngle();
-	}
 
-	/**
-	 * Reset the robots sensors,including gyro, to the zero states.
-	 */
-	public void reset() {
-		gyro.reset();
-		leftRangeFinder.resetAccumulator();
-		rightRangeFinder.resetAccumulator();
-	}
-	
-	/**
-	 * @return The distance to the obstacle detected by the range finders. 
-	 */
-	public double getDistanceToObstacle() {
-		return(leftRangeFinder.getAverageVoltage() + rightRangeFinder.getAverageVoltage());
-	}
-
+    public ArcadeDrive getArcadeDrive() {
+        return arcadeDrive;
+    }
 }
-

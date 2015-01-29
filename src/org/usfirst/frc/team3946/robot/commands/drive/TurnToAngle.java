@@ -1,40 +1,37 @@
-package org.usfirst.frc.team3946.robot.commands;
+package org.usfirst.frc.team3946.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3946.robot.*;
+import static java.lang.Math.abs;
+import static org.usfirst.frc.team3946.robot.Robot.*;
 
 /**
  *
  */
-public class Turn extends Command {
+public class TurnToAngle extends Command {
 	
 	double desiredAngle;
 	double distanceToGo;
 	double currentAngle;
 
-    public Turn(double newDesiredAngle) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.drivetrain);
-    	desiredAngle = newDesiredAngle;
+    public TurnToAngle(double angle) {
+    	requires(drivetrain);
+    	desiredAngle = angle;
+
     }
 
-    // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drivetrain.reset();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	currentAngle = Robot.drivetrain.getHeading();
+    	currentAngle = drivetrain.gyro.getAngle();	
     	distanceToGo = desiredAngle - currentAngle;
-    	double turnSpeed = distanceToGo / 40;
-    	Robot.drivetrain.turn(turnSpeed);
+    	drivetrain.getSlideDrive().slideDrive_Orientation(0, 0, desiredAngle);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(Math.abs(distanceToGo) <= 2){
+    	if(abs(distanceToGo) <= 2.0){
     		return true;
     	} else {
     		return false;

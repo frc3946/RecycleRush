@@ -1,10 +1,10 @@
-package edu.wpi.first.wpilibj.alternatives;
+package libraries;
 
 import edu.wpi.first.wpilibj.Joystick;
+import static java.lang.Math.abs;
 
 /**
  * Xbox 360 USB controller wrapper for the Joystick class.
- * @author Cameron Ordone
  */
 public class XboxController extends Joystick {
     
@@ -23,7 +23,7 @@ public class XboxController extends Joystick {
     public static final int RightStick = 10;
     
     /**
-     * Axis
+     * Axes
      */
     public static final int LeftX = 0;
     public static final int LeftY = 1;
@@ -32,10 +32,46 @@ public class XboxController extends Joystick {
     public static final int RightX = 4;
     public static final int RightY = 5;
 
+    double deadband = 0.2;
+    
     public XboxController(int port) {
         super(port);
     }
-   /**
+    
+    //	DEADBAND
+    
+    /**
+     * Set deadband
+     * @param deadband If the magnitude of the axis is less than
+     * this value, it will be considered a 0.
+     */
+    public void setDeadband(double deadband) {
+    	this.deadband = deadband;
+    }
+    
+    /**
+     * Get deadband
+     * @return deadband If the magnitude of the axis is less than
+     * this value, it will be considered a 0.
+     */
+    public double getDeadband() {
+    	return deadband;
+    }
+    
+    /**
+     * Get the value of the axis.
+     * @param axis The axis to read [0-5].
+     * @return The value of the axis.
+     */
+    public double getRawAxis(int axis) {
+        double val = super.getRawAxis(axis);
+        if(abs(val) <= deadband) return 0;
+        else return val;
+    }
+    
+    //	AXIS
+    
+    /**
      * Read the value of the left joystick's X axis.
      * @return the value of the left joystick's X axis.
      */
@@ -85,11 +121,14 @@ public class XboxController extends Joystick {
     
     /**
      * Read the value of the d-pad.
-     * @return the value of the d-pad.
+     * @return the angle of the DPad in degrees,
+     * or -1 if the DPad is not pressed.
      */
-    public double getDPad() {
+    public int getDPad() {
     	return getPOV();
     }
+    
+    // BUTTONS
     
     /**
      * Read the state of the A button.
