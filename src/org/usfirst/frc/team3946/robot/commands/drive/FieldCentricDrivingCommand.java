@@ -19,7 +19,7 @@ public class FieldCentricDrivingCommand extends Command {
      * The maximum speed that the robot is allowed to rotate at. The joystick
      * value is scaled down to this value.
      */
-    public static final double MAX_ROTATION = 0.6;
+    public static final double MAX_ROTATION = 0.5;
 
     public FieldCentricDrivingCommand() {
         requires(drivetrain);
@@ -53,7 +53,7 @@ public class FieldCentricDrivingCommand extends Command {
         SmartDashboard.putNumber("Y", y);
         SmartDashboard.putNumber("Rotation", scaledZ);
         
-        drivetrain.getSlideDrive().slideDrive_Cartesian(x, y, scaledZ, angle);
+        drivetrain.getSlideDrive().drive(x, y, scaledZ, angle);
     }
 
     /**

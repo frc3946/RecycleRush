@@ -107,9 +107,9 @@ public class SlideDrive extends DriveMethod {
      * clockwise, positive = counterclockwise)
      * @param gyroAngle the current angle reading from the gyro
      */
-    public void slideDrive_Cartesian(double x, double y, double rotation, double gyroAngle) {
+    public void drive(double x, double y, double rotation, double gyroAngle) {
         rotation = getRotationPID(rotation);
-        slideDrive_Cartesian0(x, y, rotation, gyroAngle);
+        drive0(x, y, rotation, gyroAngle);
     }
 
     /**
@@ -121,8 +121,8 @@ public class SlideDrive extends DriveMethod {
      * @param rotation The speed to rotate at while moving (negative =
      * clockwise, positive = counterclockwise)
      */
-    public void slideDrive_Cartesian(double x, double y, double rotation) {
-        slideDrive_Cartesian(x, y, rotation, gyro.getAngle() - gyroOffset);
+    public void drive(double x, double y, double rotation) {
+        drive(x, y, rotation, gyro.getAngle() - gyroOffset);
         
     }
     
@@ -133,8 +133,8 @@ public class SlideDrive extends DriveMethod {
      * @param y The forward speed (negative = backward, positive = forward)
      *
      */
-    public void slideDrive_Cartesian(double x, double y) {
-        slideDrive_Cartesian(x, y, 0);
+    public void drive(double x, double y) {
+        drive(x, y, 0);
     }
 
     /**
@@ -144,7 +144,7 @@ public class SlideDrive extends DriveMethod {
      * right)
      */
     public void strafe(double speed) {
-        slideDrive_Cartesian(speed, 0);
+        drive(speed, 0);
     }
 
     public void slideDrive_Orientation(double x, double y, double angle) {
@@ -152,7 +152,7 @@ public class SlideDrive extends DriveMethod {
             rotationPIDController.setSetpoint(angle);
             rotationPIDController.enable();
         }
-        slideDrive_Cartesian0(x, y, rotationSpeedPID, gyro.getAngle() - gyroOffset);
+        drive0(x, y, rotationSpeedPID, angle);
     }
 
     /**
@@ -166,7 +166,7 @@ public class SlideDrive extends DriveMethod {
      * clockwise, negative = counterclockwise)
      * @param gyroAngle the current angle reading from the gyro
      */
-    private void slideDrive_Cartesian0(double x, double y, double rotation, double gyroAngle) {
+    private void drive0(double x, double y, double rotation, double gyroAngle) {
         // Send debugging values.
         SmartDashboard.putNumber("Slide X", x);
         SmartDashboard.putNumber("Slide Y", y);
@@ -199,7 +199,7 @@ public class SlideDrive extends DriveMethod {
      * @param rotation The rate of rotation for the robot that is completely
      * independent of the magnitude or direction. [-1.0..1.0]
      */
-    public void slideDrive_Polar(double magnitude, double direction, double rotation) {
+    public void drivePolar(double magnitude, double direction, double rotation) {
         // Normalized for full power along the Cartesian axes.
         magnitude = DriveUtils.limit(magnitude) * sqrt(2.0);
         // The rollers are at 90 degree angles.
