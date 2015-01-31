@@ -25,9 +25,9 @@ public class Robot extends IterativeRobot {
     public static Elevator elevator;
     public static CurbFeeler curbfeeler;
     public static LightSeer lightseers;
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
+     //* This function is run when the robot is first started up and should be
+     //* used for any initialization code.
+     //*/
     public void robotInit() {  	
     	// Initialize all subsystems.
     	drivetrain = new Drivetrain();
@@ -98,8 +98,9 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
-}
     public void log() {
     	curbfeeler.log();
     	lightseers.log();
     }
+}
+    
