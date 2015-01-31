@@ -27,9 +27,6 @@ public interface RobotMap {
 	int lightseeruno = 3;
 	int lightseerdos = 4;
 	int touch = 5;
-	
-	// Analog IOs
-	int driveGyro = 0;				//GYRO
 	int liftPot = 1;				//POT
 	int lRangeF = 2;				//RF1
 	int rRangeF = 3;				//RF2	
