@@ -12,9 +12,9 @@ public interface RobotMap {
 	int driveLeftTalon = 1;				//T1
 	int driveRightTalon = 2;			//T2
 	int driveStrafeTalon = 3;			//T3
-	int liftTalon = 4;				//T4
-	int t5 = 5;					//T5
-	int t6 = 6;					//T6
+	int liftTalon = 4;					//T4
+	int t5 = 5;							//T5
+	int t6 = 6;							//T6
 	
 	// Relays
 	int lRelay = 1;					//SPK1

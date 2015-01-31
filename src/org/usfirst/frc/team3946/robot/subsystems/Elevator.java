@@ -44,10 +44,10 @@ public class Elevator extends PIDSubsystem {
         potVoltage = new double[8];
         potVoltage[0] = 0.0;	// floor
         potVoltage[1] = 0.0;	// platform
-        potVoltage[2] = 0.0;	// step
+        potVoltage[2] = 0.0;	// one tote
         potVoltage[3] = 0.0;	// two totes
         potVoltage[4] = 0.0;	// three totes
-     	potVoltage[5] = 0.0;    // four totes
+     	potVoltage[5] = 0.0;    // recycling bin
      	potVoltage[6] = 0.0;	// five totes
      	potVoltage[7] = 0.0;	// six totes
     }
