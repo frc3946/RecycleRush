@@ -23,19 +23,19 @@ public class Robot extends IterativeRobot {
     public static OI oi;
     public static Drivetrain drivetrain;
     public static Elevator elevator;
-    
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
+    public static CurbFeeler curbfeeler;
+    public static LightSeer lightseers;
+     //* This function is run when the robot is first started up and should be
+     //* used for any initialization code.
+     //*/
     public void robotInit() {  	
     	// Initialize all subsystems.
     	drivetrain = new Drivetrain();
     	elevator = new Elevator();
         oi = new OI();
 
-        autonomousChooser.addDefault("Center", new AutonomousCenter());
-        autonomousChooser.addObject("Left", new AutonomousLeft());
+    	curbfeeler = new CurbFeeler();
+    	lightseers = new LightSeer();
         autonomousChooser.addObject("Right", new AutonomousRight());
         SmartDashboard.putData("Autonomous Mode", autonomousChooser);
         
@@ -45,8 +45,8 @@ public class Robot extends IterativeRobot {
 
     /**
      * This function is called when the disabled button is hit.
-     * You can use it to reset subsystems before shutting down.
-     */
+        SmartDashboard.putData(curbfeeler);
+        SmartDashboard.putData(lightseers);
     public void disabledInit(){
 
     }
@@ -98,4 +98,9 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
+    public void log() {
+    	curbfeeler.log();
+    	lightseers.log();
+    }
 }
+    
