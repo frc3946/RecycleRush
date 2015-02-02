@@ -28,7 +28,10 @@ public class FieldCentricDrivingCommand extends Command {
     /**
      * Does nothing.
      */
-    protected void initialize() {}
+    protected void initialize() {
+    	
+    	drivetrain.gyro.reset(); 
+    }
 
     /**
      * Updates the robot movement based on joystick values.
@@ -52,6 +55,7 @@ public class FieldCentricDrivingCommand extends Command {
         SmartDashboard.putNumber("X", x);
         SmartDashboard.putNumber("Y", y);
         SmartDashboard.putNumber("Rotation", scaledZ);
+        SmartDashboard.putNumber("Gyro", angle);
         
         drivetrain.getSlideDrive().drive(x, y, scaledZ, angle);
     }
@@ -75,6 +79,7 @@ public class FieldCentricDrivingCommand extends Command {
      * Stops the drive motors.
      */
     protected void interrupted() {
+    	drivetrain.getSlideDrive().disablePID();
         end();
     }
 }

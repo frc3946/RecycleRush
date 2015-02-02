@@ -20,10 +20,10 @@ public class AutonomousCenter extends CommandGroup {
     	//addSequential(new LockElevatorPosition());
     	
     	//drive to safe zone
-    	addSequential(new AutonomousDrive(1));
+    	//addSequential(new AutonomousDrive(1.3));
     	addSequential(new TurnToAngle(-90));
-    	addSequential(new AutonomousDrive(1));
-    	addSequential(new TurnToAngle(90));
-    	addSequential(new AutonomousDrive(1));
+    	//addSequential(new AutonomousDrive(.7));
+    	//addSequential(new TurnToAngle(90));
+    	//addSequential(new AutonomousDrive(.7));
     }
 }

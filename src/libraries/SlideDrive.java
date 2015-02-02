@@ -119,7 +119,7 @@ public class SlideDrive extends DriveMethod {
     public void strafe(double speed) {
         drive(speed, 0);
     }
-
+    
     public void driveOrientation(double x, double y, double angle) {
         if (!rotationPIDController.isEnable() || rotationPIDController.getSetpoint() != angle) {
             rotationPIDController.setSetpoint(angle);
@@ -140,19 +140,9 @@ public class SlideDrive extends DriveMethod {
      * @param gyroAngle the current angle reading from the gyro
      */
     private void drive0(double x, double y, double rotation, double gyroAngle) {
-        // Send debugging values.
-        SmartDashboard.putNumber("Slide X", x);
-        SmartDashboard.putNumber("Slide Y", y);
-        SmartDashboard.putNumber("Slide Rotation", rotation);
-        
-        // Compenstate for gyro angle.
-        double rotated[] = DriveUtils.rotateVector(x, y, gyroAngle);
-        x = rotated[0];
-        y = rotated[1];
-
         double wheelSpeeds[] = new double[3];
-        wheelSpeeds[0] = x + y + rotation; // Left speed
-        wheelSpeeds[1] = x + y - rotation; // Right speed
+        wheelSpeeds[0] = y + rotation; // Left speed
+        wheelSpeeds[1] = y - rotation; // Right speed
         wheelSpeeds[2] = x; // Strafe speed
 
         DriveUtils.normalize(wheelSpeeds);
@@ -192,6 +182,8 @@ public class SlideDrive extends DriveMethod {
         // Unless told otherwise, return the rate that was passed in.
         return rotationSpeed;
     }
+    
+    
 
     /**
      * Resets the robot's gyro value to zero and resets the PID controller
@@ -211,5 +203,9 @@ public class SlideDrive extends DriveMethod {
         rotationPIDController.setSetpoint(0);
         // Re-enable the controller because it was disabled by calling reset().
         rotationPIDController.enable();
+    }
+    
+    public void disablePID() {
+    	rotationPIDController.disable();
     }
 }
