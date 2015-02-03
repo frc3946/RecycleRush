@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3946.robot.commands.drive;
+package org.usfirst.frc.team3946.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import static java.lang.Math.abs;
