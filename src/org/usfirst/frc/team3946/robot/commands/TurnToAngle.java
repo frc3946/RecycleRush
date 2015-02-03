@@ -20,19 +20,27 @@ public class TurnToAngle extends Command {
     }
 
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	double speedCoefficient;
     	currentAngle = drivetrain.gyro.getAngle();	
     	distanceToGo = desiredAngle - currentAngle;
-    	drivetrain.getSlideDrive().driveOrientation(0, 0, desiredAngle);
-    }
+    	if(abs(distanceToGo) > 45){
+    		speedCoefficient = 1;
+    	} else {
+    		speedCoefficient = .5;
+    	}
+    	//distanceToGo = distanceToGo / (abs(distanceToGo));
+    	drivetrain.rotate(.5 * speedCoefficient);
+    	}
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if(abs(distanceToGo) <= 2.0){
-    		return true;
+    		return false;
     	} else {
     		return false;
         }

@@ -36,17 +36,22 @@ public class Robot extends IterativeRobot {
 
     	curbfeeler = new CurbFeeler();
     	lightseers = new LightSeer();
+        autonomousChooser.addDefault("Center", new AutonomousCenter());
+        autonomousChooser.addObject("Left", new AutonomousLeft());
         autonomousChooser.addObject("Right", new AutonomousRight());
         SmartDashboard.putData("Autonomous Mode", autonomousChooser);
         
         // Show what command the subsystem is running on the SmartDashboard.
         SmartDashboard.putData(drivetrain);
+        SmartDashboard.putData(curbfeeler);
+        SmartDashboard.putData(lightseers);
     }
 
     /**
      * This function is called when the disabled button is hit.
-        SmartDashboard.putData(curbfeeler);
-        SmartDashboard.putData(lightseers);
+     */
+    
+   //
     public void disabledInit(){
 
     }

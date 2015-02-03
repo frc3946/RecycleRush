@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
+import org.usfirst.frc.team3946.robot.commands.AutonomousDrive;
 import org.usfirst.frc.team3946.robot.commands.drive.FieldCentricDrivingCommand;
 
 import libraries.*;
@@ -25,6 +26,7 @@ public class Drivetrain extends Subsystem {
             strafeWheel
     );
 
+
     private final SlideDrive slideDrive = new SlideDrive(driveController, gyro);
     private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveController);
 
@@ -43,5 +45,30 @@ public class Drivetrain extends Subsystem {
 
     public ArcadeDrive getArcadeDrive() {
         return arcadeDrive;
+    }
+    
+    public void rotate(double speed) {
+    	left.set(speed);
+    	right.set(speed);
+    }
+    
+    public void driveStraight(double speed) {
+    	double leftSpeed = speed;
+    	double rightSpeed = speed;
+    	double gyroValue;
+    	gyroValue = (Math.abs(gyro.getAngle())) / 45;
+    	if(gyro.getAngle() > 0){
+    		leftSpeed = leftSpeed * (1 - gyroValue);
+    		rightSpeed = rightSpeed * (1 + gyroValue);
+    	} else {
+		leftSpeed = leftSpeed * (1 + gyroValue);
+		rightSpeed = rightSpeed * (1 - gyroValue);
+    	}
+    	left.set(leftSpeed);
+    	right.set(-rightSpeed);
+    }
+    
+    public BetterGyro getGyro() {
+    	return gyro;
     }
 }
