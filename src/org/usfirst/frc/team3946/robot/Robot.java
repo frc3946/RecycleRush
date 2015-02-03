@@ -108,4 +108,3 @@ public class Robot extends IterativeRobot {
     	lightseers.log();
     }
 }
-    

@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
-import org.usfirst.frc.team3946.robot.commands.AutonomousDrive;
 import org.usfirst.frc.team3946.robot.commands.drive.FieldCentricDrivingCommand;
 
 import libraries.*;
