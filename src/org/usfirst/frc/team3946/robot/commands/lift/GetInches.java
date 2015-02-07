@@ -1,13 +1,16 @@
-package org.usfirst.frc.team3946.robot.commands.lift;
 
-import org.usfirst.frc.team3946.robot.Robot;
+package org.usfirst.frc.team3946.robot.commands.lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class  ElevateWithTriggers extends Command {
+import static org.usfirst.frc.team3946.robot.Robot.*;
 
-    public ElevateWithTriggers() {
-        requires(Robot.elevator);
+
+public class GetInches extends Command {
+
+    public GetInches() {
+        // Use requires() here to declare subsystem dependencies
+        requires(rangefinders);
     }
 
     // Called just before this Command runs the first time
@@ -16,12 +19,12 @@ public class  ElevateWithTriggers extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.elevator.elevate(Robot.oi.getLiftController());
+    	rangefinders.getReading();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false; // Runs until interrupted
+        return false;
     }
 
     // Called once after isFinished returns true

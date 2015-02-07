@@ -14,11 +14,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Elevator extends PIDSubsystem {
     Talon motor;
     Potentiometer pot;
-    DigitalInput upperLimit, 
-    		lowerLimit;
+    DigitalInput upperLimit; 
+    DigitalInput lowerLimit;
     
-    int level;
-    double[] potVoltage;
+    int level = 0;
+    public double[] potVolts = {
+    		.167,
+    		.334,
+    		.501,
+    		.635,
+    		.881,
+    		1
+    };
+    
+    public int[] feet = {1, 2, 3, 4, 5, 6};
     
     public Elevator() {
         // TODO: As soon as we can test, work on these values.
@@ -37,21 +46,8 @@ public class Elevator extends PIDSubsystem {
         LiveWindow.addSensor("Elevator", "Potentiometer", (AnalogPotentiometer) pot);
         LiveWindow.addActuator("Elevator", "Motor", (Talon) motor);
         LiveWindow.addActuator("Elevator", "PID", getPIDController());
-        
-        // Array for potentiometer voltages that represent set heights.
-        // Values are placeholders until we have a prototype to test.
-        level = 0;
-        potVoltage = new double[8];
-        potVoltage[0] = 0.0;	// floor
-        potVoltage[1] = 0.0;	// platform
-        potVoltage[2] = 0.0;	// one tote
-        potVoltage[3] = 0.0;	// two totes
-        potVoltage[4] = 0.0;	// three totes
-     	potVoltage[5] = 0.0;    // recycling bin
-     	potVoltage[6] = 0.0;	// five totes
-     	potVoltage[7] = 0.0;	// six totes
     }
-    
+ 
     public void initDefaultCommand() {}
     
     public void log() {
@@ -101,7 +97,7 @@ public class Elevator extends PIDSubsystem {
     	if (level > 7) {
     		level = 7;
     	}
-    	this.setSetpoint(potVoltage[level]);
+    	this.setSetpoint(potVolts[level]);
     }
     
     // Set minimum
@@ -110,12 +106,12 @@ public class Elevator extends PIDSubsystem {
     	if (level < 0){
     		level = 0;
     	}
-    	this.setSetpoint(potVoltage[level]);
+    	this.setSetpoint(potVolts[level]);
     }
     
     // For use on Smart Dashboard
     public void setLevel(int level) {
-    	this.setSetpoint(potVoltage[level]);
+    	this.setSetpoint(potVolts[level]);
     }
     
 }
