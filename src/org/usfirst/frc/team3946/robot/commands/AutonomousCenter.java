@@ -22,6 +22,7 @@ public class AutonomousCenter extends CommandGroup {
     	//drive to safe zone
     	//addSequential(new AutonomousDrive(1.3));
     	addSequential(new TurnToAngle(-90));
+    	addSequential(new ResetGyro());
     	//addSequential(new AutonomousDrive(.7));
     	//addSequential(new TurnToAngle(90));
     	//addSequential(new AutonomousDrive(.7));

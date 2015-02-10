@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
     Command autonomousCommand;
     private final SendableChooser autonomousChooser = new SendableChooser();
+    private final SendableChooser ledChooser = new SendableChooser();
     public static OI oi;
     public static Drivetrain drivetrain;
     public static Elevator elevator;
@@ -40,6 +41,11 @@ public class Robot extends IterativeRobot {
         autonomousChooser.addObject("Left", new AutonomousLeft());
         autonomousChooser.addObject("Right", new AutonomousRight());
         SmartDashboard.putData("Autonomous Mode", autonomousChooser);
+        ledChooser.addDefault("Green", new LedGreen());
+        ledChooser.addObject("Red", new LedRed());
+        ledChooser.addObject("Blue", new LedBlue());
+        SmartDashboard.putData("LED Color", ledChooser);
+        
         
         // Show what command the subsystem is running on the SmartDashboard.
         SmartDashboard.putData(drivetrain);
