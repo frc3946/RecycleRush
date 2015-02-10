@@ -26,6 +26,7 @@ public class Robot extends IterativeRobot {
     public static Elevator elevator;
     public static CurbFeeler curbfeeler;
     public static LightSeer lightseers;
+	public static final FunLights Lights = new FunLights();
      //* This function is run when the robot is first started up and should be
      //* used for any initialization code.
      //*/
@@ -41,9 +42,9 @@ public class Robot extends IterativeRobot {
         autonomousChooser.addObject("Left", new AutonomousLeft());
         autonomousChooser.addObject("Right", new AutonomousRight());
         SmartDashboard.putData("Autonomous Mode", autonomousChooser);
-        ledChooser.addDefault("Green", new LedGreen());
-        ledChooser.addObject("Red", new LedRed());
-        ledChooser.addObject("Blue", new LedBlue());
+        ledChooser.addDefault("Green", new Green());
+        ledChooser.addObject("Red", new Red());
+        ledChooser.addObject("Blue", new Blue());
         SmartDashboard.putData("LED Color", ledChooser);
         
         

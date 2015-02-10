@@ -32,5 +32,9 @@ public interface RobotMap {
 	int driveGyro = 0;
 	int liftPot = 1;				//POT
 	int lRangeF = 2;				//RF1
-	int rRangeF = 3;				//RF2	
+	int rRangeF = 3;				//RF2
+	
+	// Spike Relays
+	public static int spike1 = 1;
+	public static int spike2 = 2;
 }
