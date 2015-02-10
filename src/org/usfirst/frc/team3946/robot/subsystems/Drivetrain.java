@@ -55,7 +55,7 @@ public class Drivetrain extends Subsystem {
     	double leftSpeed = speed;
     	double rightSpeed = speed;
     	double gyroValue;
-    	gyroValue = (Math.abs(gyro.getAngle())) / 45;
+    	gyroValue = (Math.abs(gyro.getAngle()) / 45);
     	if(gyro.getAngle() > 0){
     		leftSpeed = leftSpeed * (1 - gyroValue);
     		rightSpeed = rightSpeed * (1 + gyroValue);

@@ -19,10 +19,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
     Command autonomousCommand;
+    
     private final SendableChooser autonomousChooser = new SendableChooser();
     private final SendableChooser ledChooser = new SendableChooser();
     public static OI oi;
     public static Drivetrain drivetrain;
+    public static RangeFinders rangefinders;
     public static Elevator elevator;
     public static CurbFeeler curbfeeler;
     public static LightSeer lightseers;
@@ -32,12 +34,13 @@ public class Robot extends IterativeRobot {
      //*/
     public void robotInit() {  	
     	// Initialize all subsystems.
+    	oi = new OI();
     	drivetrain = new Drivetrain();
+    	rangefinders = new RangeFinders();
     	elevator = new Elevator();
-        oi = new OI();
-
     	curbfeeler = new CurbFeeler();
     	lightseers = new LightSeer();
+    	
         autonomousChooser.addDefault("Center", new AutonomousCenter());
         autonomousChooser.addObject("Left", new AutonomousLeft());
         autonomousChooser.addObject("Right", new AutonomousRight());
