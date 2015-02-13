@@ -17,9 +17,9 @@ public interface RobotMap {
 	int t6 = 6;							//T6
 	
 	// Relays
-	int lRelay = 1;					//SPK1
-	int cRelay = 2;					//SPK2
-	int rRelay = 3;					//SPK3
+	int spike1 = 1;					//SPK1
+	int spike2 = 2;					//SPK2
+	int spike3 = 3;					//SPK3
 	
 	// Digital IOs
 	int uLimitSwitch = 1;				//label
@@ -33,8 +33,4 @@ public interface RobotMap {
 	int liftPot = 1;				//POT
 	int lRangeF = 2;				//RF1
 	int rRangeF = 3;				//RF2
-	
-	// Spike Relays
-	public static int spike1 = 1;
-	public static int spike2 = 2;
 }

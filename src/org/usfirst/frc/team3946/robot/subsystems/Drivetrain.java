@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
-import org.usfirst.frc.team3946.robot.commands.drive.FieldCentricDrivingCommand;
+import org.usfirst.frc.team3946.robot.commands.drive.SlideDrivingCommand;
 
 import libraries.*;
 import edu.wpi.first.wpilibj.*;
@@ -34,7 +34,7 @@ public class Drivetrain extends Subsystem {
     }
     
     public void initDefaultCommand() {
-        setDefaultCommand(new FieldCentricDrivingCommand());
+        setDefaultCommand(new SlideDrivingCommand());
         gyro.setPIDSourceParameter(PIDSource.PIDSourceParameter.kAngle);
     }
     

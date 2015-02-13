@@ -17,7 +17,7 @@ public class OI {
 
 	public XboxController driveController = new XboxController(0);
 		
-		Button enableFieldCentricControl;
+		Button enableSlideControl;
 		Button enableArcadeControl;
 		Button resetGyroButton;
 		Button strafeLeftButton;
@@ -25,6 +25,8 @@ public class OI {
 		
 	public XboxController liftController = new XboxController(1);;
 		
+		Button leftLiftButton;
+		Button rightLiftButton;
 		Button raiseElevatorButton;
 		Button lowerElevatorButton;
 		Button lockElevatorButton;
@@ -34,28 +36,33 @@ public class OI {
 		liftController.setDeadband(0.2);
     	
     	// Drive Control Buttons
-    	enableFieldCentricControl = new JoystickButton(driveController, XboxController.Start);
-    		enableFieldCentricControl.whenPressed(new FieldCentricDrivingCommand());
+    	enableSlideControl = new JoystickButton(driveController, XboxController.Start);
+    		enableSlideControl.whenPressed(new SlideDrivingCommand());
     	enableArcadeControl = new JoystickButton(driveController, XboxController.Back);
     		enableArcadeControl.whenPressed(new ArcadeDrivingCommand());
     	resetGyroButton = new JoystickButton(driveController, XboxController.B);
     		resetGyroButton.whenPressed(new ResetGyro());
-    	strafeLeftButton = new JoystickButton(driveController, XboxController.LeftTrigger);
-    		strafeLeftButton.whileHeld(new ManualStrafeLeft());
-    	strafeRightButton = new JoystickButton(driveController, XboxController.RightTrigger);
-    		strafeRightButton.whileHeld(new ManualStrafeRight());
+//    	strafeLeftButton = new JoystickButton(driveController, XboxController.LeftTrigger);
+//    		strafeLeftButton.whileHeld(new ManualStrafeLeft());
+//    	strafeRightButton = new JoystickButton(driveController, XboxController.RightTrigger);
+//    		strafeRightButton.whileHeld(new ManualStrafeRight());
     	
     	// Lift Control Buttons
-        raiseElevatorButton = new JoystickButton(liftController, XboxController.RightBumper);
+    	leftLiftButton = new JoystickButton(driveController, XboxController.LeftTrigger);
+    	rightLiftButton = new JoystickButton(driveController, XboxController.RightTrigger);
+			leftLiftButton.whileActive(new ElevateWithTriggers());
+			rightLiftButton.whileActive(new ElevateWithTriggers());
+    	
+        raiseElevatorButton = new JoystickButton(driveController, XboxController.RightBumper);
         	raiseElevatorButton.whenPressed(new RaiseElevatorLevel());
-        lowerElevatorButton = new JoystickButton(liftController, XboxController.LeftBumper);
+        lowerElevatorButton = new JoystickButton(driveController, XboxController.LeftBumper);
         	lowerElevatorButton.whenPressed(new LowerElevatorLevel());
-        lockElevatorButton = new JoystickButton(liftController, XboxController.A);
-        	lockElevatorButton.whenPressed(new LockElevatorPosition()); 
+//        lockElevatorButton = new JoystickButton(driveController, XboxController.A);
+//        	lockElevatorButton.whenPressed(new LockElevatorPosition()); 
 
         // SmartDashboard Buttons
         SmartDashboard.putData("Reset Gyro", new ResetGyro());
-        SmartDashboard.putData("Enable Field Control", new FieldCentricDrivingCommand());
+        SmartDashboard.putData("Enable Field Control", new SlideDrivingCommand());
         SmartDashboard.putData("Enable Arcade Control", new ArcadeDrivingCommand());
         
         SmartDashboard.putData("Raise Elevator", new RaiseElevatorLevel());
