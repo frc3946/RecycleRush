@@ -1,8 +1,7 @@
 package org.usfirst.frc.team3946.robot.commands;
 
-import org.usfirst.frc.team3946.robot.commands.drive.ResetGyro;
-import org.usfirst.frc.team3946.robot.commands.lift.LockElevatorPosition;
-import org.usfirst.frc.team3946.robot.commands.lift.RaiseElevatorLevel;
+import org.usfirst.frc.team3946.robot.commands.drive.*;
+import org.usfirst.frc.team3946.robot.commands.lift.*;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -15,8 +14,7 @@ public class AutonomousLeft extends CommandGroup {
     	addSequential(new ResetGyro());
     	
     	//picks up tote
-    	addSequential(new RaiseElevatorLevel());
-    	addSequential(new LockElevatorPosition());
+    	addSequential(new IncLiftSetpoint());
     	
     	//drives to safe zone
     	addSequential(new AutonomousDrive(1));

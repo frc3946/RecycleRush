@@ -1,8 +1,11 @@
 package org.usfirst.frc.team3946.robot.commands.lift;
 
+import libraries.XboxController;
+
 import org.usfirst.frc.team3946.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class  ElevateWithTriggers extends Command {
 
@@ -16,7 +19,11 @@ public class  ElevateWithTriggers extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.elevator.elevate(Robot.oi.getLiftController());
+    	XboxController j = Robot.oi.getDriveController();
+    	double throttle = j.getThrottle();
+    	Robot.elevator.elevate(throttle);
+    	SmartDashboard.putNumber("Lift Motor", throttle);
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -26,6 +33,7 @@ public class  ElevateWithTriggers extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.elevator.stop();
     }
 
     // Called when another command which requires one or more of the same

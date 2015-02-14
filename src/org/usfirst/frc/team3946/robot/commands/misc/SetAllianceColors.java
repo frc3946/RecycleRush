@@ -1,24 +1,28 @@
-package org.usfirst.frc.team3946.robot.commands.lift;
 
-import org.usfirst.frc.team3946.robot.Robot;
+package org.usfirst.frc.team3946.robot.commands.misc;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *	Separate brake used to stop the elevator without using the motor.
- */
-public class  LockElevatorPosition extends Command {
+import org.usfirst.frc.team3946.robot.Robot;
 
-    public LockElevatorPosition() {
-        requires(Robot.elevator);
+/**
+ *
+ */
+public class SetAllianceColors extends Command {
+
+    public SetAllianceColors() {
+        // Use requires() here to declare subsystem dependencies
+        requires(Robot.lights);
     }
 
-    // Called just before this Command runs the first time
+    //Called just before this Command runs the first time
     protected void initialize() {
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.lights.setAllianceColors();
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

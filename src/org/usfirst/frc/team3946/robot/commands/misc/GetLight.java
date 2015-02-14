@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3946.robot.commands;
+package org.usfirst.frc.team3946.robot.commands.misc;
 
 import org.usfirst.frc.team3946.robot.Robot;
 
@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class GetPress extends Command {
+public class GetLight extends Command {
 
-    public GetPress() {
+    public GetLight() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.curbfeeler);
+        requires(Robot.lightseers);
     }
 
     // Called just before this Command runs the first time
@@ -20,7 +20,7 @@ public class GetPress extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.curbfeeler.isPressed();
+    	Robot.lightseers.isTrue();
     }
 
     // Make this return true when this Command no longer needs to run execute()

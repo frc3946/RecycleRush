@@ -1,14 +1,14 @@
 
-package org.usfirst.frc.team3946.robot.commands.lift;
+package org.usfirst.frc.team3946.robot.commands.misc;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 import static org.usfirst.frc.team3946.robot.Robot.*;
 
 
-public class GetInches extends Command {
+public class GetDistanceToObstacle extends Command {
 
-    public GetInches() {
+    public GetDistanceToObstacle() {
         // Use requires() here to declare subsystem dependencies
         requires(rangefinders);
     }

@@ -12,14 +12,23 @@ public class RangeFinder extends AnalogInput{
 	}
 	
 	public double[] rvoltages = {
-			0.4384178275,   //0
-			0.6007756594,   //1
-			0.7737746387,   //2
-			0.8951031266,   //3
-			1.009484947,    //4
-			1.156945688,    //5
-			1.326952202,    //6
-			1.519505038     //7
+			0.42,           //0
+			0.59,           //1
+			0.75,           //2
+			1.07,           //3
+			1.39,           //4 
+			1.67,           //5
+			1.9,            //6
+			2.2             //7
+			
+//			0.4384178275,   //0
+//			0.6007756594,   //1
+//			0.7737746387,   //2
+//			0.8951031266,   //3
+//			1.009484947,    //4
+//			1.156945688,    //5
+//			1.326952202,    //6
+//			1.519505038     //7
 	}; 
 	
 	public int[] distances = {
@@ -39,8 +48,10 @@ public class RangeFinder extends AnalogInput{
 	 */
 	public double getDistance() {
 		double rvolts = 1 / getVoltage();
+		//return rvolts;
 		//int cm = 0;
 		//double inches = 0;
+		///**
 		int firstPoint = 0;
 		int secondPoint = 1;
 		boolean timeToProcess = false;
@@ -62,7 +73,7 @@ public class RangeFinder extends AnalogInput{
 			if(timeToProcess == true){
 				double slope = rvoltages[secondPoint] - rvoltages[firstPoint];
 				slope = slope / (distances[secondPoint] - distances[firstPoint]);
-				double intercept = (rvoltages[firstPoint] - distances[firstPoint]) * slope;
+				double intercept = rvoltages[firstPoint] - distances[firstPoint] * slope;
 				double distancesCM = (rvolts - intercept) / slope;
 				double distancesIN = distancesCM * .3937;
 				SmartDashboard.putNumber("Inches from ", distancesIN);//interpolation
@@ -75,6 +86,6 @@ public class RangeFinder extends AnalogInput{
 			
 			
 		}
-		return 0.0; 
+		return 0.0; //*/
 	}
 }
