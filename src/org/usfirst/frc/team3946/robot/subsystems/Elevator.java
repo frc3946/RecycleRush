@@ -31,10 +31,13 @@ public class Elevator extends PIDSubsystem {
     };
     
     public double[] setPoints = {
+    		0,
     		12.1 / 12,
     		24.2 / 12,
     		36.3 / 12,
-    		48.4 / 12
+    		48.4 / 12,
+    		60.5 / 12,
+    		72.6 / 12
     };
     
     public int[] feet = {0, 1, 2, 3, 4, 5, 6};
@@ -59,7 +62,7 @@ public class Elevator extends PIDSubsystem {
     }
  
     public void initDefaultCommand() {
-    	setDefaultCommand(new ElevateWithTriggers());
+//    	setDefaultCommand(new ElevateWithTriggers());
     }
     
     public void log() {

@@ -26,16 +26,13 @@ public class FunLights extends Subsystem {
     
 	public void setAllianceColors() {
     	if (getAlliance() == Alliance.Red) {
-    		r3.set(Relay.Value.kReverse);
-    		r2.set(Relay.Value.kOn);
+    		Red();
     	}
     	if (getAlliance() == Alliance.Blue) {
-    		r3.set(Relay.Value.kOn);
-    		r2.set(Relay.Value.kReverse);
+    		Blue();
     	}
     	if (getAlliance() == Alliance.Invalid) {
-    		r3.set(Relay.Value.kForward);
-    		r2.set(Relay.Value.kOn);
+    		Green();
     	}
     }
     
@@ -70,12 +67,12 @@ public class FunLights extends Subsystem {
     }
     
     public void Cyan() {
-    	r3.set(Relay.Value.kReverse);
+    	r3.set(Relay.Value.kForward);
     	r2.set(Relay.Value.kReverse);
     }
     
     public void Magenta() {
-    	r3.set(Relay.Value.kForward);
+    	r3.set(Relay.Value.kReverse);
     	r2.set(Relay.Value.kReverse);
     }
 }

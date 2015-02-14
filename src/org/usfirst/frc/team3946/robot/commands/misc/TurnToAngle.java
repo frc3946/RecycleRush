@@ -14,11 +14,11 @@ public class TurnToAngle extends Command {
 	double gyroReading;
 	double offset;
 	double error;
+	double distanceToGo;
 	
     public TurnToAngle(double angle) {
     	requires(drivetrain);
     	target = angle;
-
     }
 
     protected void initialize() {
@@ -39,13 +39,18 @@ public class TurnToAngle extends Command {
     		speedCoefficient = .5;
     	}
     	//distanceToGo = distanceToGo / (abs(distanceToGo));
-    	drivetrain.rotate(.5 * speedCoefficient);
+    	if(distanceToGo > 0){
+    		drivetrain.rotate(.5 * speedCoefficient);
+    	} else {
+    		drivetrain.rotate(-.5 * speedCoefficient);
     	}
+    }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if(abs(error) <= 2.0){
-    		return false;
+    		drivetrain.rotate(0);
+    		return true;
     	} else {
     		return false;
         }

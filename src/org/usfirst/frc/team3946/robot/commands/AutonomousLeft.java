@@ -17,6 +17,6 @@ public class AutonomousLeft extends CommandGroup {
     	addSequential(new IncLiftSetpoint());
     	
     	//drives to safe zone
-    	addSequential(new AutonomousDrive(1));
+    	addSequential(new AutonomousDrive(8));
     }
 }
