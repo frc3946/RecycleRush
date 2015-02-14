@@ -1,13 +1,17 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
 import org.usfirst.frc.team3946.robot.commands.drive.SlideDrivingCommand;
+import org.usfirst.frc.team3946.robot.commands.*;
 
 import libraries.*;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import static org.usfirst.frc.team3946.robot.Robot.drivetrain;
 import static org.usfirst.frc.team3946.robot.RobotMap.*;
 
+
 public class Drivetrain extends Subsystem {
+	
 
     public static final double STRAFE_SPEED = 0.6;
 
@@ -29,12 +33,12 @@ public class Drivetrain extends Subsystem {
     private final SlideDrive slideDrive = new SlideDrive(driveController, gyro);
     private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveController);
 
-    public Drivetrain() {
+	public Drivetrain() {
         rightWheel.setInverted(true);
     }
     
     public void initDefaultCommand() {
-        setDefaultCommand(new SlideDrivingCommand());
+   //     setDefaultCommand(new SlideDrivingCommand());
         gyro.setPIDSourceParameter(PIDSource.PIDSourceParameter.kAngle);
     }
     
@@ -60,11 +64,15 @@ public class Drivetrain extends Subsystem {
     		leftSpeed = leftSpeed * (1 - gyroValue);
     		rightSpeed = rightSpeed * (1 + gyroValue);
     	} else {
-		leftSpeed = leftSpeed * (1 + gyroValue);
-		rightSpeed = rightSpeed * (1 - gyroValue);
+    		leftSpeed = leftSpeed * (1 + gyroValue);
+    		rightSpeed = rightSpeed * (1 - gyroValue);
     	}
     	left.set(leftSpeed);
     	right.set(-rightSpeed);
+    }
+     
+    public double feetToSec(double feet){
+    	return feet / 5;
     }
     
     public Gyro getGyro() {

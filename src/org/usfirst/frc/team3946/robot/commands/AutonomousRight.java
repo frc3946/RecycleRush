@@ -18,11 +18,11 @@ public class AutonomousRight extends CommandGroup {
     	addSequential(new IncLiftSetpoint());
     	
     	//drive to safe zone
-    	addSequential(new AutonomousDrive(1));
+    	addSequential(new AutonomousDrive(3));
     	addSequential(new TurnToAngle(-90));
-    	addSequential(new AutonomousDrive(1));
+    	addSequential(new AutonomousDrive(12));
     	addSequential(new TurnToAngle(90));
-    	addSequential(new AutonomousDrive(1));
+    	addSequential(new AutonomousDrive(5));
     	
     }
 }
