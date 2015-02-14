@@ -57,6 +57,8 @@ public class Elevator extends PIDSubsystem {
     
     public void log() {
     	SmartDashboard.putData("Elevator Potentiometer", (AnalogPotentiometer) pot);
+    	SmartDashboard.putData("Top Reached", topSwitch);
+    	SmartDashboard.putData("Bottom Reached", bottomSwitch);
     }
     
     // Manual Control Stuff
