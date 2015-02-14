@@ -14,10 +14,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *	
  */
 public class Elevator extends PIDSubsystem {
-    public Talon motor;
-    public Potentiometer pot;
-    public DigitalInput topSwitch; 
-    public DigitalInput bottomSwitch;
+    public Talon motor1 = new Talon(liftTalon1);
+    public Talon motor2 = new Talon(liftTalon2);
+    public Potentiometer pot = new AnalogPotentiometer(liftPot);
+    public DigitalInput top = new DigitalInput(topLS);
+    public DigitalInput upper = new DigitalInput(upperLS);
+    public DigitalInput lower = new DigitalInput(lowerLS);
+    public DigitalInput bottom = new DigitalInput(bottomLS);
     
     int level = 0;
     public double[] potVolts = {
@@ -47,37 +50,37 @@ public class Elevator extends PIDSubsystem {
     	super("Elevator", 1.0, 0.0, 0.0);
         setAbsoluteTolerance(0.005);
         getPIDController().setContinuous(false);
-
-        topSwitch = new DigitalInput(uLimitSwitch);
-        bottomSwitch = new DigitalInput(lLimitSwitch);
-        pot = new AnalogPotentiometer(liftPot);
-        motor = new Talon(liftTalon);
         
         // Show everything in the LiveWindow
-        LiveWindow.addSensor("Elevator", "Upper Limit Switch", topSwitch);
-        LiveWindow.addSensor("Elevator", "Lower Limit Switch", bottomSwitch);
+        LiveWindow.addSensor("Elevator", "Top Limit Switch", top);
+        LiveWindow.addSensor("Elevator", "Bottom Limit Switch", bottom);
         LiveWindow.addSensor("Elevator", "Potentiometer", (AnalogPotentiometer) pot);
-        LiveWindow.addActuator("Elevator", "Motor", (Talon) motor);
+        LiveWindow.addActuator("M1", "Motor1", (Talon) motor1);
+        LiveWindow.addActuator("M2", "Motor2", (Talon) motor2);
         LiveWindow.addActuator("Elevator", "PID", getPIDController());
     }
  
     public void initDefaultCommand() {
-//    	setDefaultCommand(new ElevateWithTriggers());
+    	setDefaultCommand(new ElevateWithTriggers());
     }
     
     public void log() {
     	SmartDashboard.putData("Elevator Potentiometer", (AnalogPotentiometer) pot);
-    	SmartDashboard.putData("Top Reached", topSwitch);
-    	SmartDashboard.putData("Bottom Reached", bottomSwitch);
+    	SmartDashboard.putData("At Top", top);
+    	SmartDashboard.putData("Near Top", upper);
+    	SmartDashboard.putData("Near Bottom", lower);
+    	SmartDashboard.putData("At Bottom", bottom);
     }
     
     // Manual Control Stuff
     public void elevate(double input) {
-    	motor.set(input);
+    	motor1.set(input);
+    	motor2.set(input);
     }
     
     public void stop() {
-    	motor.set(0);
+    	motor1.set(0);
+    	motor2.set(0);
     }
       
     /**
@@ -115,10 +118,17 @@ public class Elevator extends PIDSubsystem {
      */
     protected void usePIDOutput(double output) {
         // Turns motor off when limit switches are engaged.
-    	if (topSwitch.get() == true || bottomSwitch.get() == true) {
-    		motor.set(0);
+    	if (top.get() == true || bottom.get() == true) {
+    		motor1.set(0);
+    		motor2.set(0);
+    	}
+    	// Slow the motor down when secondary switches are engaged.
+    	if (upper.get() == true || lower.get() == true) {
+    		motor1.set(output * .25);
+    		motor2.set(output * .25);
         } else {
-        	motor.set(output);
+        	motor1.set(output);
+        	motor2.set(output);
         }
     }
     
