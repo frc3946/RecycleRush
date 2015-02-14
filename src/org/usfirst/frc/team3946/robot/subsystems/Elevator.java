@@ -16,11 +16,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Elevator extends PIDSubsystem {
     public Talon motor;
     public Potentiometer pot;
-    public DigitalInput upperLimit; 
-    public DigitalInput lowerLimit;
+    public DigitalInput topSwitch; 
+    public DigitalInput bottomSwitch;
     
     int level = 0;
     public double[] potVolts = {
+    		0,
     		.167,
     		.334,
     		.501,
@@ -37,14 +38,14 @@ public class Elevator extends PIDSubsystem {
         setAbsoluteTolerance(0.005);
         getPIDController().setContinuous(false);
 
-        upperLimit = new DigitalInput(uLimitSwitch);
-        lowerLimit = new DigitalInput(lLimitSwitch);
+        topSwitch = new DigitalInput(uLimitSwitch);
+        bottomSwitch = new DigitalInput(lLimitSwitch);
         pot = new AnalogPotentiometer(liftPot);
         motor = new Talon(liftTalon);
         
         // Show everything in the LiveWindow
-        LiveWindow.addSensor("Elevator", "Upper Limit Switch", upperLimit);
-        LiveWindow.addSensor("Elevator", "Lower Limit Switch", lowerLimit);
+        LiveWindow.addSensor("Elevator", "Upper Limit Switch", topSwitch);
+        LiveWindow.addSensor("Elevator", "Lower Limit Switch", bottomSwitch);
         LiveWindow.addSensor("Elevator", "Potentiometer", (AnalogPotentiometer) pot);
         LiveWindow.addActuator("Elevator", "Motor", (Talon) motor);
         LiveWindow.addActuator("Elevator", "PID", getPIDController());
@@ -59,7 +60,6 @@ public class Elevator extends PIDSubsystem {
     }
     
     // Manual Control Stuff
-    
     public void elevate(double input) {
     	motor.set(input);
     }
@@ -67,9 +67,7 @@ public class Elevator extends PIDSubsystem {
     public void stop() {
     	motor.set(0);
     }
-    
-    // Automatic Control Stuff
-    
+      
     /**
      * Use the potentiometer as the PID sensor. This method is automatically
      * called by the subsystem.
@@ -84,7 +82,7 @@ public class Elevator extends PIDSubsystem {
      */
     protected void usePIDOutput(double output) {
         // Turns motor off when limit switches are engaged.
-    	if (upperLimit.get() == true || lowerLimit.get() == true) {
+    	if (topSwitch.get() == true || bottomSwitch.get() == true) {
     		motor.set(0);
         } else {
         	motor.set(output);
@@ -92,7 +90,7 @@ public class Elevator extends PIDSubsystem {
     }
     
     // Set maximum
-    public void raiseLevel() {
+    public void incLevel() {
     	level++;
     	if (level > 7) {
     		level = 7;
@@ -101,7 +99,7 @@ public class Elevator extends PIDSubsystem {
     }
     
     // Set minimum
-    public void lowerLevel() {
+    public void decLevel() {
     	level--;
     	if (level < 0){
     		level = 0;
@@ -109,7 +107,6 @@ public class Elevator extends PIDSubsystem {
     	this.setSetpoint(potVolts[level]);
     }
     
-    // For use on Smart Dashboard
     public void setLevel(int level) {
     	this.setSetpoint(potVolts[level]);
     }

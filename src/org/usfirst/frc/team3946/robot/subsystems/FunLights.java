@@ -2,7 +2,7 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
 import org.usfirst.frc.team3946.robot.RobotMap;
-import org.usfirst.frc.team3946.robot.commands.SetLEDColors;
+import org.usfirst.frc.team3946.robot.commands.misc.SetLEDColors;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;

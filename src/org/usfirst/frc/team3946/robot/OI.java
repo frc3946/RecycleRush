@@ -19,17 +19,16 @@ public class OI {
 		
 		Button enableSlideControl;
 		Button enableArcadeControl;
-		Button resetGyroButton;
-		Button strafeLeftButton;
-		Button strafeRightButton;
+		Button resetGyro;
+		Button strafeLeft;
+		Button strafeRight;
 		
-	public XboxController liftController = new XboxController(1);;
+	public XboxController liftController = new XboxController(1);
 		
-		Button leftLiftButton;
-		Button rightLiftButton;
-		Button raiseElevatorButton;
-		Button lowerElevatorButton;
-		Button lockElevatorButton;
+		Button lowerLift;
+		Button raiseLift;
+		Button incLiftSetpoint;
+		Button decLiftSetpoint;
 		
     public OI() {
    		driveController.setDeadband(0.2);
@@ -37,37 +36,35 @@ public class OI {
     	
     	// Drive Control Buttons
     	enableSlideControl = new JoystickButton(driveController, XboxController.Start);
-    		enableSlideControl.whenPressed(new SlideDrivingCommand());
     	enableArcadeControl = new JoystickButton(driveController, XboxController.Back);
-    		enableArcadeControl.whenPressed(new ArcadeDrivingCommand());
-    	resetGyroButton = new JoystickButton(driveController, XboxController.B);
-    		resetGyroButton.whenPressed(new ResetGyro());
-//    	strafeLeftButton = new JoystickButton(driveController, XboxController.LeftTrigger);
-//    		strafeLeftButton.whileHeld(new ManualStrafeLeft());
-//    	strafeRightButton = new JoystickButton(driveController, XboxController.RightTrigger);
-//    		strafeRightButton.whileHeld(new ManualStrafeRight());
+    	resetGyro = new JoystickButton(driveController, XboxController.B);
+	    	enableSlideControl.whenPressed(new SlideDrivingCommand());
+			enableArcadeControl.whenPressed(new ArcadeDrivingCommand());
+	    	resetGyro.whenPressed(new ResetGyro());
+    	
+//    	strafeLeft = new JoystickButton(driveController, XboxController.LeftTrigger);
+//    		strafeLeft.whileActive(new ManualStrafeLeft());
+//    	strafeRight = new JoystickButton(driveController, XboxController.RightTrigger);
+//    		strafeRight.whileActive(new ManualStrafeRight());
     	
     	// Lift Control Buttons
-    	leftLiftButton = new JoystickButton(driveController, XboxController.LeftTrigger);
-    	rightLiftButton = new JoystickButton(driveController, XboxController.RightTrigger);
-			leftLiftButton.whileActive(new ElevateWithTriggers());
-			rightLiftButton.whileActive(new ElevateWithTriggers());
+    	lowerLift = new JoystickButton(driveController, XboxController.LeftTrigger);
+    	raiseLift = new JoystickButton(driveController, XboxController.RightTrigger);
+			lowerLift.whileActive(new ElevateWithTriggers());
+			raiseLift.whileActive(new ElevateWithTriggers());
     	
-        raiseElevatorButton = new JoystickButton(driveController, XboxController.RightBumper);
-        	raiseElevatorButton.whenPressed(new RaiseElevatorLevel());
-        lowerElevatorButton = new JoystickButton(driveController, XboxController.LeftBumper);
-        	lowerElevatorButton.whenPressed(new LowerElevatorLevel());
-//        lockElevatorButton = new JoystickButton(driveController, XboxController.A);
-//        	lockElevatorButton.whenPressed(new LockElevatorPosition()); 
+		incLiftSetpoint = new JoystickButton(driveController, XboxController.RightBumper);
+		decLiftSetpoint = new JoystickButton(driveController, XboxController.LeftBumper);
+			incLiftSetpoint.whenPressed(new IncLiftSetpoint());
+			decLiftSetpoint.whenPressed(new DecLiftSetpoint());
 
         // SmartDashboard Buttons
         SmartDashboard.putData("Reset Gyro", new ResetGyro());
-        SmartDashboard.putData("Enable Field Control", new SlideDrivingCommand());
-        SmartDashboard.putData("Enable Arcade Control", new ArcadeDrivingCommand());
+        SmartDashboard.putData("Enable Slide", new SlideDrivingCommand());
+        SmartDashboard.putData("Enable Arcade With Strafe", new ArcadeDrivingCommand());
         
-        SmartDashboard.putData("Raise Elevator", new RaiseElevatorLevel());
-        SmartDashboard.putData("Lower Elevator", new LowerElevatorLevel());
-        SmartDashboard.putData("Lock", new LockElevatorPosition());
+        SmartDashboard.putData("Raise Elevator", new IncLiftSetpoint());
+        SmartDashboard.putData("Lower Elevator", new DecLiftSetpoint());
         SmartDashboard.putData("Floor", new SetElevatorSetpoint(0));
         SmartDashboard.putData("Platform", new SetElevatorSetpoint(1));
         SmartDashboard.putData("Step", new SetElevatorSetpoint(2));

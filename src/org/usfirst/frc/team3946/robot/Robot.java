@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3946.robot;
 
 import org.usfirst.frc.team3946.robot.commands.*;
+import org.usfirst.frc.team3946.robot.commands.misc.SetLEDColors;
 import org.usfirst.frc.team3946.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;

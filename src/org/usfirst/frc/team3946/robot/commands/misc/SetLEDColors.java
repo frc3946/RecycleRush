@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3946.robot.commands;
+package org.usfirst.frc.team3946.robot.commands.misc;
 
 import static org.usfirst.frc.team3946.robot.Robot.*;
 
@@ -11,42 +11,42 @@ public class SetLEDColors extends Command {
 	int selection;
 	
     public SetLEDColors(int input) {
-    	requires(lights);
-    	input = selection;
+    	selection = input;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	requires(lights);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
     	System.out.println("Selection = " + selection );
-    	
-      	if (selection == 0) {
+    	switch (selection) {
+    	case 0: 
     		lights.Off();
-    	}
-       	if (selection == 1) {
+    		break;
+    	case 1: 
     		lights.White();
-    	}
-    	if (selection == 2) {
+    		break;
+    	case 2:
     		lights.Red();
-    	}
-    	if (selection == 3) {
+    		break;
+    	case 3:
     		lights.Blue();
-      	}
-    	if (selection == 4) {
+    		break;
+    	case 4:
     		lights.Green();
-    	}
-    	if (selection == 5) {
+    		break;
+    	case 5:
     		lights.Yellow();
-       	}
-    	if (selection == 6) {
+    		break;
+    	case 6:
     		lights.Cyan();
-    	}
-    	if (selection == 7) {
+    		break;
+    	case 7:
     		lights.Magenta();
+    		break;
     	}
     }
 
