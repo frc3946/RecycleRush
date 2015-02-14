@@ -14,7 +14,7 @@ public class AutonomousLeft extends CommandGroup {
     	addSequential(new ResetGyro());
     	
     	//picks up tote
-    	//addSequential(new IncLiftSetpoint());
+    	addSequential(new IncLiftSetpoint());
     	
     	//drives to safe zone
     	addSequential(new AutonomousDrive(8));
