@@ -1,7 +1,9 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
 import static org.usfirst.frc.team3946.robot.RobotMap.*;
-import libraries.XboxController;
+
+import org.usfirst.frc.team3946.robot.commands.lift.ElevateWithTriggers;
+
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
@@ -12,10 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *	
  */
 public class Elevator extends PIDSubsystem {
-    Talon motor;
-    Potentiometer pot;
-    DigitalInput upperLimit; 
-    DigitalInput lowerLimit;
+    public Talon motor;
+    public Potentiometer pot;
+    public DigitalInput upperLimit; 
+    public DigitalInput lowerLimit;
     
     int level = 0;
     public double[] potVolts = {
@@ -48,7 +50,9 @@ public class Elevator extends PIDSubsystem {
         LiveWindow.addActuator("Elevator", "PID", getPIDController());
     }
  
-    public void initDefaultCommand() {}
+    public void initDefaultCommand() {
+    	setDefaultCommand(new ElevateWithTriggers());
+    }
     
     public void log() {
     	SmartDashboard.putData("Elevator Potentiometer", (AnalogPotentiometer) pot);
@@ -59,10 +63,6 @@ public class Elevator extends PIDSubsystem {
     public void elevate(double input) {
     	motor.set(input);
     }
-    
-    public void elevate(XboxController controller) {
-    	elevate(controller.getThrottle());
-    }    
     
     public void stop() {
     	motor.set(0);

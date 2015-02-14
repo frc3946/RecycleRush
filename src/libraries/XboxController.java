@@ -120,30 +120,11 @@ public class XboxController extends Joystick {
     }
     
     /**
-     * @param trigger
-     * @return if trigger is pressed
-     */
-    public boolean isPressed(int trigger) {
-		if (getRawAxis(trigger) != 0.0) {
-			return true;
-		} else {
-			return false;
-		}
-    }
-    
-    /**
      * Read the value of the triggers as one axis.
      * @return the value of this "axis" [-1.0..1.0]
      */
     public double getThrottle() {
-    	if (isPressed(RightTrigger) == true && isPressed(LeftTrigger) == false) {
-    		return getRightTrigger();
-    	}
-    	if (isPressed(LeftTrigger) == true && isPressed(RightTrigger) == false) {
-    		return -getLeftTrigger();
-    	} else {
-        	return 0.0;
-    	}
+    	return getRightTrigger() - getLeftTrigger();
     }
     
     /**

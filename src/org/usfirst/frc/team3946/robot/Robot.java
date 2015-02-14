@@ -19,36 +19,55 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
     Command autonomousCommand;
-    
-    private final SendableChooser autonomousChooser = new SendableChooser();
-    
+   
     public static OI oi;
     public static Drivetrain drivetrain;
     public static RangeFinders rangefinders;
     public static Elevator elevator;
     public static CurbFeeler curbfeeler;
     public static LightSeer lightseers;
+	public static FunLights lights;
+	
+    private final SendableChooser autonomousChooser = new SendableChooser();
+    private final SendableChooser ledChooser = new SendableChooser();
      //* This function is run when the robot is first started up and should be
      //* used for any initialization code.
      //*/
     public void robotInit() {  	
     	// Initialize all subsystems.
-    	oi = new OI();
     	drivetrain = new Drivetrain();
     	rangefinders = new RangeFinders();
     	elevator = new Elevator();
     	curbfeeler = new CurbFeeler();
     	lightseers = new LightSeer();
+    	lights = new FunLights();
+    	oi = new OI();
     	
         autonomousChooser.addDefault("Center", new AutonomousCenter());
         autonomousChooser.addObject("Left", new AutonomousLeft());
         autonomousChooser.addObject("Right", new AutonomousRight());
+        
         SmartDashboard.putData("Autonomous Mode", autonomousChooser);
+        
+        ledChooser.addDefault("Off", new SetLEDColors(0));
+		ledChooser.addObject("White", new SetLEDColors(1));
+		ledChooser.addObject("Red", new SetLEDColors(2));
+		ledChooser.addObject("Blue", new SetLEDColors(3));
+		ledChooser.addObject("Green", new SetLEDColors(4));
+		ledChooser.addObject("Yellow", new SetLEDColors(5));
+		ledChooser.addObject("Cyan", new SetLEDColors(6));
+		ledChooser.addObject("Magenta", new SetLEDColors(7));
+		
+		SmartDashboard.putData("LED Color", ledChooser);        
         
         // Show what command the subsystem is running on the SmartDashboard.
         SmartDashboard.putData(drivetrain);
+        SmartDashboard.putData(elevator);
+        SmartDashboard.putData(rangefinders);
         SmartDashboard.putData(curbfeeler);
         SmartDashboard.putData(lightseers);
+        SmartDashboard.putData(lights);
+
     }
 
     /**
@@ -108,6 +127,7 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
     }
     public void log() {
+    	elevator.log();
     	curbfeeler.log();
     	lightseers.log();
     }
