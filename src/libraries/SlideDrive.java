@@ -29,7 +29,7 @@ public class SlideDrive extends DriveMethod {
      * The {@link Gyro} that the {@link SlideDrive} uses for
      * field-oriented driving and keeping the correct orientation.
      */
-    protected final BetterGyro gyro;
+    protected final Gyro gyro;
 
     public final double ROTATION_DEADBAND = 0.05;
     public static final double ROTATION_P = 0.01;
@@ -49,7 +49,7 @@ public class SlideDrive extends DriveMethod {
      * @param gyro the {@link Gyro} to use for orientation correction and
      * field-oriented driving
      */
-    public SlideDrive(ThreeWheelDriveController controller, BetterGyro gyro) {
+    public SlideDrive(ThreeWheelDriveController controller, Gyro gyro) {
         super(controller);
         
         this.controller = controller;
@@ -174,7 +174,7 @@ public class SlideDrive extends DriveMethod {
             // If the rotation rate is less than the deadband, turn on the PID
             // controller and set its setpoint to the current angle.
             if (abs(rotationSpeed) < ROTATION_DEADBAND) {
-                gyroOffset = gyro.getYaw();
+                gyroOffset = gyro.getAngle();
                 rotationPIDController.setSetpoint(gyroOffset);
                 rotationPIDController.enable();
             }

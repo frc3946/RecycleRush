@@ -18,8 +18,8 @@ public interface RobotMap {
 	
 	// Relays
 	int spike1 = 1;					//SPK1
-	int spike2 = 2;					//SPK2
-	int spike3 = 3;					//SPK3
+	int ledSpike2 = 2;					//SPK2 +blue -common
+	int ledSpike3 = 3;					//SPK3 +red -green
 	
 	// Digital IOs
 	int uLimitSwitch = 1;				//label
