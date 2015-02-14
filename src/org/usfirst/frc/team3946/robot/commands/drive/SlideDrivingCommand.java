@@ -29,6 +29,7 @@ public class SlideDrivingCommand extends Command {
      * Does nothing.
      */
     protected void initialize() {
+    	drivetrain.getSlideDrive().resetGyro();
     }
 
     /**
@@ -40,10 +41,7 @@ public class SlideDrivingCommand extends Command {
         double x = xbox.getLeftStickX();
         double y = -xbox.getLeftStickY();
         double z = xbox.getRightStickX();
-        
-        // Wrap angle to [0..360] degrees
         double angle = drivetrain.gyro.getAngle(); 
-        angle = angle % 360;
         
         double scaledZ = z;
         // Scale z down so it is never greater than MAX_ROTATION.

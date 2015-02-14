@@ -111,13 +111,13 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
     	if (autonomousCommand != null) {
         	autonomousCommand.cancel();
-        }
-    	Object selection = ledChooser.getSelected();
-    	if (selection != null && selection instanceof Command) {
-    		funCommand = (Command) selection;
-            funCommand.start();
+	    	Object selection = ledChooser.getSelected();
+	    	if (selection != null && selection instanceof Command) {
+	    		funCommand = (Command) selection;
+	            funCommand.start();
+	    	}
+	    	Robot.drivetrain.getSlideDrive().resetGyro();
     	}
-        Robot.drivetrain.getSlideDrive().resetGyro();
     }
 
     /**

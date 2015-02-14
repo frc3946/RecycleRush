@@ -14,7 +14,7 @@ public class Drivetrain extends Subsystem {
     public Talon left = new Talon(driveLeftTalon);
     public Talon right = new Talon(driveRightTalon);
     public Talon strafe = new Talon(driveStrafeTalon);
-    public Gyro gyro = new Gyro(driveGyro);
+    public BetterGyro gyro = new BetterGyro(driveGyro);
 
     private final WheelController leftWheel = new WheelController(left);
     private final WheelController rightWheel = new WheelController(right);
