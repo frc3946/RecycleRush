@@ -43,8 +43,8 @@ public class OI {
 	    	resetGyro.whenPressed(new ResetGyro());
     	
 //    	strafeLeft = new JoystickButton(driveController, XboxController.LeftTrigger);
-//    		strafeLeft.whileActive(new ManualStrafeLeft());
 //    	strafeRight = new JoystickButton(driveController, XboxController.RightTrigger);
+//    		strafeLeft.whileActive(new ManualStrafeLeft());
 //    		strafeRight.whileActive(new ManualStrafeRight());
     	
     	// Lift Control Buttons

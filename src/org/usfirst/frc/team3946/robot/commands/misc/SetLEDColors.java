@@ -11,13 +11,12 @@ public class SetLEDColors extends Command {
 	int selection;
 	
     public SetLEDColors(int input) {
+     	requires(lights);
     	selection = input;
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {
-    	requires(lights);
-    }
+    protected void initialize() {}
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {

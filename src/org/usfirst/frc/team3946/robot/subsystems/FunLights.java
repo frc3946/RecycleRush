@@ -9,9 +9,6 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- *
- */
 public class FunLights extends Subsystem {
 	
 	private Relay spk1 = new Relay(RobotMap.spike1);
@@ -27,7 +24,7 @@ public class FunLights extends Subsystem {
     	return DriverStation.getInstance().getAlliance();
     }
     
-    public void setAllianceColors() {
+	public void setAllianceColors() {
     	if (getAlliance() == Alliance.Red) {
     		spk1.set(Relay.Value.kReverse);
     		spk2.set(Relay.Value.kOn);
@@ -68,7 +65,7 @@ public class FunLights extends Subsystem {
 	}
     
     public void Yellow() {
-    	spk1.set(Relay.Value.kForward);
+    	spk1.set(Relay.Value.kOff);
     	spk2.set(Relay.Value.kOn);
     }
     
@@ -78,7 +75,7 @@ public class FunLights extends Subsystem {
     }
     
     public void Magenta() {
-    	spk1.set(Relay.Value.kOff);
+    	spk1.set(Relay.Value.kForward);
     	spk2.set(Relay.Value.kReverse);
     }
 }
