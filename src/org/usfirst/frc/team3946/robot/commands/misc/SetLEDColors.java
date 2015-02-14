@@ -46,7 +46,7 @@ public class SetLEDColors extends Command {
     		lights.Magenta();
     		break;
     	}
-    	System.err.println("Selection = " + selection );
+    	System.out.println("Selection = " + selection );
     }
 
     // Make this return true when this Command no longer needs to run execute()

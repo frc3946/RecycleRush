@@ -2,6 +2,7 @@ package org.usfirst.frc.team3946.robot.commands.misc;
 
 import edu.wpi.first.wpilibj.command.Command;
 import static java.lang.Math.abs;
+import static java.lang.Math.floor;
 import static org.usfirst.frc.team3946.robot.Robot.*;
 
 /**
@@ -9,13 +10,14 @@ import static org.usfirst.frc.team3946.robot.Robot.*;
  */
 public class TurnToAngle extends Command {
 	
-	double desiredAngle;
-	double distanceToGo;
-	double currentAngle;
-
+	double target;
+	double gyroReading;
+	double offset;
+	double error;
+	
     public TurnToAngle(double angle) {
     	requires(drivetrain);
-    	desiredAngle = angle;
+    	target = angle;
 
     }
 
@@ -26,9 +28,12 @@ public class TurnToAngle extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double speedCoefficient;
-    	currentAngle = drivetrain.gyro.getAngle();	
-    	distanceToGo = desiredAngle - currentAngle;
-    	if(abs(distanceToGo) > 45){
+    	gyroReading = drivetrain.gyro.getAngle();	
+    	offset = target - gyroReading;
+    	offset = error;
+    	//Anti-spinning death machine function
+    	error -= 360 * floor(0.5 + (error/360));
+    	if(abs(error) > 45){
     		speedCoefficient = 1;
     	} else {
     		speedCoefficient = .5;
@@ -39,7 +44,7 @@ public class TurnToAngle extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(abs(distanceToGo) <= 2.0){
+    	if(abs(error) <= 2.0){
     		return false;
     	} else {
     		return false;
