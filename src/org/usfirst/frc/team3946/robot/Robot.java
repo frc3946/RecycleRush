@@ -123,6 +123,7 @@ public class Robot extends IterativeRobot {
     		funCommand = (Command) color;
             funCommand.start();
     	}
+    	log();
     }
 
     /**
@@ -131,6 +132,7 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
+    
     public void log() {
     	elevator.log();
     	curbfeeler.log();
