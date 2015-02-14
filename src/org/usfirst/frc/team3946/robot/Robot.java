@@ -34,7 +34,7 @@ public class Robot extends IterativeRobot {
     private final SendableChooser ledChooser = new SendableChooser();
      //* This function is run when the robot is first started up and should be
      //* used for any initialization code.
-     //*/
+     //*
     public void robotInit() {  	
     	// Initialize all subsystems.
     	drivetrain = new Drivetrain();
@@ -75,8 +75,6 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called when the disabled button is hit.
      */
-    
-   //
     public void disabledInit(){
 
     }
@@ -111,12 +109,7 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
     	if (autonomousCommand != null) {
         	autonomousCommand.cancel();
-	    	Object selection = ledChooser.getSelected();
-	    	if (selection != null && selection instanceof Command) {
-	    		funCommand = (Command) selection;
-	            funCommand.start();
-	    	}
-	    	Robot.drivetrain.getSlideDrive().resetGyro();
+        	System.out.println("Testing...");
     	}
     }
 
@@ -125,6 +118,11 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        Object color = ledChooser.getSelected();
+    	if (color != null && color instanceof Command) {
+    		funCommand = (Command) color;
+            funCommand.start();
+    	}
     }
 
     /**
