@@ -78,4 +78,9 @@ public class Drivetrain extends Subsystem {
     public Gyro getGyro() {
     	return gyro;
     }
+    public void setMotor(double leftSpeed, double rightSpeed, double strafeSpeed){
+    	left.set(leftSpeed);
+    	right.set(rightSpeed);
+    	strafe.set(strafeSpeed);
+    }
 }

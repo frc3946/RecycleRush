@@ -14,11 +14,11 @@ public class TurnToAngle extends Command {
 	double gyroReading;
 	double offset;
 	double error;
+	double distanceToGo;
 	
     public TurnToAngle(double angle) {
     	requires(drivetrain);
     	target = angle;
-
     }
 
     protected void initialize() {
