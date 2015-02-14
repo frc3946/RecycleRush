@@ -31,10 +31,10 @@ public class Elevator extends PIDSubsystem {
     };
     
     public double[] setPoints = {
-    		12.1,
-    		24.2,
-    		36.3,
-    		48.4
+    		12.1 / 12,
+    		24.2 / 12,
+    		36.3 / 12,
+    		48.4 / 12
     };
     
     public int[] feet = {0, 1, 2, 3, 4, 5, 6};
@@ -99,7 +99,7 @@ public class Elevator extends PIDSubsystem {
     			firstPoint++;
     			secondPoint++;
     		}
-		
+		 
     		if(secondPoint >= potVolts.length){
     			return 0.0;
     		}
@@ -122,10 +122,10 @@ public class Elevator extends PIDSubsystem {
     // Set maximum
     public void incLevel() {
     	level++;
-    	if (level > 7) {
-    		level = 7;
+    	if (level > setPoints.length) {
+    		level = setPoints.length;
     	}
-    	this.setSetpoint(potVolts[level]);
+    	this.setSetpoint(setPoints[level]);
     }
     
     // Set minimum
@@ -134,11 +134,11 @@ public class Elevator extends PIDSubsystem {
     	if (level < 0){
     		level = 0;
     	}
-    	this.setSetpoint(potVolts[level]);
+    	this.setSetpoint(setPoints[level]);
     }
     
     public void setLevel(int level) {
-    	this.setSetpoint(potVolts[level]);
+    	this.setSetpoint(setPoints[level]);
     }
     
 }
