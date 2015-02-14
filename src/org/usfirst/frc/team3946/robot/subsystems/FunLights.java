@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class FunLights extends Subsystem {
 	
-	private Relay spk1 = new Relay(RobotMap.spike1);
-	private Relay spk2 = new Relay(RobotMap.spike2); 
+	private Relay r3 = new Relay(RobotMap.ledSpike3);
+	private Relay r2 = new Relay(RobotMap.ledSpike2); 
 	
 	public FunLights() {}
 	
@@ -26,56 +26,56 @@ public class FunLights extends Subsystem {
     
 	public void setAllianceColors() {
     	if (getAlliance() == Alliance.Red) {
-    		spk1.set(Relay.Value.kReverse);
-    		spk2.set(Relay.Value.kOn);
+    		r3.set(Relay.Value.kReverse);
+    		r2.set(Relay.Value.kOn);
     	}
     	if (getAlliance() == Alliance.Blue) {
-    		spk1.set(Relay.Value.kOn);
-    		spk2.set(Relay.Value.kReverse);
+    		r3.set(Relay.Value.kOn);
+    		r2.set(Relay.Value.kReverse);
     	}
     	if (getAlliance() == Alliance.Invalid) {
-    		spk1.set(Relay.Value.kForward);
-    		spk2.set(Relay.Value.kOn);
+    		r3.set(Relay.Value.kForward);
+    		r2.set(Relay.Value.kOn);
     	}
     }
     
     public void Off() {
-		spk1.set(Relay.Value.kOn);
-    	spk2.set(Relay.Value.kOn);
+		r3.set(Relay.Value.kOn);
+    	r2.set(Relay.Value.kOn);
     } 
     
     public void White() {
-		spk1.set(Relay.Value.kOff);
-    	spk2.set(Relay.Value.kReverse);
+		r3.set(Relay.Value.kOff);
+    	r2.set(Relay.Value.kReverse);
     }
     
     public void Red() {
-		spk1.set(Relay.Value.kReverse);
-		spk2.set(Relay.Value.kOn);
+		r3.set(Relay.Value.kReverse);
+		r2.set(Relay.Value.kOn);
 	}
     
     public void Blue() {
-		spk1.set(Relay.Value.kOn);
-		spk2.set(Relay.Value.kReverse);
+		r3.set(Relay.Value.kOn);
+		r2.set(Relay.Value.kReverse);
 	}
     
 	public void Green() {
-		spk1.set(Relay.Value.kForward);
-		spk2.set(Relay.Value.kOn);
+		r3.set(Relay.Value.kForward);
+		r2.set(Relay.Value.kOn);
 	}
     
     public void Yellow() {
-    	spk1.set(Relay.Value.kOff);
-    	spk2.set(Relay.Value.kOn);
+    	r3.set(Relay.Value.kOff);
+    	r2.set(Relay.Value.kOn);
     }
     
     public void Cyan() {
-    	spk1.set(Relay.Value.kReverse);
-    	spk2.set(Relay.Value.kReverse);
+    	r3.set(Relay.Value.kForward);
+    	r2.set(Relay.Value.kReverse);
     }
     
     public void Magenta() {
-    	spk1.set(Relay.Value.kForward);
-    	spk2.set(Relay.Value.kReverse);
+    	r3.set(Relay.Value.kReverse);
+    	r2.set(Relay.Value.kReverse);
     }
 }

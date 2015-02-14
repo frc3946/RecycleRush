@@ -75,7 +75,7 @@ public class Drivetrain extends Subsystem {
     	return feet / 5;
     }
     
-    public BetterGyro getGyro() {
+    public Gyro getGyro() {
     	return gyro;
     }
 }

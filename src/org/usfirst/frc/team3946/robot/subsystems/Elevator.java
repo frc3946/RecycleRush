@@ -30,7 +30,14 @@ public class Elevator extends PIDSubsystem {
     		1
     };
     
-    public int[] feet = {1, 2, 3, 4, 5, 6};
+    public double[] setPoints = {
+    		12.1 / 12,
+    		24.2 / 12,
+    		36.3 / 12,
+    		48.4 / 12
+    };
+    
+    public int[] feet = {0, 1, 2, 3, 4, 5, 6};
     
     public Elevator() {
         // TODO: As soon as we can test, work on these values.
@@ -57,6 +64,8 @@ public class Elevator extends PIDSubsystem {
     
     public void log() {
     	SmartDashboard.putData("Elevator Potentiometer", (AnalogPotentiometer) pot);
+    	SmartDashboard.putData("Top Reached", topSwitch);
+    	SmartDashboard.putData("Bottom Reached", bottomSwitch);
     }
     
     // Manual Control Stuff
@@ -73,9 +82,30 @@ public class Elevator extends PIDSubsystem {
      * called by the subsystem.
      */
     protected double returnPIDInput() {
-        return pot.get();
+    	int firstPoint = 0;
+		int secondPoint = 1;
+    	double volts = pot.get();
+    	while(secondPoint < feet.length){
+    		if(volts >= potVolts[firstPoint] ||
+				(volts <= potVolts[secondPoint])){
+    			double slope = potVolts[secondPoint] - potVolts[firstPoint];
+    			slope = slope / (feet[secondPoint] - feet[firstPoint]);
+    			double intercept = potVolts[firstPoint] - feet[firstPoint] * slope;
+    			double distance = (volts - intercept) / slope;
+    			SmartDashboard.putNumber("Elevator Height: ", distance);
+    			return distance;
+    		}
+    		else{
+    			firstPoint++;
+    			secondPoint++;
+    		}
+		 
+    		if(secondPoint >= potVolts.length){
+    			return 0.0;
+    		}
+    	}
+    	return 0.0;
     }
-    
     /**
      * Use the motor as the PID output. This method is automatically called by
      * the subsystem.
@@ -92,10 +122,10 @@ public class Elevator extends PIDSubsystem {
     // Set maximum
     public void incLevel() {
     	level++;
-    	if (level > 7) {
-    		level = 7;
+    	if (level > setPoints.length) {
+    		level = setPoints.length;
     	}
-    	this.setSetpoint(potVolts[level]);
+    	this.setSetpoint(setPoints[level]);
     }
     
     // Set minimum
@@ -104,11 +134,11 @@ public class Elevator extends PIDSubsystem {
     	if (level < 0){
     		level = 0;
     	}
-    	this.setSetpoint(potVolts[level]);
+    	this.setSetpoint(setPoints[level]);
     }
     
     public void setLevel(int level) {
-    	this.setSetpoint(potVolts[level]);
+    	this.setSetpoint(setPoints[level]);
     }
     
 }
