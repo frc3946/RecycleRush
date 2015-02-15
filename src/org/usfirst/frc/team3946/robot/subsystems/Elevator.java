@@ -35,25 +35,23 @@ public class Elevator extends PIDSubsystem {
     
     public double[] setPoints = {
     		0,
-    		12.1 / 12,
-    		24.2 / 12,
-    		36.3 / 12,
-    		48.4 / 12,
-    		60.5 / 12,
-    		72.6 / 12
+    		(12.1 / 12),
+    		(24.2 / 12),
+    		(36.3 / 12),
+    		(48.4 / 12),
+    		(60.5 / 12),
+    		(72.6 / 12)
     };
     
     public int[] feet = {0, 1, 2, 3, 4, 5, 6};
     
     public Elevator() {
         // TODO: As soon as we can test, work on these values.
-    	super("Elevator", 1.0, 0.0, 0.0);
+    	super("Elevator", 0.01, 0.0, 0.0);
         setAbsoluteTolerance(0.005);
         getPIDController().setContinuous(false);
         
         // Show everything in the LiveWindow
-        LiveWindow.addSensor("Elevator", "Top Limit Switch", top);
-        LiveWindow.addSensor("Elevator", "Bottom Limit Switch", bottom);
         LiveWindow.addSensor("Elevator", "Potentiometer", (AnalogPotentiometer) pot);
         LiveWindow.addActuator("M1", "Motor1", (Talon) motor1);
         LiveWindow.addActuator("M2", "Motor2", (Talon) motor2);
@@ -64,23 +62,34 @@ public class Elevator extends PIDSubsystem {
     	setDefaultCommand(new ElevateWithTriggers());
     }
     
+    public void elevate(double input) {
+    	// Turns motor off when limit switches are engaged.
+		if ((top.get() == true && input > 0) || (bottom.get() == true && input < 0)) {
+			motor1.set(0);
+			motor2.set(0);
+			return;
+		}
+		// Slow the motor down when secondary switches are engaged.
+		if ((upper.get() == true && input > 0) || (lower.get() == true && input < 0)) {
+			motor1.set(-(input * 0.5));
+			motor2.set(-(input * 0.5));
+			return;
+		} else {
+	    	motor1.set(-input);
+	    	motor2.set(-input);
+	    }
+    }
+    public void stop() {
+    	motor1.set(0);
+    	motor2.set(0);
+    }
+    
     public void log() {
     	SmartDashboard.putData("Elevator Potentiometer", (AnalogPotentiometer) pot);
     	SmartDashboard.putData("At Top", top);
     	SmartDashboard.putData("Near Top", upper);
     	SmartDashboard.putData("Near Bottom", lower);
     	SmartDashboard.putData("At Bottom", bottom);
-    }
-    
-    // Manual Control Stuff
-    public void elevate(double input) {
-    	motor1.set(input);
-    	motor2.set(input);
-    }
-    
-    public void stop() {
-    	motor1.set(0);
-    	motor2.set(0);
     }
       
     /**
@@ -112,23 +121,27 @@ public class Elevator extends PIDSubsystem {
     	}
     	return 0.0;
     }
+    
     /**
      * Use the motor as the PID output. This method is automatically called by
      * the subsystem.
      */
     protected void usePIDOutput(double output) {
         // Turns motor off when limit switches are engaged.
-    	if (top.get() == true || bottom.get() == true) {
+    	if ((top.get() == true && output > 0) || (bottom.get() == true && output < 0)) {
     		motor1.set(0);
     		motor2.set(0);
+    		return;
     	}
     	// Slow the motor down when secondary switches are engaged.
-    	if (upper.get() == true || lower.get() == true) {
-    		motor1.set(output * .25);
-    		motor2.set(output * .25);
+    	if ((upper.get() == true && output > 0) || (lower.get() == true && output < 0)) {
+    		motor1.set(-(output * 0.5));
+    		motor2.set(-(output * 0.5));
+    		return;
         } else {
-        	motor1.set(output);
-        	motor2.set(output);
+        	motor1.set(-output);
+        	motor2.set(-output);
+        	return;
         }
     }
     
