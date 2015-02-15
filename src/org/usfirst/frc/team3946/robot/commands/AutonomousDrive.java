@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutonomousDrive extends Command {
     	 
-    	 public AutonomousDrive(double timeout) {
+    	 public AutonomousDrive(double feet) {
     	 // Use requires() here to declare subsystem dependencies
     	 requires(drivetrain);
-    	 setTimeout(timeout);
+    	 setTimeout(drivetrain.feetToSec(feet));
     	 }
     	 
     	 // Called just before this Command runs the first time
@@ -24,10 +24,11 @@ public class AutonomousDrive extends Command {
     	 }
     	 // Make this return true when this Command no longer needs to run execute()
     	 protected boolean isFinished() {
-    	 return isTimedOut();
+    		 return isTimedOut();
     	 }
     	 // Called once after isFinished returns true
     	 protected void end() {
+    		 drivetrain.driveStraight(0);
     	 }
     	 // Called when another command which requires one or more of the same
     	 // subsystems is scheduled to run

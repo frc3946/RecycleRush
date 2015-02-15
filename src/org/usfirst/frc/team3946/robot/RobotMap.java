@@ -12,21 +12,21 @@ public interface RobotMap {
 	int driveLeftTalon = 1;				//T1
 	int driveRightTalon = 2;			//T2
 	int driveStrafeTalon = 3;			//T3
-	int liftTalon = 4;					//T4
-	int t5 = 5;							//T5
+	int liftTalon1 = 4;					//T4
+	int liftTalon2 = 5;					//T5
 	int t6 = 6;							//T6
 	
 	// Relays
 	int spike1 = 1;					//SPK1
-	int spike2 = 2;					//SPK2
-	int spike3 = 3;					//SPK3
+	int ledSpike2 = 2;					//SPK2 +blue -common
+	int ledSpike3 = 3;					//SPK3 +red -green
 	
 	// Digital IOs
-	int uLimitSwitch = 1;				//label
-	int lLimitSwitch = 2;				//label
-	int lightseeruno = 3;
-	int lightseerdos = 4;
-	int touch = 5;
+	int upperLS = 3;				//label
+	int bottomLS = 4;
+	int lowerLS = 5;				//label
+	int topLS = 6;
+	int touch = 7;
 	
 	// Analog IOs
 	int driveGyro = 0;

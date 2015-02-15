@@ -20,7 +20,6 @@ public class SetLEDColors extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("Selection = " + selection );
     	switch (selection) {
     	case 0: 
     		lights.Off();
@@ -47,6 +46,7 @@ public class SetLEDColors extends Command {
     		lights.Magenta();
     		break;
     	}
+    	System.out.println("Selection = " + selection );
     }
 
     // Make this return true when this Command no longer needs to run execute()

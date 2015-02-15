@@ -20,13 +20,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
     Command autonomousCommand;
-   
+    Command funCommand;
+    
     public static OI oi;
+    public static PDP pdp;
     public static Drivetrain drivetrain;
     public static RangeFinders rangefinders;
     public static Elevator elevator;
     public static CurbFeeler curbfeeler;
-    public static LightSeer lightseers;
 	public static FunLights lights;
 	public static Camera camera;
 	
@@ -34,14 +35,14 @@ public class Robot extends IterativeRobot {
     private final SendableChooser ledChooser = new SendableChooser();
      //* This function is run when the robot is first started up and should be
      //* used for any initialization code.
-     //*/
+     //*
     public void robotInit() {  	
     	// Initialize all subsystems.
+    	pdp = new PDP();
     	drivetrain = new Drivetrain();
-    	rangefinders = new RangeFinders();
     	elevator = new Elevator();
+    	rangefinders = new RangeFinders();
     	curbfeeler = new CurbFeeler();
-    	lightseers = new LightSeer();
     	lights = new FunLights();
     	oi = new OI();
     	camera = new Camera();
@@ -68,7 +69,6 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData(elevator);
         SmartDashboard.putData(rangefinders);
         SmartDashboard.putData(curbfeeler);
-        SmartDashboard.putData(lightseers);
         SmartDashboard.putData(lights);
         SmartDashboard.putData(camera);
 
@@ -77,8 +77,6 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called when the disabled button is hit.
      */
-    
-   //
     public void disabledInit(){
 
     }
@@ -111,10 +109,9 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) {
+    	if (autonomousCommand != null) {
         	autonomousCommand.cancel();
-        }
-        Robot.drivetrain.getSlideDrive().resetGyro();
+    	}
     }
 
     /**
@@ -122,6 +119,12 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        Object color = ledChooser.getSelected();
+    	if (color != null && color instanceof Command) {
+    		funCommand = (Command) color;
+            funCommand.start();
+    	}
+    	log();
     }
 
     /**
@@ -130,9 +133,10 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
+    
     public void log() {
+    	pdp.log();
     	elevator.log();
     	curbfeeler.log();
-    	lightseers.log();
     }
 }

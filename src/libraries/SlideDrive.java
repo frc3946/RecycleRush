@@ -174,7 +174,9 @@ public class SlideDrive extends DriveMethod {
             // If the rotation rate is less than the deadband, turn on the PID
             // controller and set its setpoint to the current angle.
             if (abs(rotationSpeed) < ROTATION_DEADBAND) {
-                gyroOffset = gyro.getYaw();
+                gyroOffset = gyro.getAngle();
+                //gyroOffset -= gyro.getAngle();
+                //gyroOffset -= 360 * floor(0.5 + (gyroOffset/360));
                 rotationPIDController.setSetpoint(gyroOffset);
                 rotationPIDController.enable();
             }
