@@ -23,11 +23,11 @@ public class Robot extends IterativeRobot {
     Command funCommand;
     
     public static OI oi;
+    public static PDP pdp;
     public static Drivetrain drivetrain;
     public static RangeFinders rangefinders;
     public static Elevator elevator;
     public static CurbFeeler curbfeeler;
-    public static LightSeer lightseers;
 	public static FunLights lights;
 	
     private final SendableChooser autonomousChooser = new SendableChooser();
@@ -37,11 +37,11 @@ public class Robot extends IterativeRobot {
      //*
     public void robotInit() {  	
     	// Initialize all subsystems.
+    	pdp = new PDP();
     	drivetrain = new Drivetrain();
-    	rangefinders = new RangeFinders();
     	elevator = new Elevator();
+    	rangefinders = new RangeFinders();
     	curbfeeler = new CurbFeeler();
-    	lightseers = new LightSeer();
     	lights = new FunLights();
     	oi = new OI();
     	
@@ -67,7 +67,6 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData(elevator);
         SmartDashboard.putData(rangefinders);
         SmartDashboard.putData(curbfeeler);
-        SmartDashboard.putData(lightseers);
         SmartDashboard.putData(lights);
 
     }
@@ -109,7 +108,6 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
     	if (autonomousCommand != null) {
         	autonomousCommand.cancel();
-        	System.out.println("Testing...");
     	}
     }
 
@@ -134,8 +132,8 @@ public class Robot extends IterativeRobot {
     }
     
     public void log() {
+    	pdp.log();
     	elevator.log();
     	curbfeeler.log();
-    	lightseers.log();
     }
 }
