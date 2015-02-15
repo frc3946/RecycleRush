@@ -49,11 +49,11 @@ public class SlideDrive extends DriveMethod {
      * @param gyro the {@link Gyro} to use for orientation correction and
      * field-oriented driving
      */
-    public SlideDrive(ThreeWheelDriveController controller, Gyro gyro) {
+	public SlideDrive(ThreeWheelDriveController controller, BetterGyro gyro) {
         super(controller);
         
         this.controller = controller;
-        this.gyro = gyro;
+        this.gyro =  ;
         rotationPIDController = new PIDController(
                 ROTATION_P,
                 ROTATION_I,
