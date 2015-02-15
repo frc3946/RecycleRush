@@ -49,11 +49,11 @@ public class SlideDrive extends DriveMethod {
      * @param gyro the {@link Gyro} to use for orientation correction and
      * field-oriented driving
      */
-	public SlideDrive(ThreeWheelDriveController controller, BetterGyro gyro) {
+	public SlideDrive(ThreeWheelDriveController controller, Gyro gyro) {
         super(controller);
         
         this.controller = controller;
-        this.gyro =  ;
+        this.gyro = gyro;
         rotationPIDController = new PIDController(
                 ROTATION_P,
                 ROTATION_I,
@@ -175,8 +175,8 @@ public class SlideDrive extends DriveMethod {
             // controller and set its setpoint to the current angle.
             if (abs(rotationSpeed) < ROTATION_DEADBAND) {
                 gyroOffset = gyro.getAngle();
-                //gyroOffset -= gyro.getAngle();
-                //gyroOffset -= 360 * floor(0.5 + (gyroOffset/360));
+                gyroOffset -= gyro.getAngle();
+                gyroOffset -= 360 * floor(0.5 + (gyroOffset/360));
                 rotationPIDController.setSetpoint(gyroOffset);
                 rotationPIDController.enable();
             }

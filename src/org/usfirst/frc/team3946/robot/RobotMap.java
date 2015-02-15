@@ -17,7 +17,7 @@ public interface RobotMap {
 	int t6 = 6;							//T6
 	
 	// Relays
-	int spike1 = 1;					//SPK1
+	int camSpike1 = 1;					//SPK1
 	int ledSpike2 = 2;					//SPK2 +blue -common
 	int ledSpike3 = 3;					//SPK3 +red -green
 	
