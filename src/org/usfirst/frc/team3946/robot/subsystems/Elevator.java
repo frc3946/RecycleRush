@@ -2,6 +2,8 @@ package org.usfirst.frc.team3946.robot.subsystems;
 
 import static org.usfirst.frc.team3946.robot.RobotMap.*;
 
+import org.usfirst.frc.team3946.robot.commands.lift.ElevateWithTriggers;
+
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
