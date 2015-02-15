@@ -1,12 +1,8 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
-import org.usfirst.frc.team3946.robot.commands.drive.SlideDrivingCommand;
-import org.usfirst.frc.team3946.robot.commands.*;
-
 import libraries.*;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import static org.usfirst.frc.team3946.robot.Robot.drivetrain;
 import static org.usfirst.frc.team3946.robot.RobotMap.*;
 
 
