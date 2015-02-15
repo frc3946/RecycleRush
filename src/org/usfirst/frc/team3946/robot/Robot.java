@@ -28,6 +28,7 @@ public class Robot extends IterativeRobot {
     public static CurbFeeler curbfeeler;
     public static LightSeer lightseers;
 	public static FunLights lights;
+	public static Camera camera;
 	
     private final SendableChooser autonomousChooser = new SendableChooser();
     private final SendableChooser ledChooser = new SendableChooser();
@@ -43,6 +44,7 @@ public class Robot extends IterativeRobot {
     	lightseers = new LightSeer();
     	lights = new FunLights();
     	oi = new OI();
+    	camera = new Camera();
     	
         autonomousChooser.addDefault("Center", new AutonomousCenter());
         autonomousChooser.addObject("Left", new AutonomousLeft());
@@ -68,6 +70,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData(curbfeeler);
         SmartDashboard.putData(lightseers);
         SmartDashboard.putData(lights);
+        SmartDashboard.putData(camera);
 
     }
 

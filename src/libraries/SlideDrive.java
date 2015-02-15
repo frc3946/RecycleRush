@@ -29,7 +29,7 @@ public class SlideDrive extends DriveMethod {
      * The {@link Gyro} that the {@link SlideDrive} uses for
      * field-oriented driving and keeping the correct orientation.
      */
-    protected final BetterGyro gyro;
+    protected final Gyro gyro;
 
     public final double ROTATION_DEADBAND = 0.05;
     public static final double ROTATION_P = 0.01;
@@ -49,11 +49,11 @@ public class SlideDrive extends DriveMethod {
      * @param gyro the {@link Gyro} to use for orientation correction and
      * field-oriented driving
      */
-    public SlideDrive(ThreeWheelDriveController controller, BetterGyro gyro) {
+	public SlideDrive(ThreeWheelDriveController controller, BetterGyro gyro) {
         super(controller);
         
         this.controller = controller;
-        this.gyro = gyro;
+        this.gyro =  ;
         rotationPIDController = new PIDController(
                 ROTATION_P,
                 ROTATION_I,
