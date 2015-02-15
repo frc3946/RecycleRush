@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3946.robot.commands.misc;
 
+import org.usfirst.frc.team3946.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -8,8 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ProcessImage extends Command {
 
     public ProcessImage() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.camera);
     }
 
     // Called just before this Command runs the first time

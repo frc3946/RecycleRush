@@ -13,14 +13,11 @@ import edu.wpi.first.wpilibj.vision.USBCamera;
  */
 public class Camera extends Subsystem {
     
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 	CameraServer server;
     USBCamera camera;
    
     
-    public Camera()
-    {
+    public Camera() {
     	camera = new USBCamera("cam0");
 		camera.openCamera();
 		camera.setFPS(30);
@@ -29,7 +26,7 @@ public class Camera extends Subsystem {
 	    server.setQuality(50);
 	    server.setSize(0);
 	    //the camera name (ex "cam0") can be found through the roborio web interface
-	    server.startAutomaticCapture("cam0");
+	    //server.startAutomaticCapture("cam0");
 	    
     }
     
@@ -38,12 +35,7 @@ public class Camera extends Subsystem {
         setDefaultCommand(new ProcessImage());
     }
     
-    public void getImageFromCamera(Image image)
-    {
+    public void getImageFromCamera(Image image){
     	camera.getImage(image);
     }
-    
-    
-    
 }
-

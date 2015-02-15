@@ -44,8 +44,9 @@ public class Robot extends IterativeRobot {
     	rangefinders = new RangeFinders();
     	curbfeeler = new CurbFeeler();
     	lights = new FunLights();
-    	oi = new OI();
     	camera = new Camera();
+    	// PUT ALL SUBSYSTEM DEH-CLAIRE-AYYY-SHINS ABOVE HERE.
+    	oi = new OI();
     	
         autonomousChooser.addDefault("Center", new AutonomousCenter());
         autonomousChooser.addObject("Left", new AutonomousLeft());
