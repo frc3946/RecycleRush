@@ -16,7 +16,6 @@ public class PDP extends Subsystem {
 	
 	public PDP() {
 		LiveWindow.addSensor("PDP", "PowerDistributionPanel", panel);
-		SmartDashboard.putData(panel.getSmartDashboardType(), panel);
 	}
 	
     public void initDefaultCommand() {
@@ -31,6 +30,7 @@ public class PDP extends Subsystem {
     }
     
     public void log() {
+		SmartDashboard.putData("PowerDistributionPanel", panel);
     	maxA1 = Math.max(getCurrent(1), maxA1);
     	maxA2 = Math.max(getCurrent(2), maxA2);
         SmartDashboard.putNumber("M1 Max Current", maxA1);

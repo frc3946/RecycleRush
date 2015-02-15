@@ -81,7 +81,7 @@ public class SlideDrive extends DriveMethod {
      * @param gyroAngle the current angle reading from the gyro
      */
     public void drive(double x, double y, double rotation, double gyroAngle) {
-        rotation = getRotationPID(rotation);
+        //rotation = getRotationPID(rotation);
         drive0(x, y, rotation, gyroAngle);
     }
 

@@ -22,9 +22,9 @@ public interface RobotMap {
 	int ledSpike3 = 3;					//SPK3 +red -green
 	
 	// Digital IOs
-	int upperLS = 3;				//label
-	int bottomLS = 4;
-	int lowerLS = 5;				//label
+	int lowerLS = 3;
+	int upperLS = 4;
+	int bottomLS = 5;
 	int topLS = 6;
 	int touch = 7;
 	

@@ -2,6 +2,7 @@ package org.usfirst.frc.team3946.robot;
 
 import libraries.XboxController;
 
+import org.usfirst.frc.team3946.robot.commands.TestDrive;
 import org.usfirst.frc.team3946.robot.commands.drive.*;
 import org.usfirst.frc.team3946.robot.commands.lift.*;
 
@@ -59,9 +60,11 @@ public class OI {
 			decLiftSetpoint.whenPressed(new DecLiftSetpoint());
 
         // SmartDashboard Buttons
+		SmartDashboard.putData("Test Motors", new TestDrive());
+			
         SmartDashboard.putData("Reset Gyro", new ResetGyro());
         SmartDashboard.putData("Enable Slide", new SlideDrivingCommand());
-        SmartDashboard.putData("Enable Arcade With Strafe", new ArcadeDrivingCommand());
+        SmartDashboard.putData("Enable Arcade", new ArcadeDrivingCommand());
         
         SmartDashboard.putData("Raise Elevator", new IncLiftSetpoint());
         SmartDashboard.putData("Lower Elevator", new DecLiftSetpoint());
