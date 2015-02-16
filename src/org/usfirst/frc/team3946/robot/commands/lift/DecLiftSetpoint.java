@@ -27,12 +27,15 @@ public class DecLiftSetpoint extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	 Robot.elevator.disable();
     	Robot.elevator.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.elevator.disable();
+    	Robot.elevator.stop();
     }
 }
 

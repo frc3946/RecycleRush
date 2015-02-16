@@ -67,9 +67,9 @@ public class Drivetrain extends Subsystem {
     	right.set(-rightSpeed);
     }
      
-    public double feetToSec(double feet){
-    	return feet / 5;
-    }
+//    public double feetToSec(double feet){
+//    	return feet / 5;
+//    }
     
     public Gyro getGyro() {
     	return gyro;

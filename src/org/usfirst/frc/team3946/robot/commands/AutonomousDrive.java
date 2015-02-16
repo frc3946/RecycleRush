@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutonomousDrive extends Command {
     	 
-    	 public AutonomousDrive(double feet) {
+    	 public AutonomousDrive(double timeout) {
     	 // Use requires() here to declare subsystem dependencies
     	 requires(drivetrain);
-    	 setTimeout(drivetrain.feetToSec(feet));
+    	 setTimeout(timeout);
     	 }
     	 
     	 // Called just before this Command runs the first time
