@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3946.robot;
 
 import org.usfirst.frc.team3946.robot.commands.*;
-import org.usfirst.frc.team3946.robot.commands.misc.SetLEDColors;
+import org.usfirst.frc.team3946.robot.commands.misc.*;
 import org.usfirst.frc.team3946.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
     Command autonomousCommand;
     Command funCommand;
+    Command vlCommand;
     
     public static OI oi;
     public static PDP pdp;
@@ -33,6 +34,7 @@ public class Robot extends IterativeRobot {
 	
     private final SendableChooser autonomousChooser = new SendableChooser();
     private final SendableChooser ledChooser = new SendableChooser();
+    private final SendableChooser vlChooser = new SendableChooser();
      //* This function is run when the robot is first started up and should be
      //* used for any initialization code.
      //*
@@ -65,6 +67,12 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("LED Color", ledChooser);
         
+		vlChooser.addDefault("Off", new SetVisionLights(0));
+		vlChooser.addObject("Tote Tracking", new SetVisionLights(1));
+		vlChooser.addObject("Tote Alignment", new SetVisionLights(2));
+
+		SmartDashboard.putData("Vision Lights", vlChooser);
+		
         // Show what command the subsystem is running on the SmartDashboard.
         SmartDashboard.putData(drivetrain);
         SmartDashboard.putData(elevator);
@@ -124,6 +132,11 @@ public class Robot extends IterativeRobot {
     	if (color != null && color instanceof Command) {
     		funCommand = (Command) color;
             funCommand.start();
+    	}
+    	Object lights = vlChooser.getSelected();
+    	if (lights != null && lights instanceof Command) {
+    		vlCommand = (Command) lights;
+    		vlCommand.start();
     	}
     	log();
     }

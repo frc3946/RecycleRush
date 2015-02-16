@@ -14,7 +14,6 @@ public class TurnToAngle extends Command {
 	double gyroReading;
 	double offset;
 	double error;
-	double distanceToGo;
 	
     public TurnToAngle(double angle) {
     	requires(drivetrain);
@@ -30,19 +29,18 @@ public class TurnToAngle extends Command {
     	double speedCoefficient;
     	gyroReading = drivetrain.gyro.getAngle();	
     	offset = target - gyroReading;
-    	error = offset;
     	//Anti-spinning death machine function
     	error -= 360 * floor(0.5 + (error/360));
+    	///////////////////////////////////////
     	if(abs(error) > 45){
     		speedCoefficient = 1;
     	} else {
-    		speedCoefficient = .5;
+    		speedCoefficient = 0.5;
     	}
-    	//distanceToGo = distanceToGo / (abs(distanceToGo));
     	if(error > 0){
-    		drivetrain.rotate(.5 * speedCoefficient);
+    		drivetrain.rotate(0.5 * speedCoefficient);
     	} else {
-    		drivetrain.rotate(-.5 * speedCoefficient);
+    		drivetrain.rotate(-0.5 * speedCoefficient);
     	}
     }
 

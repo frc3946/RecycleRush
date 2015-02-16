@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
+import org.usfirst.frc.team3946.robot.commands.drive.SlideDrivingCommand;
+
 import libraries.*;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,7 +21,7 @@ public class Drivetrain extends Subsystem {
     private final WheelController leftWheel = new WheelController(left);
     private final WheelController rightWheel = new WheelController(right);
     private final WheelController strafeWheel = new WheelController(strafe);
-    private final ThreeWheelDriveController driveController = new ThreeWheelDriveController(
+    private final ThreeWheelController driveController = new ThreeWheelController(
             leftWheel, 
             rightWheel, 
             strafeWheel
@@ -34,7 +36,7 @@ public class Drivetrain extends Subsystem {
     }
     
     public void initDefaultCommand() {
-   //     setDefaultCommand(new SlideDrivingCommand());
+        setDefaultCommand(new SlideDrivingCommand());
         gyro.setPIDSourceParameter(PIDSource.PIDSourceParameter.kAngle);
     }
     
@@ -66,12 +68,8 @@ public class Drivetrain extends Subsystem {
     	left.set(leftSpeed);
     	right.set(-rightSpeed);
     }
-     
-//    public double feetToSec(double feet){
-//    	return feet / 5;
-//    }
     
-    public Gyro getGyro() {
+    public BetterGyro getGyro() {
     	return gyro;
     }
     public void setMotor(double leftSpeed, double rightSpeed, double strafeSpeed){

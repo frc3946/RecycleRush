@@ -27,7 +27,7 @@ public class  IncLiftSetpoint extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	 Robot.elevator.disable();
+    	Robot.elevator.disable();
     	Robot.elevator.stop();
     }
 

@@ -1,10 +1,13 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
+import org.usfirst.frc.team3946.robot.RobotMap;
 import org.usfirst.frc.team3946.robot.commands.misc.ProcessImage;
 
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
+
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -12,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Camera extends Subsystem {
     
+	private Relay r1 = new Relay(RobotMap.camSpike1);
 //	CameraServer server;
 //    USBCamera camera;
     int session;
@@ -49,4 +53,16 @@ public class Camera extends Subsystem {
 //    	camera.getImage(image);
 //    	server.setImage(image);
     }
+    
+    public void ToteTracking() {
+    	r1.set(Relay.Value.kReverse); //Tote tracking
+	}
+    
+    public void ToteAlignment() {
+    	r1.set(Relay.Value.kForward); //Left right alignment
+    }
+    
+	public void Off() {
+		r1.set(Relay.Value.kOff);
+	}
 }

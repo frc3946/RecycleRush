@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class FunLights extends Subsystem {
 	
-	private Relay r3 = new Relay(RobotMap.ledSpike3);
-	private Relay r2 = new Relay(RobotMap.ledSpike2); 
+	private Relay r3 = new Relay(RobotMap.ledSpike3); //SPK3 +red -green
+	private Relay r2 = new Relay(RobotMap.ledSpike2); //SPK2 +blue -common
 	
 	public FunLights() {}
 	

@@ -9,21 +9,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Heart of the slide drive code. All calculations are done here.
  * 
- * A {@link DriveMethod} that uses a {@link ThreeWheelDriveController} (which
+ * A {@link DriveMethod} that uses a {@link ThreeWheelController} (which
  * controls three speed controllers to drive using a gyro to maintain orientation
  * and drive relative to the field.
  *
- * @see ThreeWheelDriveController
+ * @see ThreeWheelController
  * @see DriveMethod
  */
 public class SlideDrive extends DriveMethod {
 
     /**
      * The {@link SlideDrive} requires a
-     * {@link ThreeWheelDriveController} so the normal
+     * {@link ThreeWheelController} so the normal
      * {@link DriveMethod#controller} is hidden.
      */
-    protected final ThreeWheelDriveController controller;
+    protected final ThreeWheelController controller;
     
     /**
      * The {@link Gyro} that the {@link SlideDrive} uses for
@@ -43,13 +43,13 @@ public class SlideDrive extends DriveMethod {
 
     /**
      * Creates a new {@link SlideDrive} that controls the specified
-     * {@link ThreeWheelDriveController}.
+     * {@link ThreeWheelController}.
      *
-     * @param controller the {@link ThreeWheelDriveController} to control
+     * @param controller the {@link ThreeWheelController} to control
      * @param gyro the {@link Gyro} to use for orientation correction and
      * field-oriented driving
      */
-	public SlideDrive(ThreeWheelDriveController controller, Gyro gyro) {
+	public SlideDrive(ThreeWheelController controller, Gyro gyro) {
         super(controller);
         
         this.controller = controller;

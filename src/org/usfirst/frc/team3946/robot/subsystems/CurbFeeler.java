@@ -12,21 +12,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class CurbFeeler extends Subsystem {
 	
-	TouchSensor touch = new TouchSensor(RobotMap.touch);
+	TouchSensor left = new TouchSensor(RobotMap.lTouch);
+	TouchSensor center = new TouchSensor(RobotMap.cTouch);
+	TouchSensor right = new TouchSensor(RobotMap.rTouch);
 	
 	public void isPressed() {
-		touch.getTouch();
+		left.get();
+		center.get();
+		right.get();
 	}
 	
 	public void log() {
-		SmartDashboard.putData("CurbFeeler", (TouchSensor) touch);
+		SmartDashboard.putData("Left Pressed?", (TouchSensor) left);
+		SmartDashboard.putData("Center Pressed?", (TouchSensor) center);
+		SmartDashboard.putData("Right Pressed?", (TouchSensor) right);
 	}
-    
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
         setDefaultCommand(new GetPress());
     }
 }

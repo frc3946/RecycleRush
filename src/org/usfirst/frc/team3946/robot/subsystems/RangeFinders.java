@@ -23,8 +23,8 @@ public class RangeFinders extends Subsystem {
     }
     
     public void getReading() {
-    	SmartDashboard.putNumber("Left", getLeftInches());
-    	SmartDashboard.putNumber("Right", getRightInches());
+    	SmartDashboard.putNumber("Left Inches", getLeftInches());
+    	SmartDashboard.putNumber("Right Inches", getRightInches());
 
     }
 }

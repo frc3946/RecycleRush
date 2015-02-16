@@ -5,9 +5,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
 public class PDP extends Subsystem {
     
 	PowerDistributionPanel panel = new PowerDistributionPanel();
@@ -31,6 +28,7 @@ public class PDP extends Subsystem {
     
     public void log() {
 		SmartDashboard.putData("PowerDistributionPanel", panel);
+
     	maxA1 = Math.max(getCurrent(1), maxA1);
     	maxA2 = Math.max(getCurrent(2), maxA2);
         SmartDashboard.putNumber("M1 Max Current", maxA1);

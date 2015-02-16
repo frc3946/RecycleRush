@@ -22,11 +22,13 @@ public interface RobotMap {
 	int ledSpike3 = 3;					//SPK3 +red -green
 	
 	// Digital IOs
-	int lowerLS = 3;
+	int topLS = 3;
 	int upperLS = 4;
 	int bottomLS = 5;
-	int topLS = 6;
-	int touch = 7;
+	int lowerLS = 6;
+	int rTouch = 7;
+	int cTouch = 8;
+	int lTouch = 9;
 	
 	// Analog IOs
 	int driveGyro = 0;

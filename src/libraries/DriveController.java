@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.MotorSafetyHelper;
  * DriveControllers must implement.
  *
  * @see DriveMethod
- * @see ThreeWheelDriveController
+ * @see ThreeWheelController
  */
 public abstract class DriveController implements MotorSafety {
 

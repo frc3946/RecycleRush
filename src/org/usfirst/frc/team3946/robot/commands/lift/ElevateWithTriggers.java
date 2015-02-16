@@ -23,8 +23,7 @@ public class  ElevateWithTriggers extends Command {
     	XboxController j = Robot.oi.getDriveController();
     	double throttle = j.getThrottle();
     	Robot.elevator.elevate(throttle);
-    	SmartDashboard.putNumber("Lift Motor", throttle);
-
+    	SmartDashboard.putNumber("Lift Throttle", throttle);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -40,5 +39,6 @@ public class  ElevateWithTriggers extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.elevator.stop();
     }
 }
