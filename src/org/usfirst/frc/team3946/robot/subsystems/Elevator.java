@@ -71,12 +71,12 @@ public class Elevator extends PIDSubsystem {
 		}
 		// Slow the motor down when secondary switches are engaged.
 		if ((upper.get() == true && input > 0) || (lower.get() == true && input < 0)) {
-			motor1.set(-(input * 0.5));
-			motor2.set(-(input * 0.5));
+			motor1.set(input * 0.25);
+			motor2.set(input * 0.25);
 			return;
 		} else {
-	    	motor1.set(-input);
-	    	motor2.set(-input);
+	    	motor1.set(input);
+	    	motor2.set(input);
 	    }
     }
     public void stop() {
@@ -135,12 +135,12 @@ public class Elevator extends PIDSubsystem {
     	}
     	// Slow the motor down when secondary switches are engaged.
     	if ((upper.get() == true && output > 0) || (lower.get() == true && output < 0)) {
-    		motor1.set(-(output * 0.5));
-    		motor2.set(-(output * 0.5));
+    		motor1.set(output * 0.5);
+    		motor2.set(output * 0.5);
     		return;
         } else {
-        	motor1.set(-output);
-        	motor2.set(-output);
+        	motor1.set(output);
+        	motor2.set(output);
         	return;
         }
     }

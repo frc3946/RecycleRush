@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot {
 		ledChooser.addObject("Cyan", new SetLEDColors(6));
 		ledChooser.addObject("Magenta", new SetLEDColors(7));
 		
-		SmartDashboard.putData("LED Color", ledChooser);        
+		SmartDashboard.putData("LED Color", ledChooser);
         
         // Show what command the subsystem is running on the SmartDashboard.
         SmartDashboard.putData(drivetrain);

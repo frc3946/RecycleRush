@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3946.robot.sensors;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
 HEROBRINE WAS HERE
 */ 
@@ -76,7 +75,7 @@ public class RangeFinder extends AnalogInput{
 				double intercept = rvoltages[firstPoint] - distances[firstPoint] * slope;
 				double distancesCM = (rvolts - intercept) / slope;
 				double distancesIN = distancesCM * .3937;
-				SmartDashboard.putNumber("Inches from ", distancesIN);//interpolation
+				//SmartDashboard.putNumber("Inches from ", distancesIN);//interpolation
 				return distancesIN;
 			}
 			else {
