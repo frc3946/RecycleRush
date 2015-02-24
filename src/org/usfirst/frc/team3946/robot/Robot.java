@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
     Command autonomousCommand;
     Command funCommand;
-    Command vlCommand;
+//    Command vlCommand;
     
     public static OI oi;
     public static PDP pdp;
@@ -34,7 +34,7 @@ public class Robot extends IterativeRobot {
 	
     private final SendableChooser autonomousChooser = new SendableChooser();
     private final SendableChooser ledChooser = new SendableChooser();
-    private final SendableChooser vlChooser = new SendableChooser();
+//    private final SendableChooser vlChooser = new SendableChooser();
      //* This function is run when the robot is first started up and should be
      //* used for any initialization code.
      //*
@@ -67,11 +67,11 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("LED Color", ledChooser);
         
-		vlChooser.addDefault("Off", new SetVisionLights(0));
-		vlChooser.addObject("Tote Tracking", new SetVisionLights(1));
-		vlChooser.addObject("Tote Alignment", new SetVisionLights(2));
+//		vlChooser.addDefault("Off", new SetVisionLights(0));
+//		vlChooser.addObject("Tote Tracking", new SetVisionLights(1));
+//		vlChooser.addObject("Tote Alignment", new SetVisionLights(2));
 
-		SmartDashboard.putData("Vision Lights", vlChooser);
+//		SmartDashboard.putData("Vision Lights", vlChooser);
 		
         // Show what command the subsystem is running on the SmartDashboard.
         SmartDashboard.putData(drivetrain);
@@ -127,17 +127,21 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	try {
         Scheduler.getInstance().run();
+    	} catch (Exception e) {
+    		System.out.println("Exception");
+    	}
         Object color = ledChooser.getSelected();
     	if (color != null && color instanceof Command) {
     		funCommand = (Command) color;
             funCommand.start();
     	}
-    	Object lights = vlChooser.getSelected();
-    	if (lights != null && lights instanceof Command) {
-    		vlCommand = (Command) lights;
-    		vlCommand.start();
-    	}
+//    	Object lights = vlChooser.getSelected();
+//    	if (lights != null && lights instanceof Command) {
+//    		vlCommand = (Command) lights;
+//    		vlCommand.start();
+//    	}
     	log();
     }
 
