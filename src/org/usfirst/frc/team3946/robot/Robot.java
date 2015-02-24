@@ -17,6 +17,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
+ * 
+ * TODO: 
+ * 1. Update lift to use encoder.
+ * 2. Update drivetrain to use encoder.
+ * 3. Gyro????
+ * 4. Autonomous pickup
+ * 5. Autonomous stack
+ * 6. Get camera working
+ * 7. Limit switch override
+ * 8. Test viability of two person team
  */
 public class Robot extends IterativeRobot {
     Command autonomousCommand;
@@ -30,7 +40,7 @@ public class Robot extends IterativeRobot {
     public static Elevator elevator;
     public static CurbFeeler curbfeeler;
 	public static FunLights lights;
-	public static Camera camera;
+//	public static Camera camera;
 	
     private final SendableChooser autonomousChooser = new SendableChooser();
     private final SendableChooser ledChooser = new SendableChooser();
@@ -46,7 +56,7 @@ public class Robot extends IterativeRobot {
     	rangefinders = new RangeFinders();
     	curbfeeler = new CurbFeeler();
     	lights = new FunLights();
-    	camera = new Camera();
+//    	camera = new Camera();
     	// PUT ALL SUBSYSTEM DEH-CLAIRE-AYYY-SHINS ABOVE HERE.
     	oi = new OI();
     	
@@ -79,7 +89,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData(rangefinders);
         SmartDashboard.putData(curbfeeler);
         SmartDashboard.putData(lights);
-        SmartDashboard.putData(camera);
+//        SmartDashboard.putData(camera);
 
     }
 
@@ -127,11 +137,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	try {
         Scheduler.getInstance().run();
-    	} catch (Exception e) {
-    		System.out.println("Exception");
-    	}
         Object color = ledChooser.getSelected();
     	if (color != null && color instanceof Command) {
     		funCommand = (Command) color;

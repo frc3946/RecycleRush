@@ -22,7 +22,7 @@ public class ProcessImage extends Command {
 
     public ProcessImage() {
         // Use requires() here to declare subsystem dependencies
-          requires(Robot.camera);
+//          requires(Robot.camera);
     }
 
     // Called just before this Command runs the first time
@@ -35,7 +35,7 @@ public class ProcessImage extends Command {
     protected void execute() {
     	
     	Image sourceImage = NIVision.imaqCreateImage(ImageType.IMAGE_RGB, 0);
-    	Robot.camera.getImageFromCamera(sourceImage);
+//    	Robot.camera.getImageFromCamera(sourceImage);
     
     	Image threshold = NIVision.imaqCreateImage(ImageType.IMAGE_U8, 0);
     	Range red = new Range(0, 225);
