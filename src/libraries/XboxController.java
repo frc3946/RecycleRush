@@ -120,6 +120,14 @@ public class XboxController extends Joystick {
     }
     
     /**
+     * Read the value of the triggers as one axis.
+     * @return the value of this "axis" [-1.0..1.0]
+     */
+    public double getThrottle() {
+    	return getRightTrigger() - getLeftTrigger();
+    }
+    
+    /**
      * Read the value of the d-pad.
      * @return the angle of the DPad in degrees,
      * or -1 if the DPad is not pressed.

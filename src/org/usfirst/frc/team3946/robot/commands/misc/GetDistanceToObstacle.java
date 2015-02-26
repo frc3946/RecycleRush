@@ -1,33 +1,34 @@
-package org.usfirst.frc.team3946.robot.commands.lift;
 
-import org.usfirst.frc.team3946.robot.Robot;
+package org.usfirst.frc.team3946.robot.commands.misc;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class  RaiseElevatorLevel extends Command {
-	
-    public RaiseElevatorLevel() {
-    	requires(Robot.elevator);
+import static org.usfirst.frc.team3946.robot.Robot.*;
+
+
+public class GetDistanceToObstacle extends Command {
+
+    public GetDistanceToObstacle() {
+        // Use requires() here to declare subsystem dependencies
+        requires(rangefinders);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        Robot.elevator.enable();
-        Robot.elevator.raiseLevel();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	rangefinders.getReading();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.elevator.onTarget();
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.elevator.stop();
     }
 
     // Called when another command which requires one or more of the same
