@@ -1,36 +1,41 @@
-package org.usfirst.frc.team3946.robot.commands.lift;
+package org.usfirst.frc.team3946.robot.commands.misc;
 
 import org.usfirst.frc.team3946.robot.Robot;
+import static org.usfirst.frc.team3946.robot.Robot.rangefinders;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Command;abstract
 
-public class SetElevatorSetpoint extends Command {
-  
-	private int level;
-	
-    public SetElevatorSetpoint(int setpoint) {
-        requires(Robot.elevator);
-        level = setpoint;
+
+/**
+ *
+ */
+public class Square extends Command {
+
+	double leftInches;
+	double rightInches;
+
+    public Square() {
+    	requires(Robot.drivetrain);
+    	requires(Robot.rangefinders);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        Robot.elevator.enable();
-        Robot.elevator.setLevel(level);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	leftInches = rangefinders.getLeftInches();
+    	rightInches = rangefinders.getRightInches();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.elevator.onTarget();
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.elevator.disable();
     }
 
     // Called when another command which requires one or more of the same

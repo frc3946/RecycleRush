@@ -17,11 +17,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
+ * 
+ * TODO: 
+ * 1. Update lift to use encoder.
+ * 2. Update drivetrain to use encoder.
+ * 3. Gyro????
+ * 4. Autonomous pickup
+ * 5. Autonomous stack
+ * 6. Get camera working
+ * 7. Limit switch override
+ * 8. Test viability of two person team
  */
 public class Robot extends IterativeRobot {
     Command autonomousCommand;
     Command funCommand;
-    Command vlCommand;
+//    Command vlCommand;
     
     public static OI oi;
     public static PDP pdp;
@@ -30,11 +40,11 @@ public class Robot extends IterativeRobot {
     public static Elevator elevator;
     public static CurbFeeler curbfeeler;
 	public static FunLights lights;
-	//public static Camera camera;
+//	public static Camera camera;
 	
     private final SendableChooser autonomousChooser = new SendableChooser();
     private final SendableChooser ledChooser = new SendableChooser();
-    private final SendableChooser vlChooser = new SendableChooser();
+//    private final SendableChooser vlChooser = new SendableChooser();
      //* This function is run when the robot is first started up and should be
      //* used for any initialization code.
      //*
@@ -46,7 +56,7 @@ public class Robot extends IterativeRobot {
     	rangefinders = new RangeFinders();
     	curbfeeler = new CurbFeeler();
     	lights = new FunLights();
-    	//camera = new Camera();
+//    	camera = new Camera();
     	// PUT ALL SUBSYSTEM DEH-CLAIRE-AYYY-SHINS ABOVE HERE.
     	oi = new OI();
     	
@@ -71,7 +81,7 @@ public class Robot extends IterativeRobot {
 //		vlChooser.addObject("Tote Tracking", new SetVisionLights(1));
 //		vlChooser.addObject("Tote Alignment", new SetVisionLights(2));
 
-		SmartDashboard.putData("Vision Lights", vlChooser);
+//		SmartDashboard.putData("Vision Lights", vlChooser);
 		
         // Show what command the subsystem is running on the SmartDashboard.
         SmartDashboard.putData(drivetrain);
@@ -79,7 +89,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData(rangefinders);
         SmartDashboard.putData(curbfeeler);
         SmartDashboard.putData(lights);
-       // SmartDashboard.putData(camera);
+//        SmartDashboard.putData(camera);
 
     }
 
@@ -133,11 +143,11 @@ public class Robot extends IterativeRobot {
     		funCommand = (Command) color;
             funCommand.start();
     	}
-    	Object lights = vlChooser.getSelected();
-    	if (lights != null && lights instanceof Command) {
-    		vlCommand = (Command) lights;
-    		vlCommand.start();
-    	}
+//    	Object lights = vlChooser.getSelected();
+//    	if (lights != null && lights instanceof Command) {
+//    		vlCommand = (Command) lights;
+//    		vlCommand.start();
+//    	}
     	log();
     }
 

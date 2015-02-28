@@ -3,18 +3,15 @@ package org.usfirst.frc.team3946.robot.subsystems;
 import static org.usfirst.frc.team3946.robot.RobotMap.*;
 
 import org.usfirst.frc.team3946.robot.commands.lift.ElevateWithTriggers;
-import org.usfirst.frc.team3946.robot.sensors.Pot;
-
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator extends PIDSubsystem {
     public Talon motor1 = new Talon(liftTalon1);
     public Talon motor2 = new Talon(liftTalon2);
-    public Pot pot = new Pot(liftPot);
+    public Potentiometer pot = new AnalogPotentiometer(liftPot);
     public DigitalInput top = new DigitalInput(topLS);
     public DigitalInput upper = new DigitalInput(upperLS);
     public DigitalInput lower = new DigitalInput(lowerLS);
@@ -26,16 +23,29 @@ public class Elevator extends PIDSubsystem {
 	double height;
     int level = 0;
 
-    public double[] setPoints = {
+    public double[] potVolts = {
     		0,
-    		(12.1 / 12),
-    		(24.2 / 12),
-    		(36.3 / 12),
-    		(48.4 / 12),
-    		(60.5 / 12),
-    		(72.6 / 12)
+    		.167,
+    		.334,
+    		.501,
+    		.635,
+    		.881,
+    		1
     };
-	
+    
+
+     public double[] setPoints = {
+    		 0,
+      		(12.1 / 12),
+      		(24.2 / 12),
+      		(36.3 / 12),
+      		(48.4 / 12),
+      		(60.5 / 12),
+      		(72.6 / 12)
+     };
+    
+    public int[] feet = {0, 1, 2, 3, 4, 5, 6};
+
     public Elevator() {
     	super("Elevator", p, i, d);
         setAbsoluteTolerance(0.005);     
@@ -88,9 +98,29 @@ public class Elevator extends PIDSubsystem {
      * called by the subsystem.
      */
     protected double returnPIDInput() {
-    	height = pot.getHeight();
-		SmartDashboard.putNumber("Elevator Height: ", height);
-		return height;
+    	int firstPoint = 0;
+		int secondPoint = 1;
+    	double volts = pot.get();
+    	while(secondPoint < feet.length){
+    		if(volts >= potVolts[firstPoint] ||
+				(volts <= potVolts[secondPoint])){
+    			double slope = potVolts[secondPoint] - potVolts[firstPoint];
+    			slope = slope / (feet[secondPoint] - feet[firstPoint]);
+    			double intercept = potVolts[firstPoint] - feet[firstPoint] * slope;
+    			double distance = (volts - intercept) / slope;
+    			SmartDashboard.putNumber("Elevator Height: ", distance);
+    			return distance;
+    		}
+    		else{
+    			firstPoint++;
+    			secondPoint++;
+    		}
+		 
+    		if(secondPoint >= potVolts.length){
+    			return 0.0;
+    		}
+    	}
+    	return 0.0;
     }
     
     /**

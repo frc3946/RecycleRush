@@ -32,4 +32,3 @@ public class CurbFeeler extends Subsystem {
         setDefaultCommand(new GetPress());
     }
 }
-
