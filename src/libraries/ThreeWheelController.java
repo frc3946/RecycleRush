@@ -6,21 +6,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Controls a robot that has two wheels, or (in most cases) two sides that each
  * act as a unit, as well as a perpendicular strafe wheel for slide/h drive handling.
  */
-public class ThreeWheelDriveController extends DriveController {
+public class ThreeWheelController extends DriveController {
 
     protected WheelController leftWheel;
     protected WheelController rightWheel;
     protected WheelController strafeWheel;
 
     /**
-     * Creates a new {@link ThreeWheelDriveController} that drives the specified
+     * Creates a new {@link ThreeWheelController} that drives the specified
      * {@link WheelController}s.
      *
      * @param leftWheel the left {@link WheelController}
      * @param rightWheel the right {@link WheelController}
      * @param strafeWheel the strafe {@link WheelController}
      */
-    public ThreeWheelDriveController(WheelController leftWheel, WheelController rightWheel, WheelController strafeWheel) {
+    public ThreeWheelController(WheelController leftWheel, WheelController rightWheel, WheelController strafeWheel) {
         this.leftWheel = leftWheel;
         this.rightWheel = rightWheel;
         this.strafeWheel = strafeWheel;
@@ -64,6 +64,6 @@ public class ThreeWheelDriveController extends DriveController {
     }
 
     public String getDescription() {
-        return "Three Wheel Drive Controller";
+        return "Three Wheel Controller";
     }
 }

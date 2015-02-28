@@ -8,7 +8,7 @@ public class TouchSensor extends DigitalInput {
 		super(channel);
 	}
 	
-	public boolean getTouch() {
+	public boolean get() {
 		return super.get();
 	}
 }

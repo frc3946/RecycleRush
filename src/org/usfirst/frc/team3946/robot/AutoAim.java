@@ -1,17 +1,15 @@
-package org.usfirst.frc.team3946.robot.commands;
-
-import org.usfirst.frc.team3946.robot.Robot;
+package org.usfirst.frc.team3946.robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class GetLight extends Command {
+public class AutoAim extends Command {
 
-    public GetLight() {
+    public AutoAim() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.lightseers);
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
@@ -20,7 +18,6 @@ public class GetLight extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lightseers.isTrue();
     }
 
     // Make this return true when this Command no longer needs to run execute()

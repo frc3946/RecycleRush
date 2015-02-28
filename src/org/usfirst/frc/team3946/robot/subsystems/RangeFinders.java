@@ -1,11 +1,10 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
-import org.usfirst.frc.team3946.robot.commands.lift.GetInches;
+import org.usfirst.frc.team3946.robot.commands.misc.GetDistanceToObstacle;
 import org.usfirst.frc.team3946.robot.sensors.RangeFinder;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import static org.usfirst.frc.team3946.robot.RobotMap.*;
 
 public class RangeFinders extends Subsystem {
@@ -13,7 +12,7 @@ public class RangeFinders extends Subsystem {
     RangeFinder rf2 = new RangeFinder(rRangeF);
 
     public void initDefaultCommand() {
-    	setDefaultCommand(new GetInches());
+    	setDefaultCommand(new GetDistanceToObstacle());
     }
 
     public double getLeftInches() {
@@ -24,8 +23,8 @@ public class RangeFinders extends Subsystem {
     }
     
     public void getReading() {
-    	SmartDashboard.putNumber("Left", getLeftInches());
-    	SmartDashboard.putNumber("Right", getRightInches());
+    	SmartDashboard.putNumber("Left Inches", getLeftInches());
+    	SmartDashboard.putNumber("Right Inches", getRightInches());
 
     }
 }

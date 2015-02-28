@@ -1,13 +1,15 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
-import org.usfirst.frc.team3946.robot.commands.drive.FieldCentricDrivingCommand;
+import org.usfirst.frc.team3946.robot.commands.drive.SlideDrivingCommand;
 
 import libraries.*;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import static org.usfirst.frc.team3946.robot.RobotMap.*;
 
+
 public class Drivetrain extends Subsystem {
+	
 
     public static final double STRAFE_SPEED = 0.6;
 
@@ -19,7 +21,7 @@ public class Drivetrain extends Subsystem {
     private final WheelController leftWheel = new WheelController(left);
     private final WheelController rightWheel = new WheelController(right);
     private final WheelController strafeWheel = new WheelController(strafe);
-    private final ThreeWheelDriveController driveController = new ThreeWheelDriveController(
+    private final ThreeWheelController driveController = new ThreeWheelController(
             leftWheel, 
             rightWheel, 
             strafeWheel
@@ -29,12 +31,12 @@ public class Drivetrain extends Subsystem {
     private final SlideDrive slideDrive = new SlideDrive(driveController, gyro);
     private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveController);
 
-    public Drivetrain() {
+	public Drivetrain() {
         rightWheel.setInverted(true);
     }
     
     public void initDefaultCommand() {
-        setDefaultCommand(new FieldCentricDrivingCommand());
+        setDefaultCommand(new SlideDrivingCommand());
         gyro.setPIDSourceParameter(PIDSource.PIDSourceParameter.kAngle);
     }
     
@@ -60,8 +62,8 @@ public class Drivetrain extends Subsystem {
     		leftSpeed = leftSpeed * (1 - gyroValue);
     		rightSpeed = rightSpeed * (1 + gyroValue);
     	} else {
-		leftSpeed = leftSpeed * (1 + gyroValue);
-		rightSpeed = rightSpeed * (1 - gyroValue);
+    		leftSpeed = leftSpeed * (1 + gyroValue);
+    		rightSpeed = rightSpeed * (1 - gyroValue);
     	}
     	left.set(leftSpeed);
     	right.set(-rightSpeed);
@@ -69,5 +71,10 @@ public class Drivetrain extends Subsystem {
     
     public BetterGyro getGyro() {
     	return gyro;
+    }
+    public void setMotor(double leftSpeed, double rightSpeed, double strafeSpeed){
+    	left.set(leftSpeed);
+    	right.set(rightSpeed);
+    	strafe.set(strafeSpeed);
     }
 }

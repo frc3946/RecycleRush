@@ -1,17 +1,16 @@
-package org.usfirst.frc.team3946.robot.commands;
 
-import org.usfirst.frc.team3946.robot.Robot;
+package org.usfirst.frc.team3946.robot.commands.misc;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
-public class GetPress extends Command {
+import static org.usfirst.frc.team3946.robot.Robot.*;
 
-    public GetPress() {
+
+public class GetDistanceToObstacle extends Command {
+
+    public GetDistanceToObstacle() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.curbfeeler);
+        requires(rangefinders);
     }
 
     // Called just before this Command runs the first time
@@ -20,7 +19,7 @@ public class GetPress extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.curbfeeler.isPressed();
+    	rangefinders.getReading();
     }
 
     // Make this return true when this Command no longer needs to run execute()

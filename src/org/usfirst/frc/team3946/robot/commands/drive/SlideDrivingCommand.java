@@ -13,7 +13,7 @@ import static java.lang.Math.abs;
  * Command that drives in slide drive mode with gyro orientation for
  * field-centric control.
  */
-public class FieldCentricDrivingCommand extends Command {
+public class SlideDrivingCommand extends Command {
 
     /**
      * The maximum speed that the robot is allowed to rotate at. The joystick
@@ -21,7 +21,7 @@ public class FieldCentricDrivingCommand extends Command {
      */
     public static final double MAX_ROTATION = 0.5;
 
-    public FieldCentricDrivingCommand() {
+    public SlideDrivingCommand() {
         requires(drivetrain);
     }
 
@@ -29,8 +29,7 @@ public class FieldCentricDrivingCommand extends Command {
      * Does nothing.
      */
     protected void initialize() {
-    	
-    	drivetrain.gyro.reset(); 
+    	drivetrain.getSlideDrive().resetGyro();
     }
 
     /**
@@ -42,10 +41,7 @@ public class FieldCentricDrivingCommand extends Command {
         double x = xbox.getLeftStickX();
         double y = -xbox.getLeftStickY();
         double z = xbox.getRightStickX();
-        
-        // Wrap angle to [0..360] degrees
         double angle = drivetrain.gyro.getAngle(); 
-        angle = angle % 360;
         
         double scaledZ = z;
         // Scale z down so it is never greater than MAX_ROTATION.

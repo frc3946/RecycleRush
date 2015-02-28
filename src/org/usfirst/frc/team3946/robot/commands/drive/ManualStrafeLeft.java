@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ManualStrafeLeft extends Command {
 
     public ManualStrafeLeft() {
-        // This command drives, so it requires the drivetrain.
         requires(drivetrain);
     }
 

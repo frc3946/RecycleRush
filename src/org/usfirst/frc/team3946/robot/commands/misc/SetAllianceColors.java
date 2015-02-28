@@ -1,25 +1,28 @@
 
-package org.usfirst.frc.team3946.robot.commands.lift;
+package org.usfirst.frc.team3946.robot.commands.misc;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-import static org.usfirst.frc.team3946.robot.Robot.*;
+import org.usfirst.frc.team3946.robot.Robot;
 
+/**
+ *
+ */
+public class SetAllianceColors extends Command {
 
-public class GetInches extends Command {
-
-    public GetInches() {
+    public SetAllianceColors() {
         // Use requires() here to declare subsystem dependencies
-        requires(rangefinders);
+        requires(Robot.lights);
     }
 
-    // Called just before this Command runs the first time
+    //Called just before this Command runs the first time
     protected void initialize() {
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	rangefinders.getReading();
+    	Robot.lights.setAllianceColors();
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

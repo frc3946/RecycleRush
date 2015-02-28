@@ -9,27 +9,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Heart of the slide drive code. All calculations are done here.
  * 
- * A {@link DriveMethod} that uses a {@link ThreeWheelDriveController} (which
+ * A {@link DriveMethod} that uses a {@link ThreeWheelController} (which
  * controls three speed controllers to drive using a gyro to maintain orientation
  * and drive relative to the field.
  *
- * @see ThreeWheelDriveController
+ * @see ThreeWheelController
  * @see DriveMethod
  */
 public class SlideDrive extends DriveMethod {
 
     /**
      * The {@link SlideDrive} requires a
-     * {@link ThreeWheelDriveController} so the normal
+     * {@link ThreeWheelController} so the normal
      * {@link DriveMethod#controller} is hidden.
      */
-    protected final ThreeWheelDriveController controller;
+    protected final ThreeWheelController controller;
     
     /**
      * The {@link Gyro} that the {@link SlideDrive} uses for
      * field-oriented driving and keeping the correct orientation.
      */
-    protected final BetterGyro gyro;
+    protected final Gyro gyro;
 
     public final double ROTATION_DEADBAND = 0.05;
     public static final double ROTATION_P = 0.01;
@@ -43,13 +43,13 @@ public class SlideDrive extends DriveMethod {
 
     /**
      * Creates a new {@link SlideDrive} that controls the specified
-     * {@link ThreeWheelDriveController}.
+     * {@link ThreeWheelController}.
      *
-     * @param controller the {@link ThreeWheelDriveController} to control
+     * @param controller the {@link ThreeWheelController} to control
      * @param gyro the {@link Gyro} to use for orientation correction and
      * field-oriented driving
      */
-    public SlideDrive(ThreeWheelDriveController controller, BetterGyro gyro) {
+	public SlideDrive(ThreeWheelController controller, Gyro gyro) {
         super(controller);
         
         this.controller = controller;
@@ -81,7 +81,7 @@ public class SlideDrive extends DriveMethod {
      * @param gyroAngle the current angle reading from the gyro
      */
     public void drive(double x, double y, double rotation, double gyroAngle) {
-        rotation = getRotationPID(rotation);
+        //rotation = getRotationPID(rotation);
         drive0(x, y, rotation, gyroAngle);
     }
 
@@ -174,7 +174,9 @@ public class SlideDrive extends DriveMethod {
             // If the rotation rate is less than the deadband, turn on the PID
             // controller and set its setpoint to the current angle.
             if (abs(rotationSpeed) < ROTATION_DEADBAND) {
-                gyroOffset = gyro.getYaw();
+                gyroOffset = gyro.getAngle();
+                gyroOffset -= gyro.getAngle();
+                gyroOffset -= 360 * floor(0.5 + (gyroOffset/360));
                 rotationPIDController.setSetpoint(gyroOffset);
                 rotationPIDController.enable();
             }
