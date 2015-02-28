@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Camera extends Subsystem {
+public class Vision extends Subsystem {
     
 	private Relay r1 = new Relay(RobotMap.camSpike1);
 //	CameraServer server;
@@ -21,7 +21,7 @@ public class Camera extends Subsystem {
     int session;
     Image frame;
     
-    public Camera() {
+    public Vision() {
     	
     	frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 

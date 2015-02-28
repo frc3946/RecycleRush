@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot {
     public static Drivetrain drivetrain;
     public static RangeFinders rangefinders;
     public static Elevator elevator;
-    public static CurbFeeler curbfeeler;
+    public static ToteContactSensors curbfeeler;
 	public static FunLights lights;
 //	public static Camera camera;
 	
@@ -54,7 +54,7 @@ public class Robot extends IterativeRobot {
     	drivetrain = new Drivetrain();
     	elevator = new Elevator();
     	rangefinders = new RangeFinders();
-    	curbfeeler = new CurbFeeler();
+    	curbfeeler = new ToteContactSensors();
     	lights = new FunLights();
 //    	camera = new Camera();
     	// PUT ALL SUBSYSTEM DEH-CLAIRE-AYYY-SHINS ABOVE HERE.

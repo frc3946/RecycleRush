@@ -1,29 +1,32 @@
 package org.usfirst.frc.team3946.robot.commands.drive;
 
 import org.usfirst.frc.team3946.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class DriveToCrate extends Command {
-
+	boolean contact;
+	
     public DriveToCrate() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.drivetrain);
+        requires(Robot.curbfeeler);
+    	requires(Robot.drivetrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.driveStraight(.4);
-    //	if(){
-    //		
-    //	}
+    	Robot.drivetrain.driveStraight(0.4); 
+    	contact = Robot.curbfeeler.isPressed();
+    	if (contact == true) {
+    		Robot.drivetrain.getSlideDrive().stop();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
