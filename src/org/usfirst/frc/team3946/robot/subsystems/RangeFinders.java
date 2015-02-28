@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static org.usfirst.frc.team3946.robot.RobotMap.*;
 
 public class RangeFinders extends Subsystem {
-	RangeFinder rf1 = new RangeFinder(lRangeF);
-    RangeFinder rf2 = new RangeFinder(rRangeF);
+	public RangeFinder rf1 = new RangeFinder(lRangeF);
+    public RangeFinder rf2 = new RangeFinder(rRangeF);
 
     public void initDefaultCommand() {
     	setDefaultCommand(new GetDistanceToObstacle());
