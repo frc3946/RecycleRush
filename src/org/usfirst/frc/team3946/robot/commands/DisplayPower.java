@@ -25,15 +25,15 @@ public class DisplayPower extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double elevatorCurrent1 = Robot.pdp.getElevatorCurrent1();
-    	double elevatorCurrent2 = Robot.pdp.getElevatorCurrent2();
-    	maxCurrent1 = Math.max(maxCurrent1, elevatorCurrent1);
-    	maxCurrent2 = Math.max(maxCurrent2, elevatorCurrent2);
+    	//double elevatorCurrent1 = Robot.pdp.getElevatorCurrent1();
+    	//double elevatorCurrent2 = Robot.pdp.getElevatorCurrent2();
+    	//maxCurrent1 = Math.max(maxCurrent1, elevatorCurrent1);
+    	//maxCurrent2 = Math.max(maxCurrent2, elevatorCurrent2);
 
     	SmartDashboard.putNumber("Max Current 1 ", maxCurrent1);
     	SmartDashboard.putNumber("Max Current 2 ", maxCurrent2);
-    	SmartDashbaord.putNumber("Elevator Current 1 ", elevatorCurrent1);
-    	SmartDashbaord.putNumber("Elevator Current 2 ", elevatorCurrent2);
+    	//SmartDashboard.putNumber("Elevator Current 1 ", elevatorCurrent1);
+    	//SmartDashboard.putNumber("Elevator Current 2 ", elevatorCurrent2);
 
 
     }
