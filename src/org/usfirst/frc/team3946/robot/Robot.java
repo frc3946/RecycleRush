@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
     public static Elevator elevator;
     public static CurbFeeler curbfeeler;
 	public static FunLights lights;
-	public static Camera camera;
+	//public static Camera camera;
 	
     private final SendableChooser autonomousChooser = new SendableChooser();
     private final SendableChooser ledChooser = new SendableChooser();
@@ -46,7 +46,7 @@ public class Robot extends IterativeRobot {
     	rangefinders = new RangeFinders();
     	curbfeeler = new CurbFeeler();
     	lights = new FunLights();
-    	camera = new Camera();
+    	//camera = new Camera();
     	// PUT ALL SUBSYSTEM DEH-CLAIRE-AYYY-SHINS ABOVE HERE.
     	oi = new OI();
     	
@@ -67,9 +67,9 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("LED Color", ledChooser);
         
-		vlChooser.addDefault("Off", new SetVisionLights(0));
-		vlChooser.addObject("Tote Tracking", new SetVisionLights(1));
-		vlChooser.addObject("Tote Alignment", new SetVisionLights(2));
+//		vlChooser.addDefault("Off", new SetVisionLights(0));
+//		vlChooser.addObject("Tote Tracking", new SetVisionLights(1));
+//		vlChooser.addObject("Tote Alignment", new SetVisionLights(2));
 
 		SmartDashboard.putData("Vision Lights", vlChooser);
 		
@@ -79,7 +79,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData(rangefinders);
         SmartDashboard.putData(curbfeeler);
         SmartDashboard.putData(lights);
-        SmartDashboard.putData(camera);
+       // SmartDashboard.putData(camera);
 
     }
 

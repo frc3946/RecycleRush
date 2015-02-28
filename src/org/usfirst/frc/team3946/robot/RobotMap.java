@@ -26,8 +26,8 @@ public interface RobotMap {
 	int upperLS = 4;
 	int bottomLS = 5;
 	int lowerLS = 6;
-	int rTouch = 7;
-	int cTouch = 8;
+	int cTouch = 7;
+	int rTouch = 8;
 	int lTouch = 9;
 	
 	// Analog IOs

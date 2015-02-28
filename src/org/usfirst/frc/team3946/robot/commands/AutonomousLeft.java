@@ -11,14 +11,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutonomousLeft extends CommandGroup {
     
-    public  AutonomousLeft() {
-    	addSequential(new ResetGyro());
-    	
+    public  AutonomousLeft() {    	
     	//picks up tote
     	//(new IncLiftSetpoint());
     	
     	//drives to safe zone
-    	addSequential(new AutonomousDrive(2));
-    	//addSequential(new TurnToAngle(90));
+    	addSequential(new AutonomousDrive(1));
+    	addSequential(new TurnToAngle(90));
     }
 }

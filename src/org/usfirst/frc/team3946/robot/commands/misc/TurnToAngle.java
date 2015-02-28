@@ -31,7 +31,6 @@ public class TurnToAngle extends Command {
     	offset = target - gyroReading;
     	//Anti-spinning death machine function
     	error -= 360 * floor(0.5 + (error/360));
-    	///////////////////////////////////////
     	if(abs(error) > 45){
     		speedCoefficient = 1;
     	} else {
