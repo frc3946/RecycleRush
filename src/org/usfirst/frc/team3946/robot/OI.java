@@ -41,6 +41,7 @@ public class OI {
 	    	enableSlideControl.whenPressed(new SlideDrivingCommand());
 			enableArcadeControl.whenPressed(new ArcadeDrivingCommand());
 	    	resetGyro.whenPressed(new ResetGyro());
+	    
     	
 //    	strafeLeft = new JoystickButton(driveController, XboxController.LeftTrigger);
 //    	strafeRight = new JoystickButton(driveController, XboxController.RightTrigger);
