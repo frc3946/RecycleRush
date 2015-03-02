@@ -22,6 +22,7 @@ public class OI {
 		Button resetGyro;
 		Button strafeLeft;
 		Button strafeRight;
+		Button driveToCrate;
 		
 	public XboxController liftController = new XboxController(1);
 		
@@ -38,10 +39,11 @@ public class OI {
     	enableSlideControl = new JoystickButton(driveController, XboxController.Start);
     	enableArcadeControl = new JoystickButton(driveController, XboxController.Back);
     	resetGyro = new JoystickButton(driveController, XboxController.B);
+    	driveToCrate = new JoystickButton(driveController, XboxController.A);
 	    	enableSlideControl.whenPressed(new SlideDrivingCommand());
 			enableArcadeControl.whenPressed(new ArcadeDrivingCommand());
 	    	resetGyro.whenPressed(new ResetGyro());
-	    
+	    	driveToCrate.whenPressed(new DriveToCrate());
     	
 //    	strafeLeft = new JoystickButton(driveController, XboxController.LeftTrigger);
 //    	strafeRight = new JoystickButton(driveController, XboxController.RightTrigger);
@@ -51,13 +53,13 @@ public class OI {
     	// Lift Control Buttons
     	lowerLift = new JoystickButton(driveController, XboxController.LeftTrigger);
     	raiseLift = new JoystickButton(driveController, XboxController.RightTrigger);
-			lowerLift.whileActive(new ElevateWithTriggers());
-			raiseLift.whileActive(new ElevateWithTriggers());
+		lowerLift.whileActive(new ElevateWithTriggers());
+		raiseLift.whileActive(new ElevateWithTriggers());
     	
 		incLiftSetpoint = new JoystickButton(driveController, XboxController.RightBumper);
 		decLiftSetpoint = new JoystickButton(driveController, XboxController.LeftBumper);
-			incLiftSetpoint.whenPressed(new IncLiftSetpoint());
-			decLiftSetpoint.whenPressed(new DecLiftSetpoint());
+		incLiftSetpoint.whenPressed(new IncLiftSetpoint());
+		decLiftSetpoint.whenPressed(new DecLiftSetpoint());
 
         // SmartDashboard Buttons			
         SmartDashboard.putData("Reset Gyro", new ResetGyro());

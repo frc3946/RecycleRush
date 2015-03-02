@@ -22,6 +22,8 @@ public interface RobotMap {
 	int ledSpike3 = 3;					//SPK3 +red -green
 	
 	// Digital IOs
+	int lCurbFeeler = 1;
+	int rCurbFeeler = 2;
 	int topLS = 3;
 	int upperLS = 4;
 	int bottomLS = 5;
