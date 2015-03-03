@@ -2,6 +2,7 @@ package org.usfirst.frc.team3946.robot;
 
 import libraries.XboxController;
 
+import org.usfirst.frc.team3946.robot.commands.AlignToStack;
 import org.usfirst.frc.team3946.robot.commands.drive.*;
 import org.usfirst.frc.team3946.robot.commands.lift.*;
 
@@ -23,6 +24,7 @@ public class OI {
 		Button strafeLeft;
 		Button strafeRight;
 		Button driveToCrate;
+		Button alignToStack;
 		
 	public XboxController liftController = new XboxController(1);
 		
@@ -40,10 +42,12 @@ public class OI {
     	enableArcadeControl = new JoystickButton(driveController, XboxController.Back);
     	resetGyro = new JoystickButton(driveController, XboxController.B);
     	driveToCrate = new JoystickButton(driveController, XboxController.A);
+    	alignToStack = new JoystickButton(driveController, XboxController.Y);
 	    	enableSlideControl.whenPressed(new SlideDrivingCommand());
 			enableArcadeControl.whenPressed(new ArcadeDrivingCommand());
 	    	resetGyro.whenPressed(new ResetGyro());
 	    	driveToCrate.whenPressed(new DriveToCrate());
+	    	alignToStack.whenPressed(new AlignToStack());
     	
 //    	strafeLeft = new JoystickButton(driveController, XboxController.LeftTrigger);
 //    	strafeRight = new JoystickButton(driveController, XboxController.RightTrigger);
