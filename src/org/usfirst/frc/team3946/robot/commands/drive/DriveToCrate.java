@@ -11,7 +11,7 @@ public class DriveToCrate extends Command {
 	
     public DriveToCrate() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.curbfeeler);
+        requires(Robot.toteContact);
     	requires(Robot.drivetrain);
     }
 
@@ -26,7 +26,7 @@ public class DriveToCrate extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	boolean contact = Robot.curbfeeler.isPressed();
+    	boolean contact = Robot.toteContact.isPressed();
     	if (contact == true) {
     		Robot.drivetrain.getSlideDrive().stop();
     		return true;

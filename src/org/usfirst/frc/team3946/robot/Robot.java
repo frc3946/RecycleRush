@@ -43,7 +43,7 @@ public class Robot extends IterativeRobot {
     public static Drivetrain drivetrain;
     public static RangeFinders rangefinders;
     public static Elevator elevator;
-    public static ToteContactSensors curbfeeler;
+    public static ToteContactSensors toteContact;
 	public static FunLights lights;
 	
     private final SendableChooser autonomousChooser = new SendableChooser();
@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot {
     	drivetrain = new Drivetrain();
     	elevator = new Elevator();
     	rangefinders = new RangeFinders();
-    	curbfeeler = new ToteContactSensors();
+    	toteContact = new ToteContactSensors();
     	lights = new FunLights();
 //    	camera = new Camera();
     	// PUT ALL SUBSYSTEM DEH-CLAIRE-AYYY-SHINS ABOVE HERE.
@@ -96,7 +96,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData(drivetrain);
         SmartDashboard.putData(elevator);
         SmartDashboard.putData(rangefinders);
-        SmartDashboard.putData(curbfeeler);
+        SmartDashboard.putData(toteContact);
         SmartDashboard.putData(lights);
 
         frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
@@ -194,6 +194,6 @@ public class Robot extends IterativeRobot {
     public void log() {
     	pdp.log();
     	elevator.log();
-    	curbfeeler.log();
+    	toteContact.log();
     }
 }
