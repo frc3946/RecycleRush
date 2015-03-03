@@ -66,7 +66,7 @@ public class Robot extends IterativeRobot {
     	curbfeeler = new ToteContactSensors();
     	lights = new FunLights();
 //    	camera = new Camera();
-    	// PUT ALL SUBSYSTEM DEH-CLAIRE-AYYY-SHINS ABOVE HERE.
+
     	oi = new OI();
     	
         autonomousChooser.addDefault("Center", new AutonomousCenter());
