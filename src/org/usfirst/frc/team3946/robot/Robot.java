@@ -4,7 +4,12 @@ import org.usfirst.frc.team3946.robot.commands.*;
 import org.usfirst.frc.team3946.robot.commands.misc.*;
 import org.usfirst.frc.team3946.robot.subsystems.*;
 
+import com.ni.vision.NIVision;
+import com.ni.vision.NIVision.Image;
+
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -40,11 +45,15 @@ public class Robot extends IterativeRobot {
     public static Elevator elevator;
     public static ToteContactSensors curbfeeler;
 	public static FunLights lights;
-//	public static Camera camera;
 	
     private final SendableChooser autonomousChooser = new SendableChooser();
     private final SendableChooser ledChooser = new SendableChooser();
 //    private final SendableChooser vlChooser = new SendableChooser();
+    
+    int session;
+    Image frame;
+    NIVision.RawData colorTable;
+    
      //* This function is run when the robot is first started up and should be
      //* used for any initialization code.
      //*
@@ -89,8 +98,13 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData(rangefinders);
         SmartDashboard.putData(curbfeeler);
         SmartDashboard.putData(lights);
-//        SmartDashboard.putData(camera);
 
+        frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+        // The camera name (ex "cam0") can be found through the roborio web interface
+        session = NIVision.IMAQdxOpenCamera("cam0",
+                NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+        NIVision.IMAQdxConfigureGrab(session);
+        colorTable = new NIVision.RawData();
     }
 
     /**
@@ -149,6 +163,25 @@ public class Robot extends IterativeRobot {
 //    		vlCommand.start();
 //    	}
     	log();
+    }
+    
+    public void operatorControl() {
+        NIVision.IMAQdxStartAcquisition(session);
+
+        /**
+         * Grab an image and provide it for the camera server
+         * which will in turn send it to the SmartDashboard.
+         */
+        while (isOperatorControl() && isEnabled()) {
+
+            NIVision.IMAQdxGrab(session, frame, 1);
+            CameraServer.getInstance().setImage(frame);
+            
+            NIVision.imaqWriteJPEGFile(frame, "home/lvuser/images/frame.jpg", 95, colorTable);
+            
+            Timer.delay(0.005);		// wait for a motor update time
+        }
+        NIVision.IMAQdxStopAcquisition(session);
     }
 
     /**
