@@ -28,11 +28,11 @@ public class ToteContactSensors extends Subsystem {
 	}
 	
 	public void log() {
-		SmartDashboard.putData("Left Pressed?", (ContactSwitch) left);
-		SmartDashboard.putData("Center Pressed?", (ContactSwitch) center);
-		SmartDashboard.putData("Right Pressed?", (ContactSwitch) right);
-		SmartDashboard.putData("Left Curb?", (ContactSwitch) lCurb);
-		SmartDashboard.putData("Right Curb?", (ContactSwitch) rCurb);
+		SmartDashboard.putData("Left Touch Pressed?", (ContactSwitch) left);
+		SmartDashboard.putData("Center Touch Pressed?", (ContactSwitch) center);
+		SmartDashboard.putData("Right Touch Pressed?", (ContactSwitch) right);
+		SmartDashboard.putData("Left Curb Pressed?", (ContactSwitch) lCurb);
+		SmartDashboard.putData("Right Curb Pressed?", (ContactSwitch) rCurb);
 	}
 
     public void initDefaultCommand() {
