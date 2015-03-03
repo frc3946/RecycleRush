@@ -15,17 +15,24 @@ public class ToteContactSensors extends Subsystem {
 	ContactSwitch left = new ContactSwitch(RobotMap.lTouch);
 	ContactSwitch center = new ContactSwitch(RobotMap.cTouch);
 	ContactSwitch right = new ContactSwitch(RobotMap.rTouch);
+	ContactSwitch lCurb = new ContactSwitch(RobotMap.lCurbFeeler);
+	ContactSwitch rCurb = new ContactSwitch(RobotMap.rCurbFeeler);
+
 	
 	public boolean isPressed() {
 		return left.get() 
 			|| center.get() 
-			|| right.get();
+			|| right.get()
+			|| lCurb.get()
+			|| rCurb.get();
 	}
 	
 	public void log() {
-		SmartDashboard.putData("Left Pressed?", (ContactSwitch) left);
-		SmartDashboard.putData("Center Pressed?", (ContactSwitch) center);
-		SmartDashboard.putData("Right Pressed?", (ContactSwitch) right);
+		SmartDashboard.putData("Left Touch Pressed?", (ContactSwitch) left);
+		SmartDashboard.putData("Center Touch Pressed?", (ContactSwitch) center);
+		SmartDashboard.putData("Right Touch Pressed?", (ContactSwitch) right);
+		SmartDashboard.putData("Left Curb Pressed?", (ContactSwitch) lCurb);
+		SmartDashboard.putData("Right Curb Pressed?", (ContactSwitch) rCurb);
 	}
 
     public void initDefaultCommand() {
