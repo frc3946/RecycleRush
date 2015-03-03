@@ -43,7 +43,7 @@ public class Robot extends IterativeRobot {
     public static Drivetrain drivetrain;
     public static RangeFinders rangefinders;
     public static Elevator elevator;
-    public static ToteContactSensors curbfeeler;
+    public static ToteContactSensors toteContact;
 	public static FunLights lights;
 	
     private final SendableChooser autonomousChooser = new SendableChooser();
@@ -63,10 +63,10 @@ public class Robot extends IterativeRobot {
     	drivetrain = new Drivetrain();
     	elevator = new Elevator();
     	rangefinders = new RangeFinders();
-    	curbfeeler = new ToteContactSensors();
+    	toteContact = new ToteContactSensors();
     	lights = new FunLights();
 //    	camera = new Camera();
-    	// PUT ALL SUBSYSTEM DEH-CLAIRE-AYYY-SHINS ABOVE HERE.
+
     	oi = new OI();
     	
         autonomousChooser.addDefault("Center", new AutonomousCenter());
@@ -96,7 +96,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData(drivetrain);
         SmartDashboard.putData(elevator);
         SmartDashboard.putData(rangefinders);
-        SmartDashboard.putData(curbfeeler);
+        SmartDashboard.putData(toteContact);
         SmartDashboard.putData(lights);
 
         frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
@@ -104,6 +104,7 @@ public class Robot extends IterativeRobot {
         session = NIVision.IMAQdxOpenCamera("cam0",
                 NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         NIVision.IMAQdxConfigureGrab(session);
+        
         colorTable = new NIVision.RawData();
     }
 
@@ -145,6 +146,7 @@ public class Robot extends IterativeRobot {
     	if (autonomousCommand != null) {
         	autonomousCommand.cancel();
     	}
+    	NIVision.IMAQdxStartAcquisition(session);
     }
 
     /**
@@ -152,6 +154,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        //operatorControl();
         Object color = ledChooser.getSelected();
     	if (color != null && color instanceof Command) {
     		funCommand = (Command) color;
@@ -166,25 +169,30 @@ public class Robot extends IterativeRobot {
     }
     
     public void operatorControl() {
-        NIVision.IMAQdxStartAcquisition(session);
+       // NIVision.IMAQdxStartAcquisition(session);
 
         /**
          * Grab an image and provide it for the camera server
          * which will in turn send it to the SmartDashboard.
          */
-        while (isOperatorControl() && isEnabled()) {
-
+       // while (isOperatorControl() && isEnabled()) {
+    	try{
             NIVision.IMAQdxGrab(session, frame, 1);
             CameraServer.getInstance().setImage(frame);
             
-            NIVision.imaqWriteJPEGFile(frame, "home/lvuser/images/frame.jpg", 95, colorTable);
-            
-            Timer.delay(0.005);		// wait for a motor update time
-        }
-        NIVision.IMAQdxStopAcquisition(session);
+            NIVision.imaqWriteJPEGFile(frame, "/home/lvuser/frame.jpg", 95, colorTable);
+            PrintCommand("Wrote Picture");
+    	} catch (Exception e) {
+    	 PrintCommand(e.getMessage());
+    	}
+        //NIVision.IMAQdxStopAcquisition(session);
     }
 
-    /**
+	private void PrintCommand(String string) {
+		// TODO Auto-generated method stub
+	}
+
+	/**
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
@@ -194,6 +202,6 @@ public class Robot extends IterativeRobot {
     public void log() {
     	pdp.log();
     	elevator.log();
-    	curbfeeler.log();
+    	toteContact.log();
     }
 }
