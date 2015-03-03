@@ -17,11 +17,11 @@ public class DriveToCrate extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drivetrain.driveStraight(0.4);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.drivetrain.driveStraight(0.4);
     }
 
     // Make this return true when this Command no longer needs to run execute()
