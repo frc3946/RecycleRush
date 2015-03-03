@@ -31,6 +31,9 @@ public class DriveToCrate extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	if(contact = true){
+    		return true;
+    	}
         return false;
     }
 
