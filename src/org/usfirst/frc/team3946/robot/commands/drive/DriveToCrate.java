@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3946.robot.commands.drive;
 
 import org.usfirst.frc.team3946.robot.Robot;
+
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -9,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveToCrate extends Command {
 	
 	
-    public DriveToCrate() {
+	public DriveToCrate() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.toteContact);
     	requires(Robot.drivetrain);
