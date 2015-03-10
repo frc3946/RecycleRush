@@ -10,8 +10,8 @@ import static org.usfirst.frc.team3946.robot.RobotMap.*;
 
 public class Drivetrain extends Subsystem {
 	
-
-    public static final double STRAFE_SPEED = 0.6;
+	public static final double DRIVE_SPEED = 0.4;
+    public static final double STRAFE_SPEED = 0.4;
 
     public Talon left = new Talon(driveLeftTalon);
     public Talon right = new Talon(driveRightTalon);
@@ -67,6 +67,11 @@ public class Drivetrain extends Subsystem {
     	}
     	left.set(leftSpeed);
     	right.set(-rightSpeed);
+    }
+    
+    public void strafe(double speed) {
+    	double strafeSpeed = speed;
+    	strafe.set(strafeSpeed);
     }
     
     public BetterGyro getGyro() {

@@ -17,20 +17,22 @@ public interface RobotMap {
 	int t6 = 6;							//T6
 	
 	// Relays
-	int camSpike1 = 1;					//SPK1
-	int ledSpike2 = 2;					//SPK2 +blue -common
-	int ledSpike3 = 3;					//SPK3 +red -green
+	int spike1 = 1;					//SPK1
+	int spike2 = 2;					//SPK2 +blue -common
+	int spike3 = 3;					//SPK3 +red -green
 	
 	// Digital IOs
-	int lCurbFeeler = 1;
-	int rCurbFeeler = 2;
-	int topLS = 3;
-	int upperLS = 4;
-	int bottomLS = 5;
-	int lowerLS = 6;
-	int cTouch = 7;
-	int rTouch = 8;
-	int lTouch = 9;
+	int encoderA = 0;
+	int encoderB = 1;
+	int lCurbFeeler = 2;
+	int rCurbFeeler = 3;
+	int topLS = 4;
+	int upperLS = 5;
+	int bottomLS = 6;
+	int lowerLS = 7;
+	int cTouch = 8;
+	int rTouch = 9;
+	int lTouch = 10;
 	
 	// Analog IOs
 	int driveGyro = 0;

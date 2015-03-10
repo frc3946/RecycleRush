@@ -3,15 +3,17 @@ package org.usfirst.frc.team3946.robot.subsystems;
 import static org.usfirst.frc.team3946.robot.RobotMap.*;
 
 import org.usfirst.frc.team3946.robot.commands.lift.ElevateWithTriggers;
+
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import edu.wpi.first.wpilibj.interfaces.Potentiometer;
+//import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator extends PIDSubsystem {
     public Talon motor1 = new Talon(liftTalon1);
     public Talon motor2 = new Talon(liftTalon2);
-    public Potentiometer pot = new AnalogPotentiometer(liftPot);
+    public Encoder encode = new Encoder(encoderA, encoderB, true, EncodingType.k4X);
     public DigitalInput top = new DigitalInput(topLS);
     public DigitalInput upper = new DigitalInput(upperLS);
     public DigitalInput lower = new DigitalInput(lowerLS);
@@ -22,6 +24,7 @@ public class Elevator extends PIDSubsystem {
 	static double d = 0.0;
 	double height;
     int level = 0;
+    int setMotorDirection;
 
     public double[] potVolts = {
     		0,
@@ -50,7 +53,7 @@ public class Elevator extends PIDSubsystem {
     	super("Elevator", p, i, d);
         setAbsoluteTolerance(0.005);     
         getPIDController().setContinuous(true);
-        
+        encode.setDistancePerPulse(500);
         // Show everything in the LiveWindow
 //        LiveWindow.addSensor("Elevator", "Potentiometer", (AnalogPotentiometer) pot);
 //        LiveWindow.addActuator("M1", "Motor1", (Talon) motor1);
@@ -86,11 +89,11 @@ public class Elevator extends PIDSubsystem {
     }
     
     public void log() {
-    	SmartDashboard.putData("Potentiometer", (AnalogPotentiometer) pot);
     	SmartDashboard.putData("At Top", top);
     	SmartDashboard.putData("Near Top", upper);
     	SmartDashboard.putData("Near Bottom", lower);
     	SmartDashboard.putData("At Bottom", bottom);
+    	SmartDashboard.putNumber("Lift Distance", encode.getDistance());
     }
       
     /**
@@ -98,29 +101,29 @@ public class Elevator extends PIDSubsystem {
      * called by the subsystem.
      */
     protected double returnPIDInput() {
-    	int firstPoint = 0;
-		int secondPoint = 1;
-    	double volts = pot.get();
-    	while(secondPoint < feet.length){
-    		if(volts >= potVolts[firstPoint] ||
-				(volts <= potVolts[secondPoint])){
-    			double slope = potVolts[secondPoint] - potVolts[firstPoint];
-    			slope = slope / (feet[secondPoint] - feet[firstPoint]);
-    			double intercept = potVolts[firstPoint] - feet[firstPoint] * slope;
-    			double distance = (volts - intercept) / slope;
-    			SmartDashboard.putNumber("Elevator Height: ", distance);
-    			return distance;
-    		}
-    		else{
-    			firstPoint++;
-    			secondPoint++;
-    		}
-		 
-    		if(secondPoint >= potVolts.length){
-    			return 0.0;
-    		}
-    	}
-    	return 0.0;
+//    	int firstPoint = 0;
+//		int secondPoint = 1;
+//    	double volts = pot.get();
+//    	while(secondPoint < feet.length){
+//    		if(volts >= potVolts[firstPoint] ||
+//				(volts <= potVolts[secondPoint])){
+//    			double slope = potVolts[secondPoint] - potVolts[firstPoint];
+//    			slope = slope / (feet[secondPoint] - feet[firstPoint]);
+//    			double intercept = potVolts[firstPoint] - feet[firstPoint] * slope;
+//    			double distance = (volts - intercept) / slope;
+//    			SmartDashboard.putNumber("Elevator Height: ", distance);
+//    			return distance;
+//    		}
+//    		else{
+//    			firstPoint++;
+//    			secondPoint++;
+//    		}
+//		 
+//    		if(secondPoint >= potVolts.length){
+//    			return 0.0;
+//    		}
+//    	}
+    	return encode.getDistance();
     }
     
     /**
@@ -136,32 +139,25 @@ public class Elevator extends PIDSubsystem {
     	}
     	// Slow the motor down when secondary switches are engaged.
     	if ((upper.get() == true && output > 0) || (lower.get() == true && output < 0)) {
-    		motor1.set(output * 0.5);
-    		motor2.set(output * 0.5);
+    		motor1.set(output * 0.5 * setMotorDirection);
+    		motor2.set(output * 0.5 * setMotorDirection);
     		return;
         } else {
-        	motor1.set(output);
-        	motor2.set(output);
+        	motor1.set(output * setMotorDirection);
+        	motor2.set(output * setMotorDirection);
         	return;
         }
     }
-    
     // Set maximum
     public void incLevel() {
-    	level++;
-    	if (level > setPoints.length) {
-    		level = setPoints.length;
-    	}
-    	this.setSetpoint(setPoints[level]);
+    	setMotorDirection = 1;
+    	this.setSetpoint(12.1);
     }
     
     // Set minimum
     public void decLevel() {
-    	level--;
-    	if (level < 0){
-    		level = 0;
-    	}
-    	this.setSetpoint(setPoints[level]);
+    	setMotorDirection = -1;
+    	this.setSetpoint(12.1);
     }
     
     public void setLevel(int level) {

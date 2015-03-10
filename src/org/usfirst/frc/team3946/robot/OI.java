@@ -4,7 +4,6 @@ import libraries.XboxController;
 
 import org.usfirst.frc.team3946.robot.commands.drive.*;
 import org.usfirst.frc.team3946.robot.commands.lift.*;
-
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -40,11 +39,10 @@ public class OI {
     	enableArcadeControl = new JoystickButton(driveController, XboxController.Back);
     	resetGyro = new JoystickButton(driveController, XboxController.B);
     	driveToCrate = new JoystickButton(driveController, XboxController.A);
-	    	enableSlideControl.whenPressed(new SlideDrivingCommand());
+    		enableSlideControl.whenPressed(new SlideDrivingCommand());
 			enableArcadeControl.whenPressed(new ArcadeDrivingCommand());
 	    	resetGyro.whenPressed(new ResetGyro());
-	    	driveToCrate.whenPressed(new DriveToCrate());
-    	
+	    	driveToCrate.whenPressed(new DriveToCrate());    	
 //    	strafeLeft = new JoystickButton(driveController, XboxController.LeftTrigger);
 //    	strafeRight = new JoystickButton(driveController, XboxController.RightTrigger);
 //    		strafeLeft.whileActive(new ManualStrafeLeft());
