@@ -17,6 +17,7 @@ public class AutonomousLeft extends CommandGroup {
     	
     	//drives to safe zone
     	addSequential(new AutonomousDrive(1));
-    	addSequential(new TurnToAngle(90));
+    	addSequential(new TimedLift());
+    	//addSequential(new TurnToAngle(90));
     }
 }
