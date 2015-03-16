@@ -2,6 +2,7 @@ package org.usfirst.frc.team3946.robot;
 
 import libraries.XboxController;
 
+import org.usfirst.frc.team3946.robot.commands.AlignToStack;
 import org.usfirst.frc.team3946.robot.commands.drive.*;
 import org.usfirst.frc.team3946.robot.commands.lift.*;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -22,6 +23,7 @@ public class OI {
 		Button strafeLeft;
 		Button strafeRight;
 		Button driveToCrate;
+		Button alignToStack;
 		
 	public XboxController liftController = new XboxController(1);
 		
@@ -39,10 +41,20 @@ public class OI {
     	enableArcadeControl = new JoystickButton(driveController, XboxController.Back);
     	resetGyro = new JoystickButton(driveController, XboxController.B);
     	driveToCrate = new JoystickButton(driveController, XboxController.A);
+<<<<<<< HEAD
     		enableSlideControl.whenPressed(new SlideDrivingCommand());
 			enableArcadeControl.whenPressed(new ArcadeDrivingCommand());
 	    	resetGyro.whenPressed(new ResetGyro());
 	    	driveToCrate.whenPressed(new DriveToCrate());    	
+=======
+    	alignToStack = new JoystickButton(driveController, XboxController.Y);
+	    	enableSlideControl.whenPressed(new SlideDrivingCommand());
+			enableArcadeControl.whenPressed(new ArcadeDrivingCommand());
+	    	resetGyro.whenPressed(new ResetGyro());
+	    	driveToCrate.whenPressed(new DriveToCrate());
+	    	alignToStack.whenPressed(new AlignToStack());
+    	
+>>>>>>> aeb5db708cfbf86e52b298da7bc08340e5a9851a
 //    	strafeLeft = new JoystickButton(driveController, XboxController.LeftTrigger);
 //    	strafeRight = new JoystickButton(driveController, XboxController.RightTrigger);
 //    		strafeLeft.whileActive(new ManualStrafeLeft());
