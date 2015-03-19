@@ -61,17 +61,16 @@ public class Robot extends IterativeRobot {
 
 		oi = new OI();
     	
-        autonomousChooser.addDefault("Center", new AutonomousCenter());
+        autonomousChooser.addDefault("Off", new AutonomousOff());
         autonomousChooser.addObject("Left", new AutonomousLeft());
-        autonomousChooser.addObject("Right", new AutonomousRight());
         
         SmartDashboard.putData("Autonomous Mode", autonomousChooser);
         
-        ledChooser.addDefault("Off", new SetLEDColors(0));
+        ledChooser.addObject("Off", new SetLEDColors(0));
 		ledChooser.addObject("White", new SetLEDColors(1));
 		ledChooser.addObject("Red", new SetLEDColors(2));
 		ledChooser.addObject("Blue", new SetLEDColors(3));
-		ledChooser.addObject("Green", new SetLEDColors(4));
+		ledChooser.addDefault("Green", new SetLEDColors(4));
 		ledChooser.addObject("Yellow", new SetLEDColors(5));
 		ledChooser.addObject("Cyan", new SetLEDColors(6));
 		ledChooser.addObject("Magenta", new SetLEDColors(7));

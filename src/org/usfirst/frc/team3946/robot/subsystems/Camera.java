@@ -47,6 +47,12 @@ public class Camera extends Subsystem implements Runnable {
 	public void run() {
 		while (true) {
 			grabImage();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }
