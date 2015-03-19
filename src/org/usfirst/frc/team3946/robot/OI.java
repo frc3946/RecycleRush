@@ -3,7 +3,6 @@ package org.usfirst.frc.team3946.robot;
 import libraries.XboxController;
 
 import org.usfirst.frc.team3946.robot.commands.AlignToStack;
-import org.usfirst.frc.team3946.robot.commands.DriveToCrate;
 import org.usfirst.frc.team3946.robot.commands.drive.*;
 import org.usfirst.frc.team3946.robot.commands.lift.*;
 
@@ -18,11 +17,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
 
 	public XboxController driveController = new XboxController(0);
-//	public XboxController liftController = new XboxController(1);
 		
     public OI() {
    		driveController.setDeadband(0.2);
-//		liftController.setDeadband(0.2);
     	
     	// Drive Control Buttons
     	Button enableSlideControl = new JoystickButton(driveController, XboxController.Start);
@@ -72,7 +69,4 @@ public class OI {
     public XboxController getDriveController() {
     	return driveController;
     }
-//    public XboxController getLiftController() {
-//   		return liftController;
-//    }
 }

@@ -11,10 +11,10 @@ public interface RobotMap {
 	// Speed Controllers
 	int driveLeftTalon = 1;				//T1
 	int driveRightTalon = 2;			//T2
-	int driveStrafeTalon = 3;			//T3
+	int driveStrafeTalon = 6;			//T6
 	int liftTalon1 = 4;					//T4
 	int liftTalon2 = 5;					//T5
-	int t6 = 6;							//T6
+	int spare = 3;						//T3
 	
 	// Relays
 	int spike1 = 1;					//SPK1
@@ -26,10 +26,10 @@ public interface RobotMap {
 	int encoderB = 1;
 	int lCurbFeeler = 2;
 	int rCurbFeeler = 3;
-	int topLS = 4;
-	int upperLS = 5;
+//	int topLS = 4;
+//	int upperLS = 5;
 	int bottomLS = 6;
-	int lowerLS = 7;
+	int lowerLS = 4;
 	int cTouch = 8;
 	int rTouch = 9;
 	int lTouch = 10;

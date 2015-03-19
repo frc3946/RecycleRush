@@ -14,8 +14,8 @@ public class Elevator extends PIDSubsystem {
     public Talon motor1 = new Talon(liftTalon1);
     public Talon motor2 = new Talon(liftTalon2);
     public Encoder encode = new Encoder(encoderA, encoderB, true, EncodingType.k4X);
-    public DigitalInput top = new DigitalInput(topLS);
-    public DigitalInput upper = new DigitalInput(upperLS);
+//    public DigitalInput top = new DigitalInput(topLS);
+//    public DigitalInput upper = new DigitalInput(upperLS);
     public DigitalInput lower = new DigitalInput(lowerLS);
     public DigitalInput bottom = new DigitalInput(bottomLS);
     
@@ -95,8 +95,8 @@ public class Elevator extends PIDSubsystem {
     }
     
     public void log() {
-    	SmartDashboard.putData("At Top", top);
-    	SmartDashboard.putData("Near Top", upper);
+//    	SmartDashboard.putData("At Top", top);
+//    	SmartDashboard.putData("Near Top", upper);
     	SmartDashboard.putData("Near Bottom", lower);
     	SmartDashboard.putData("At Bottom", bottom);
     	SmartDashboard.putNumber("Lift Distance", encode.getDistance());
@@ -138,13 +138,13 @@ public class Elevator extends PIDSubsystem {
      */
     protected void usePIDOutput(double output) {
         // Disables motors when absolute limit switches are engaged.
-    	if ((top.get() == true && output > 0) || (bottom.get() == true && output < 0)) {
+    	if (bottom.get() == true && output < 0) {
     		motor1.set(0);
     		motor2.set(0);
     		return;
     	}
     	// Slows motors down when secondary switches are engaged.
-    	if ((upper.get() == true && output > 0) || (lower.get() == true && output < 0)) {
+    	if (lower.get() == true && output < 0) {
     		motor1.set(output * 0.5 * setMotorDirection);
     		motor2.set(output * 0.5 * setMotorDirection);
     		return;
