@@ -3,8 +3,10 @@ package org.usfirst.frc.team3946.robot;
 import libraries.XboxController;
 
 import org.usfirst.frc.team3946.robot.commands.AlignToStack;
+import org.usfirst.frc.team3946.robot.commands.DriveToCrate;
 import org.usfirst.frc.team3946.robot.commands.drive.*;
 import org.usfirst.frc.team3946.robot.commands.lift.*;
+
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,40 +18,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
 
 	public XboxController driveController = new XboxController(0);
-		
-		Button enableSlideControl;
-		Button enableArcadeControl;
-		Button resetGyro;
-		Button strafeLeft;
-		Button strafeRight;
-		Button driveToCrate;
-		Button alignToStack;
-		
-	public XboxController liftController = new XboxController(1);
-		
-		Button lowerLift;
-		Button raiseLift;
-		Button incLiftSetpoint;
-		Button decLiftSetpoint;
+//	public XboxController liftController = new XboxController(1);
 		
     public OI() {
    		driveController.setDeadband(0.2);
-		liftController.setDeadband(0.2);
+//		liftController.setDeadband(0.2);
     	
     	// Drive Control Buttons
-    	enableSlideControl = new JoystickButton(driveController, XboxController.Start);
-    	enableArcadeControl = new JoystickButton(driveController, XboxController.Back);
-    	resetGyro = new JoystickButton(driveController, XboxController.B);
-    	driveToCrate = new JoystickButton(driveController, XboxController.A);
+    	Button enableSlideControl = new JoystickButton(driveController, XboxController.Start);
+    	Button enableArcadeControl = new JoystickButton(driveController, XboxController.Back);
+    	Button resetGyro = new JoystickButton(driveController, XboxController.B);
+    	//driveToCrate = new JoystickButton(driveController, XboxController.A);
     		enableSlideControl.whenPressed(new SlideDrivingCommand());
 			enableArcadeControl.whenPressed(new ArcadeDrivingCommand());
 	    	resetGyro.whenPressed(new ResetGyro());
-	    	driveToCrate.whenPressed(new DriveToCrate());    	
-    	alignToStack = new JoystickButton(driveController, XboxController.Y);
-	    	enableSlideControl.whenPressed(new SlideDrivingCommand());
-			enableArcadeControl.whenPressed(new ArcadeDrivingCommand());
-	    	resetGyro.whenPressed(new ResetGyro());
-	    	driveToCrate.whenPressed(new DriveToCrate());
+	    	//driveToCrate.whenPressed(new DriveToCrate());    	
+	    Button alignToStack = new JoystickButton(driveController, XboxController.Y);
 	    	alignToStack.whenPressed(new AlignToStack());
     	
 //    	strafeLeft = new JoystickButton(driveController, XboxController.LeftTrigger);
@@ -58,21 +42,25 @@ public class OI {
 //    		strafeRight.whileActive(new ManualStrafeRight());
     	
     	// Lift Control Buttons
-    	lowerLift = new JoystickButton(driveController, XboxController.LeftTrigger);
-    	raiseLift = new JoystickButton(driveController, XboxController.RightTrigger);
-		lowerLift.whileActive(new ElevateWithTriggers());
-		raiseLift.whileActive(new ElevateWithTriggers());
+	    Button lowerLift = new JoystickButton(driveController, XboxController.LeftTrigger);
+	    Button raiseLift = new JoystickButton(driveController, XboxController.RightTrigger);
+			lowerLift.whileActive(new ElevateWithTriggers());
+			raiseLift.whileActive(new ElevateWithTriggers());
     	
-		incLiftSetpoint = new JoystickButton(driveController, XboxController.RightBumper);
-		decLiftSetpoint = new JoystickButton(driveController, XboxController.LeftBumper);
-		incLiftSetpoint.whenPressed(new IncLiftSetpoint());
-		decLiftSetpoint.whenPressed(new DecLiftSetpoint());
+		Button incLiftSetpoint = new JoystickButton(driveController, XboxController.RightBumper);
+		Button decLiftSetpoint = new JoystickButton(driveController, XboxController.LeftBumper);
+			incLiftSetpoint.whenPressed(new IncLiftSetpoint());
+			decLiftSetpoint.whenPressed(new DecLiftSetpoint());
 
+		Button switchOverride = new JoystickButton(driveController, XboxController.B);
+			switchOverride.whenPressed(new SwitchOverride());
+			
         // SmartDashboard Buttons			
         SmartDashboard.putData("Reset Gyro", new ResetGyro());
         SmartDashboard.putData("Enable Slide", new SlideDrivingCommand());
         SmartDashboard.putData("Enable Arcade", new ArcadeDrivingCommand());
-        
+       
+        SmartDashboard.putData("Switch Override", new SwitchOverride());
         SmartDashboard.putData("Raise Elevator", new IncLiftSetpoint());
         SmartDashboard.putData("Lower Elevator", new DecLiftSetpoint());
         SmartDashboard.putData("Floor", new SetElevatorSetpoint(0));
@@ -84,7 +72,7 @@ public class OI {
     public XboxController getDriveController() {
     	return driveController;
     }
-    public XboxController getLiftController() {
-    	return liftController;
-    }
+//    public XboxController getLiftController() {
+//   		return liftController;
+//    }
 }

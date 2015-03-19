@@ -35,8 +35,8 @@ public interface RobotMap {
 	int lTouch = 10;
 	
 	// Analog IOs
-	int driveGyro = 0;
-	int liftPot = 1;				//POT
+	int driveGyro = 0;				//disabled
+	int liftPot = 1;				//disabled
 	int lRangeF = 2;				//RF1
 	int rRangeF = 3;				//RF2
 }

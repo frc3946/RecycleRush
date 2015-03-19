@@ -23,10 +23,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * 2. Update drivetrain to use encoder.
  * 3. Gyro????
  * 4. Autonomous pickup
- * 5. Autonomous stack
- * 6. Get camera working
- * 7. Limit switch override
- * 8. Test viability of two person team
  */
 public class Robot extends IterativeRobot {
     Command autonomousCommand;

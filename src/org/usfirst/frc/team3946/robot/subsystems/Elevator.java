@@ -25,7 +25,8 @@ public class Elevator extends PIDSubsystem {
 	double height;
     int level = 0;
     int setMotorDirection;
-
+    boolean override = false;
+    
     public double[] potVolts = {
     		0,
     		.167,
@@ -36,8 +37,7 @@ public class Elevator extends PIDSubsystem {
     		1
     };
     
-
-     public double[] setPoints = {
+    public double[] setPoints = {
     		 0,
       		(12.1 / 12),
       		(24.2 / 12),
@@ -45,7 +45,7 @@ public class Elevator extends PIDSubsystem {
       		(48.4 / 12),
       		(60.5 / 12),
       		(72.6 / 12)
-     };
+    };
     
     public int[] feet = {0, 1, 2, 3, 4, 5, 6};
 
@@ -54,8 +54,6 @@ public class Elevator extends PIDSubsystem {
         setAbsoluteTolerance(0.005);     
         getPIDController().setContinuous(true);
         encode.setDistancePerPulse(500);
-        // Show everything in the LiveWindow
-//        LiveWindow.addSensor("Elevator", "Potentiometer", (AnalogPotentiometer) pot);
 //        LiveWindow.addActuator("M1", "Motor1", (Talon) motor1);
 //        LiveWindow.addActuator("M2", "Motor2", (Talon) motor2);
 //        LiveWindow.addActuator("Elevator", "PID", getPIDController());
@@ -66,21 +64,29 @@ public class Elevator extends PIDSubsystem {
     }
     
     public void elevate(double input) {
-    	// Turns motors off when limit switches are engaged.
-//		if ((top.get() == true && input > 0) || (bottom.get() == true && input < 0)) {
-//			motor1.set(0);
-//			motor2.set(0);
-//			return;
-//		}
-//		// Slow motors down when secondary switches are engaged.
-//		if ((upper.get() == true && input > 0) || (lower.get() == true && input < 0)) {
-//			motor1.set(input * 0.5);
-//			motor2.set(input * 0.5);
-//			return;
-//		} else {
+	    if (override = true) {
+	    	motor1.set(input);
+			motor2.set(input);
+			return;
+	    }
+	    
+	    // Turns motors off when limit switches are engaged.
+		if ((top.get() == true && input > 0) || (bottom.get() == true && input < 0)) {
+			motor1.set(0);
+			motor2.set(0);
+			return;
+		}
+		// Slow motors down when secondary switches are engaged.
+		else if ((upper.get() == true && input > 0) || (lower.get() == true && input < 0)) {
+			motor1.set(input * 0.5);
+			motor2.set(input * 0.5);
+			return;
+		} 
+		// Take the raw input if no switches are engaged.
+		else {
 	    	motor1.set(input);
 	    	motor2.set(input);
-//	    }
+		}
     }
     
     public void stop() {
@@ -131,13 +137,13 @@ public class Elevator extends PIDSubsystem {
      * the subsystem.
      */
     protected void usePIDOutput(double output) {
-        // Turns motor off when limit switches are engaged.
+        // Disables motors when absolute limit switches are engaged.
     	if ((top.get() == true && output > 0) || (bottom.get() == true && output < 0)) {
     		motor1.set(0);
     		motor2.set(0);
     		return;
     	}
-    	// Slow the motor down when secondary switches are engaged.
+    	// Slows motors down when secondary switches are engaged.
     	if ((upper.get() == true && output > 0) || (lower.get() == true && output < 0)) {
     		motor1.set(output * 0.5 * setMotorDirection);
     		motor2.set(output * 0.5 * setMotorDirection);
@@ -148,6 +154,12 @@ public class Elevator extends PIDSubsystem {
         	return;
         }
     }
+    
+    public void switchOverride () {
+    	override = !override;
+    	SmartDashboard.putBoolean("Override?", override);
+    }
+    
     // Set maximum
     public void incLevel() {
     	setMotorDirection = 1;
