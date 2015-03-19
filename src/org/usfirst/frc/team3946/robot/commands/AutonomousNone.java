@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonomousOff extends CommandGroup {
+public class AutonomousNone extends CommandGroup {
      
-    public  AutonomousOff() {
+    public  AutonomousNone() {
     	addSequential(new ResetGyro());
 //    	
 //    	//pick up tote

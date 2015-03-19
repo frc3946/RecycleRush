@@ -20,6 +20,7 @@ public class SlideDrivingCommand extends Command {
      * value is scaled down to this value.
      */
     public static final double MAX_ROTATION = 0.5;
+    public static final double MAX_STRAFE = 0.6;
 
     public SlideDrivingCommand() {
         requires(drivetrain);
@@ -43,17 +44,20 @@ public class SlideDrivingCommand extends Command {
         double z = xbox.getRightStickX();
         double angle = drivetrain.gyro.getAngle(); 
         
+        double scaledX = x;
+        if (abs(x) > MAX_STRAFE) scaledX += x < 0 ? -MAX_STRAFE : MAX_STRAFE;
+        
         double scaledZ = z;
         // Scale z down so it is never greater than MAX_ROTATION.
         if (abs(z) > MAX_ROTATION) scaledZ += z < 0 ? -MAX_ROTATION : MAX_ROTATION;
         
         // Send debugging values.
-        SmartDashboard.putNumber("X", x);
-        SmartDashboard.putNumber("Y", y);
-        SmartDashboard.putNumber("Rotation", scaledZ);
-        SmartDashboard.putNumber("Gyro", angle);
+//        SmartDashboard.putNumber("X", scaledX);
+//        SmartDashboard.putNumber("Y", y);
+//        SmartDashboard.putNumber("Rotation", scaledZ);
+//        SmartDashboard.putNumber("Gyro", angle);
         
-        drivetrain.getSlideDrive().drive(x, y, scaledZ, angle);
+        drivetrain.getSlideDrive().drive(scaledX, y, scaledZ, angle);
     }
 
     /**

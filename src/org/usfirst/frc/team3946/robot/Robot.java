@@ -61,7 +61,7 @@ public class Robot extends IterativeRobot {
 
 		oi = new OI();
     	
-        autonomousChooser.addDefault("Off", new AutonomousOff());
+        autonomousChooser.addDefault("No Autonomous", new AutonomousNone());
         autonomousChooser.addObject("Left", new AutonomousLeft());
         
         SmartDashboard.putData("Autonomous Mode", autonomousChooser);
@@ -77,8 +77,8 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("LED Color", ledChooser);
         
-		vlChooser.addDefault("Off", new SetVisionLights(0));
-		vlChooser.addObject("On", new SetVisionLights(1));
+		vlChooser.addDefault("Cam LEDs Off", new SetVisionLights(0));
+		vlChooser.addObject("Cam LEDs On", new SetVisionLights(1));
 
 		SmartDashboard.putData("Vision Lights", vlChooser);
 		

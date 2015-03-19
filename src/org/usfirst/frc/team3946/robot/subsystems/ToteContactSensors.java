@@ -12,25 +12,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ToteContactSensors extends Subsystem {
 	
-	ContactSwitch left = new ContactSwitch(RobotMap.lTouch);
-	ContactSwitch center = new ContactSwitch(RobotMap.cTouch);
-	ContactSwitch right = new ContactSwitch(RobotMap.rTouch);
+//	ContactSwitch left = new ContactSwitch(RobotMap.lTouch);
+//	ContactSwitch center = new ContactSwitch(RobotMap.cTouch);
+//	ContactSwitch right = new ContactSwitch(RobotMap.rTouch);
 	ContactSwitch lCurb = new ContactSwitch(RobotMap.lCurbFeeler);
 	ContactSwitch rCurb = new ContactSwitch(RobotMap.rCurbFeeler);
 
 	
 	public boolean isPressed() {
-		return left.get() 
-			|| center.get() 
-			|| right.get()
-			|| lCurb.get()
+		return lCurb.get()
 			|| rCurb.get();
+//			|| left.get() 
+//			|| center.get() 
+//			|| right.get();
 	}
 	
 	public void log() {
-		SmartDashboard.putData("Left Touch Pressed?", (ContactSwitch) left);
-		SmartDashboard.putData("Center Touch Pressed?", (ContactSwitch) center);
-		SmartDashboard.putData("Right Touch Pressed?", (ContactSwitch) right);
+//		SmartDashboard.putData("Left Touch Pressed?", (ContactSwitch) left);
+//		SmartDashboard.putData("Center Touch Pressed?", (ContactSwitch) center);
+//		SmartDashboard.putData("Right Touch Pressed?", (ContactSwitch) right);
 		SmartDashboard.putData("Left Curb Pressed?", (ContactSwitch) lCurb);
 		SmartDashboard.putData("Right Curb Pressed?", (ContactSwitch) rCurb);
 	}

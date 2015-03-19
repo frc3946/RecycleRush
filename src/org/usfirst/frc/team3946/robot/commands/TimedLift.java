@@ -8,9 +8,10 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class TimedLift extends Command {
-
-    public TimedLift() {
+	double speed;
+    public TimedLift(double input) {
     	requires(Robot.elevator);
+    	speed = input;
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +22,7 @@ public class TimedLift extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.elevator.elevate(.4);
+    	Robot.elevator.elevate(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
