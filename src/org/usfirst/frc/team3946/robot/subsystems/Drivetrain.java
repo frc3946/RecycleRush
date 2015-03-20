@@ -56,15 +56,15 @@ public class Drivetrain extends Subsystem {
     public void driveStraight(double speed) {
     	double leftSpeed = speed;
     	double rightSpeed = speed;
-    	double gyroValue;
-    	gyroValue = (Math.abs(gyro.getAngle()) / 45);
-    	if(gyro.getAngle() > 0){
-    		leftSpeed = leftSpeed * (1 - gyroValue);
-    		rightSpeed = rightSpeed * (1 + gyroValue);
-    	} else {
-    		leftSpeed = leftSpeed * (1 + gyroValue);
-    		rightSpeed = rightSpeed * (1 - gyroValue);
-    	}
+//    	double gyroValue;
+//    	gyroValue = (Math.abs(gyro.getAngle()) / 45);
+//    	if(gyro.getAngle() > 0){
+//    		leftSpeed = leftSpeed * (1 - gyroValue);
+//    		rightSpeed = rightSpeed * (1 + gyroValue);
+//    	} else {
+//    		leftSpeed = leftSpeed * (1 + gyroValue);
+//    		rightSpeed = rightSpeed * (1 - gyroValue);
+//    	}
     	left.set(leftSpeed);
     	right.set(-rightSpeed);
     }

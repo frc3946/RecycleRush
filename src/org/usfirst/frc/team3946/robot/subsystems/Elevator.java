@@ -64,29 +64,29 @@ public class Elevator extends PIDSubsystem {
     }
     
     public void elevate(double input) {
-	    if (override == true) {
-	    	motor1.set(input);
-			motor2.set(input);
-			return;
-	    }
-	    
-	    // Turns motors off when limit switches are engaged.
-		if (bottom.get() == true && input < 0) {
-			motor1.set(0);
-			motor2.set(0);
-			return;
-		}
-		// Slow motors down when secondary switches are engaged.
-		else if (lower.get() == true && input < 0) {
-			motor1.set(input * 0.5);
-			motor2.set(input * 0.5);
-			return;
-		} 
-		// Take the raw input if no switches are engaged.
-		else {
+//	    if (override == true) {
+//	    	motor1.set(input);
+//			motor2.set(input);
+//			return;
+//	    }
+//	    
+//	    // Turns motors off when limit switches are engaged.
+//		if (bottom.get() == true && input < 0) {
+//			motor1.set(0);
+//			motor2.set(0);
+//			return;
+//		}
+//		// Slow motors down when secondary switches are engaged.
+//		else if (lower.get() == true && input < 0) {
+//			motor1.set(input * 0.5);
+//			motor2.set(input * 0.5);
+//			return;
+//		} 
+//		// Take the raw input if no switches are engaged.
+//		else {
 	    	motor1.set(input);
 	    	motor2.set(input);
-		}
+//		}
     }
     
     public void stop() {

@@ -2,7 +2,6 @@ package org.usfirst.frc.team3946.robot;
 
 import libraries.XboxController;
 
-import org.usfirst.frc.team3946.robot.commands.AlignToStack;
 import org.usfirst.frc.team3946.robot.commands.drive.*;
 import org.usfirst.frc.team3946.robot.commands.lift.*;
 
@@ -30,8 +29,8 @@ public class OI {
 			enableArcadeControl.whenPressed(new ArcadeDrivingCommand());
 	    	resetGyro.whenPressed(new ResetGyro());
 	    	//driveToCrate.whenPressed(new DriveToCrate());    	
-	    Button alignToStack = new JoystickButton(driveController, XboxController.Y);
-	    	alignToStack.whenPressed(new AlignToStack());
+//	    Button alignToStack = new JoystickButton(driveController, XboxController.Y);
+//	    	alignToStack.whenPressed(new AlignToStack());
     	
 //    	strafeLeft = new JoystickButton(driveController, XboxController.LeftTrigger);
 //    	strafeRight = new JoystickButton(driveController, XboxController.RightTrigger);
@@ -58,11 +57,11 @@ public class OI {
         SmartDashboard.putData("Enable Arcade", new ArcadeDrivingCommand());
        
         SmartDashboard.putData("Switch Override", new SwitchOverride());
-        SmartDashboard.putData("Raise Elevator", new IncLiftSetpoint());
-        SmartDashboard.putData("Lower Elevator", new DecLiftSetpoint());
-        SmartDashboard.putData("Floor", new SetElevatorSetpoint(0));
-        SmartDashboard.putData("Platform", new SetElevatorSetpoint(1));
-        SmartDashboard.putData("Step", new SetElevatorSetpoint(2));
+//        SmartDashboard.putData("Raise Elevator", new IncLiftSetpoint());
+//        SmartDashboard.putData("Lower Elevator", new DecLiftSetpoint());
+//        SmartDashboard.putData("Floor", new SetElevatorSetpoint(0));
+//        SmartDashboard.putData("Platform", new SetElevatorSetpoint(1));
+//        SmartDashboard.putData("Step", new SetElevatorSetpoint(2));
        
     }
     

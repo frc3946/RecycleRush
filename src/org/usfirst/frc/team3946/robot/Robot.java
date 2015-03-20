@@ -32,7 +32,7 @@ public class Robot extends IterativeRobot {
     public static OI oi;
     public static PDP pdp;
     public static Drivetrain drivetrain;
-    public static RangeFinders rangefinders;
+//    public static RangeFinders rangefinders;
     public static Elevator elevator;
     public static ToteContactSensors toteContact;
 	public static FunLights lights;
@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
     	pdp = new PDP();
     	drivetrain = new Drivetrain();
     	elevator = new Elevator();
-    	rangefinders = new RangeFinders();
+//    	rangefinders = new RangeFinders();
     	toteContact = new ToteContactSensors();
     	lights = new FunLights();
     	vl = new VisionLights();
@@ -85,7 +85,7 @@ public class Robot extends IterativeRobot {
         // Show what command the subsystem is running on the SmartDashboard.
         SmartDashboard.putData(drivetrain);
         SmartDashboard.putData(elevator);
-        SmartDashboard.putData(rangefinders);
+//        SmartDashboard.putData(rangefinders);
         SmartDashboard.putData(toteContact);
         SmartDashboard.putData(lights);
     }
