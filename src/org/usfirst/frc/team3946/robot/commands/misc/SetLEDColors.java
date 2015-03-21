@@ -16,10 +16,18 @@ public class SetLEDColors extends Command {
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {}
+    protected void initialize() {
+    }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
+//    protected void execute() {
+//    	if(isTimedOut()){
+//    	//	Rainbow();
+//    		setTimeout(5.0);
+//    	}
+//    }
+    protected void execute(){
+    		
     	switch (selection) {
     	case 0: 
     		lights.Off();
@@ -47,6 +55,10 @@ public class SetLEDColors extends Command {
     		break;
     	}
     	System.out.println("Selection = " + selection );
+//    	selection++;
+//    	if(selection > 8){
+//    		selection = 0;
+//    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
