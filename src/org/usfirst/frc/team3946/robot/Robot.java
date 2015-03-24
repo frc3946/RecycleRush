@@ -62,7 +62,8 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
     	
         autonomousChooser.addDefault("No Autonomous", new AutonomousNone());
-        autonomousChooser.addObject("Left", new AutonomousLeft());
+        autonomousChooser.addObject("Left Yellow Tote", new AutonomousLeft());
+        autonomousChooser.addObject("Pull Bins Down", new AutoDriveNoLift());
         
         SmartDashboard.putData("Autonomous Mode", autonomousChooser);
         

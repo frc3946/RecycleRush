@@ -3,6 +3,7 @@ package org.usfirst.frc.team3946.robot.commands.misc;
 import static org.usfirst.frc.team3946.robot.Robot.*;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *
@@ -53,12 +54,10 @@ public class SetLEDColors extends Command {
     	case 7:
     		lights.Magenta();
     		break;
-    	}
+    	}    		
+    		
+
     	System.out.println("Selection = " + selection );
-//    	selection++;
-//    	if(selection > 8){
-//    		selection = 0;
-//    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

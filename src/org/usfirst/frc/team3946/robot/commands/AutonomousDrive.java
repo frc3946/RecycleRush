@@ -21,7 +21,8 @@ double v;
 	 }
 	 // Called repeatedly when this Command is scheduled to run
 	 protected void execute() {
-		 drivetrain.driveStraight(v);
+		 //drivetrain.driveStraight(v);
+		 drivetrain.getSlideDrive().drive(0, v, 0);
 	 }
 	 // Make this return true when this Command no longer needs to run execute()
 	 protected boolean isFinished() {
@@ -29,7 +30,8 @@ double v;
 	 }
 	 // Called once after isFinished returns true
 	 protected void end() {
-		 drivetrain.driveStraight(0);
+		 //drivetrain.driveStraight(0);
+		 drivetrain.getSlideDrive().drive(0, v, 0);
 	 }
 	 // Called when another command which requires one or more of the same
 	 // subsystems is scheduled to run
