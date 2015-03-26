@@ -3,7 +3,6 @@ package org.usfirst.frc.team3946.robot.commands.drive;
 import libraries.XboxController;
 import static org.usfirst.frc.team3946.robot.Robot.*;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static java.lang.Math.abs;
 
 /**
@@ -57,7 +56,7 @@ public class SlideDrivingCommand extends Command {
 //        SmartDashboard.putNumber("Y", y);
 //        SmartDashboard.putNumber("Rotation", scaledZ);
 //        SmartDashboard.putNumber("Gyro", angle);
-        
+         
         if (SlowMoMode.slowMoMode == true) {
         	x *= 0.5;
         	y *= 0.5;
