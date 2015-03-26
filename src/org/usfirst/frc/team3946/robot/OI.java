@@ -40,13 +40,16 @@ public class OI {
     	// Lift Control Buttons
 	    Button lowerLift = new JoystickButton(driveController, XboxController.LeftTrigger);
 	    Button raiseLift = new JoystickButton(driveController, XboxController.RightTrigger);
-			lowerLift.whileActive(new ElevateWithTriggers());
+			lowerLift.whileActive(new ElevateWithTriggers());                      
 			raiseLift.whileActive(new ElevateWithTriggers());
-    	
-		Button incLiftSetpoint = new JoystickButton(driveController, XboxController.RightBumper);
-		Button decLiftSetpoint = new JoystickButton(driveController, XboxController.LeftBumper);
-			incLiftSetpoint.whenPressed(new IncLiftSetpoint());
-			decLiftSetpoint.whenPressed(new DecLiftSetpoint());
+    	                                       
+		Button slowMoMode = new JoystickButton(driveController, XboxController.RightBumper);
+			slowMoMode.whileActive(new SlowMoMode());
+		
+//		Button incLiftSetpoint = new JoystickButton(driveController, XboxController.RightBumper);
+//		Button decLiftSetpoint = new JoystickButton(driveController, XboxController.LeftBumper);
+//			incLiftSetpoint.whenPressed(new IncLiftSetpoint());
+//			decLiftSetpoint.whenPressed(new DecLiftSetpoint());
 
 		Button switchOverride = new JoystickButton(driveController, XboxController.B);
 			switchOverride.whenPressed(new SwitchOverride());
