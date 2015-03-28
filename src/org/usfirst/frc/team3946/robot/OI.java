@@ -2,6 +2,7 @@ package org.usfirst.frc.team3946.robot;
 
 import libraries.XboxController;
 
+import org.usfirst.frc.team3946.robot.commands.DriveToCrate;
 import org.usfirst.frc.team3946.robot.commands.drive.*;
 import org.usfirst.frc.team3946.robot.commands.lift.*;
 
@@ -24,11 +25,11 @@ public class OI {
     	Button enableSlideControl = new JoystickButton(driveController, XboxController.Start);
     	Button enableArcadeControl = new JoystickButton(driveController, XboxController.Back);
     	Button resetGyro = new JoystickButton(driveController, XboxController.B);
-    	//driveToCrate = new JoystickButton(driveController, XboxController.A);
+    	Button driveToCrate = new JoystickButton(driveController, XboxController.A);
     		enableSlideControl.whenPressed(new SlideDrivingCommand());
 			enableArcadeControl.whenPressed(new ArcadeDrivingCommand());
 	    	resetGyro.whenPressed(new ResetGyro());
-	    	//driveToCrate.whenPressed(new DriveToCrate());    	
+	    	driveToCrate.whenPressed(new DriveToCrate());    	
 //	    Button alignToStack = new JoystickButton(driveController, XboxController.Y);
 //	    	alignToStack.whenPressed(new AlignToStack());
     	
