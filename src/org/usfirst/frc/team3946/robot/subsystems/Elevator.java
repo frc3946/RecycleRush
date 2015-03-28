@@ -37,8 +37,6 @@ public class Elevator extends PIDSubsystem {
       		(72.6 / 12)
     };
     
-    public int[] feet = {0, 1, 2, 3, 4, 5, 6};
-
     public Elevator() {
     	super("Elevator", p, i, d);
         setAbsoluteTolerance(0.005);     
