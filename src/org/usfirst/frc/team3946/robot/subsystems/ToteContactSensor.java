@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class ToteContactSensors extends Subsystem {
+public class ToteContactSensor extends Subsystem {
 	
 //	ContactSwitch left = new ContactSwitch(RobotMap.lTouch);
 //	ContactSwitch center = new ContactSwitch(RobotMap.cTouch);

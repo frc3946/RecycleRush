@@ -1,9 +1,7 @@
 package org.usfirst.frc.team3946.robot.commands.misc;
 
-import static org.usfirst.frc.team3946.robot.Robot.*;
-
+import static org.usfirst.frc.team3946.robot.Robot.lights;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *
@@ -21,12 +19,6 @@ public class SetLEDColors extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-//    protected void execute() {
-//    	if(isTimedOut()){
-//    	//	Rainbow();
-//    		setTimeout(5.0);
-//    	}
-//    }
     protected void execute(){
     		
     	switch (selection) {
@@ -56,7 +48,6 @@ public class SetLEDColors extends Command {
     		break;
     	}    		
     		
-
     	System.out.println("Selection = " + selection );
     }
 

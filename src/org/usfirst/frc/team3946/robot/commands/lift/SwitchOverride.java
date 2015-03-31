@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3946.robot.commands.lift;
 
-import org.usfirst.frc.team3946.robot.Robot;
+import static org.usfirst.frc.team3946.robot.Robot.elevator;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -18,7 +18,7 @@ public class SwitchOverride extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.elevator.switchOverride();
+    	elevator.switchOverride();
     }
 
     // Make this return true when this Command no longer needs to run execute()

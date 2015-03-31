@@ -22,9 +22,6 @@ public class SlideDrivingCommand extends Command {
         requires(drivetrain);
     }
 
-    /**
-     * Does nothing.
-     */
     protected void initialize() {
     	drivetrain.getSlideDrive().resetGyro();
     }
@@ -35,7 +32,7 @@ public class SlideDrivingCommand extends Command {
     protected void execute() {
         XboxController xbox = oi.getDriveController();
         // Store the axis values.
-        double x = xbox.getLeftStickX();
+        double x = xbox.getLeftStickX(); /*strafe wheel*/
         double y = -xbox.getLeftStickY();
         double z = xbox.getRightStickX();
         double angle = drivetrain.gyro.getAngle(); 
@@ -50,21 +47,14 @@ public class SlideDrivingCommand extends Command {
         if (abs(z) > MAX_ROTATION) {
         	scaledZ += z < 0 ? -MAX_ROTATION : MAX_ROTATION;
         }
-        
-// 		  Send debugging values.
-//        SmartDashboard.putNumber("X", scaledX);
-//        SmartDashboard.putNumber("Y", y);
-//        SmartDashboard.putNumber("Rotation", scaledZ);
-//        SmartDashboard.putNumber("Gyro", angle);
-         
-        if (SlowMoMode.slowMoMode == true) {
-        	x *= 0.5;
+                
+        if (drivetrain.slow == true) {
+        	scaledX *= 0.5;
         	y *= 0.5;
-        	z *= 0.5;
+        	scaledZ *= 0.5;
         }
         
-        drivetrain.getSlideDrive().drive(scaledX, y, scaledZ, angle);
-        
+        drivetrain.getSlideDrive().drive(/*strafe wheel*/ scaledX, /*speed*/ y, /*rotation*/scaledZ , angle);
     }
 
     /**
