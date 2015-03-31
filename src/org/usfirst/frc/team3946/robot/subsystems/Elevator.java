@@ -3,9 +3,11 @@ package org.usfirst.frc.team3946.robot.subsystems;
 import static org.usfirst.frc.team3946.robot.RobotMap.*;
 
 import org.usfirst.frc.team3946.robot.commands.lift.ElevateWithTriggers;
+import org.usfirst.frc.team3946.robot.commands.misc.SetLEDColors;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 //import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -64,6 +66,33 @@ public class Elevator extends PIDSubsystem {
     }
     
     public void elevate(double input) {
+
+    	double encoder = encode.getDistance();
+    	Command command;
+    	if(encoder > 10){
+    		command = new SetLEDColors(2);
+    		command.start();
+    	}else if(encoder > 20){
+    		command = new SetLEDColors(3);
+    		command.start();
+    	}else if(encoder < 10){
+    		command = new SetLEDColors(1);
+    		command.start();
+    	}else if(encoder >30){
+    		command = new SetLEDColors(4);
+    		command.start();
+    	}
+    	
+    	
+//		ledChooser.addObject("White", new SetLEDColors(1));
+//		ledChooser.addObject("Red", new SetLEDColors(2));
+//		ledChooser.addObject("Blue", new SetLEDColors(3));
+//		ledChooser.addDefault("Green", new SetLEDColors(4));
+//		ledChooser.addObject("Yellow", new SetLEDColors(5));
+//		ledChooser.addObject("Cyan", new SetLEDColors(6));
+//		ledChooser.addObject("Magenta", new SetLEDColors(7));
+    	
+    	
 //	    if (override == true) {
 //	    	motor1.set(input);
 //			motor2.set(input);
@@ -129,6 +158,7 @@ public class Elevator extends PIDSubsystem {
 //    			return 0.0;
 //    		}
 //    	}
+    	
     	return encode.getDistance();
     }
     

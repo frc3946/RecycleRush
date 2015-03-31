@@ -108,7 +108,7 @@ public class Robot extends IterativeRobot {
     	Object selection = autonomousChooser.getSelected();
     	if (selection != null && selection instanceof Command) {
             autonomousCommand = (Command) selection;
-            autonomousCommand.start();
+//          autonomousCommand.start();
     	} else {
     		System.out.println("No autonomous mode selected.");
     	}
@@ -145,7 +145,7 @@ public class Robot extends IterativeRobot {
     	if (lights != null && lights instanceof Command) {
     		vlCommand = (Command) lights;
     		vlCommand.start();
-    	}
+     	}
     	log();
     }
 

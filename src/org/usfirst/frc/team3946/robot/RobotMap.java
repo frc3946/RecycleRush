@@ -30,7 +30,6 @@ public interface RobotMap {
 //	int upperLS = 5;
 	int bottomLS = 6;
 	int lowerLS = 4;
-	int cTouch = 8;
 	int rTouch = 9;
 	int lTouch = 10;
 	
