@@ -1,22 +1,23 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
+import org.usfirst.frc.team3946.robot.RobotMap;
 import org.usfirst.frc.team3946.robot.commands.drive.SlideDrivingCommand;
 
 import libraries.*;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import static org.usfirst.frc.team3946.robot.RobotMap.*;
-
 
 public class Drivetrain extends Subsystem {
 	
 	public static final double DRIVE_SPEED = 0.4;
     public static final double STRAFE_SPEED = 0.4;
 
-    public Talon left = new Talon(driveLeftTalon);
-    public Talon right = new Talon(driveRightTalon);
-    public Talon strafe = new Talon(driveStrafeTalon);
-    public BetterGyro gyro = new BetterGyro(driveGyro);
+    public Talon left = new Talon(RobotMap.driveLeftTalon);
+    public Talon right = new Talon(RobotMap.driveRightTalon);
+    public Talon strafe = new Talon(RobotMap.driveStrafeTalon);
+    public BetterGyro gyro = new BetterGyro(RobotMap.driveGyro);
+    public Encoder leftEncoder = RobotMap.leftEncoder;
+    public Encoder rightEncoder = RobotMap.rightEncoder;
 
     private final WheelController leftWheel = new WheelController(left);
     private final WheelController rightWheel = new WheelController(right);
@@ -26,7 +27,6 @@ public class Drivetrain extends Subsystem {
             rightWheel, 
             strafeWheel
     );
-
 
     private final SlideDrive slideDrive = new SlideDrive(driveController, gyro);
     private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveController);

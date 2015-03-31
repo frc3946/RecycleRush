@@ -1,23 +1,17 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
-import static org.usfirst.frc.team3946.robot.RobotMap.*;
-
+import org.usfirst.frc.team3946.robot.RobotMap;
 import org.usfirst.frc.team3946.robot.commands.lift.ElevateWithTriggers;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-//import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator extends PIDSubsystem {
-    public Talon motor1 = new Talon(liftTalon1);
-    public Talon motor2 = new Talon(liftTalon2);
-    public Encoder encode = new Encoder(encoderA, encoderB, true, EncodingType.k4X);
-//    public DigitalInput top = new DigitalInput(topLS);
-//    public DigitalInput upper = new DigitalInput(upperLS);
-    public DigitalInput lower = new DigitalInput(lowerLS);
-    public DigitalInput bottom = new DigitalInput(bottomLS);
+    public Talon motor1 = new Talon(RobotMap.liftTalon1);
+    public Talon motor2 = new Talon(RobotMap.liftTalon2);
+    public Encoder encode = RobotMap.liftEncoder;
+    public DigitalInput bottom = new DigitalInput(RobotMap.bottomSwitch);
     
 	static double p = 0.01;
 	static double i = 0.0;
@@ -64,29 +58,23 @@ public class Elevator extends PIDSubsystem {
     }
     
     public void elevate(double input) {
-//	    if (override == true) {
-//	    	motor1.set(input);
-//			motor2.set(input);
-//			return;
-//	    }
-//	    
-//	    // Turns motors off when limit switches are engaged.
-//		if (bottom.get() == true && input < 0) {
-//			motor1.set(0);
-//			motor2.set(0);
-//			return;
-//		}
-//		// Slow motors down when secondary switches are engaged.
-//		else if (lower.get() == true && input < 0) {
-//			motor1.set(input * 0.5);
-//			motor2.set(input * 0.5);
-//			return;
-//		} 
-//		// Take the raw input if no switches are engaged.
-//		else {
+	    if (override == true) {
+	    	motor1.set(input);
+			motor2.set(input);
+			return;
+	    }
+	    
+	    // Turns motors off when limit switches are engaged.
+		if (bottom.get() == true && input < 0) {
+			motor1.set(0);
+			motor2.set(0);
+			return;
+		}
+		// Take the raw input if no switches are engaged.
+		else {
 	    	motor1.set(input);
 	    	motor2.set(input);
-//		}
+		}
     }
     
     public void stop() {
@@ -95,10 +83,7 @@ public class Elevator extends PIDSubsystem {
     }
     
     public void log() {
-//    	SmartDashboard.putData("At Top", top);
-//    	SmartDashboard.putData("Near Top", upper);
-    	SmartDashboard.putData("Near Bottom", lower);
-    	SmartDashboard.putData("At Bottom", bottom);
+    	SmartDashboard.putData("At Bottom?", bottom);
     	SmartDashboard.putNumber("Lift Distance", encode.getDistance());
     }
       
@@ -142,13 +127,8 @@ public class Elevator extends PIDSubsystem {
     		motor1.set(0);
     		motor2.set(0);
     		return;
-    	}
-    	// Slows motors down when secondary switches are engaged.
-    	if (lower.get() == true && output < 0) {
-    		motor1.set(output * 0.5 * setMotorDirection);
-    		motor2.set(output * 0.5 * setMotorDirection);
-    		return;
-        } else {
+        } 
+    	else {
         	motor1.set(output * setMotorDirection);
         	motor2.set(output * setMotorDirection);
         	return;
