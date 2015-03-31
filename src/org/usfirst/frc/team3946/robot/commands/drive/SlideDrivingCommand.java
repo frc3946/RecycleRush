@@ -1,12 +1,8 @@
 package org.usfirst.frc.team3946.robot.commands.drive;
 
 import libraries.XboxController;
-
 import static org.usfirst.frc.team3946.robot.Robot.*;
-
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import static java.lang.Math.abs;
 
 /**
@@ -45,19 +41,30 @@ public class SlideDrivingCommand extends Command {
         double angle = drivetrain.gyro.getAngle(); 
         
         double scaledX = x;
-        if (abs(x) > MAX_STRAFE) scaledX += x < 0 ? -MAX_STRAFE : MAX_STRAFE;
+        if (abs(x) > MAX_STRAFE) {
+        	scaledX += x < 0 ? -MAX_STRAFE : MAX_STRAFE;
+        }
         
         double scaledZ = z;
         // Scale z down so it is never greater than MAX_ROTATION.
-        if (abs(z) > MAX_ROTATION) scaledZ += z < 0 ? -MAX_ROTATION : MAX_ROTATION;
+        if (abs(z) > MAX_ROTATION) {
+        	scaledZ += z < 0 ? -MAX_ROTATION : MAX_ROTATION;
+        }
         
-        // Send debugging values.
+// 		  Send debugging values.
 //        SmartDashboard.putNumber("X", scaledX);
 //        SmartDashboard.putNumber("Y", y);
 //        SmartDashboard.putNumber("Rotation", scaledZ);
 //        SmartDashboard.putNumber("Gyro", angle);
+         
+        if (SlowMoMode.slowMoMode == true) {
+        	x *= 0.5;
+        	y *= 0.5;
+        	z *= 0.5;
+        }
         
         drivetrain.getSlideDrive().drive(scaledX, y, scaledZ, angle);
+        
     }
 
     /**
