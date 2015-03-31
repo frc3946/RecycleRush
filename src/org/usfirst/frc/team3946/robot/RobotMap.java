@@ -1,5 +1,8 @@
 package org.usfirst.frc.team3946.robot;
 
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -22,20 +25,16 @@ public interface RobotMap {
 	int spike3 = 3;					//SPK3 +red -green
 	
 	// Digital IOs
-	int encoderA = 0;
-	int encoderB = 1;
+	Encoder liftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
+	Encoder leftEncoder = new Encoder(2, 3, false, EncodingType.k4X);
+	Encoder rightEncoder = new Encoder(4, 5, true, EncodingType.k4X);
 	int lCurbFeeler = 2;
 	int rCurbFeeler = 3;
-//	int topLS = 4;
-//	int upperLS = 5;
-	int bottomLS = 6;
-	int lowerLS = 4;
-	int rTouch = 9;
-	int lTouch = 10;
+	int bottomSwitch = 6;
+	int touchSensor = 8;
 	
 	// Analog IOs
 	int driveGyro = 0;				//disabled
-	int liftPot = 1;				//disabled
 	int lRangeF = 2;				//RF1
 	int rRangeF = 3;				//RF2
 }

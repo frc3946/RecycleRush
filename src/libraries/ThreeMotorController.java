@@ -6,28 +6,28 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Controls a robot that has two wheels, or (in most cases) two sides that each
  * act as a unit, as well as a perpendicular strafe wheel for slide/h drive handling.
  */
-public class ThreeWheelController extends DriveController {
+public class ThreeMotorController extends DriveController {
 
-    protected WheelController leftWheel;
-    protected WheelController rightWheel;
-    protected WheelController strafeWheel;
+    protected MotorController leftWheel;
+    protected MotorController rightWheel;
+    protected MotorController strafeWheel;
 
     /**
-     * Creates a new {@link ThreeWheelController} that drives the specified
-     * {@link WheelController}s.
+     * Creates a new {@link ThreeMotorController} that drives the specified
+     * {@link MotorController}s.
      *
-     * @param leftWheel the left {@link WheelController}
-     * @param rightWheel the right {@link WheelController}
-     * @param strafeWheel the strafe {@link WheelController}
+     * @param leftWheel the left {@link MotorController}
+     * @param rightWheel the right {@link MotorController}
+     * @param strafeWheel the strafe {@link MotorController}
      */
-    public ThreeWheelController(WheelController leftWheel, WheelController rightWheel, WheelController strafeWheel) {
+    public ThreeMotorController(MotorController leftWheel, MotorController rightWheel, MotorController strafeWheel) {
         this.leftWheel = leftWheel;
         this.rightWheel = rightWheel;
         this.strafeWheel = strafeWheel;
     }
 
     /**
-     * Drives the left and right {@link WheelController}s at the specified
+     * Drives the left and right {@link MotorController}s at the specified
      * speeds.
      * @param leftSpeed {@inheritDoc}
      * @param rightSpeed {@inheritDoc}
@@ -36,7 +36,7 @@ public class ThreeWheelController extends DriveController {
 		drive(leftSpeed, rightSpeed, 0);
 	}
     /**
-     * Sets the speeds of all three {@link WheelController}s independently.
+     * Sets the speeds of all three {@link MotorController}s independently.
      *
      * @param leftSpeed the speed of the left wheels
      * @param rightSpeed the speed of the right wheels
@@ -64,6 +64,6 @@ public class ThreeWheelController extends DriveController {
     }
 
     public String getDescription() {
-        return "Three Wheel Controller";
+        return "Three Motor Controller";
     }
 }

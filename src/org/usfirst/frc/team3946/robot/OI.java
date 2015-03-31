@@ -2,6 +2,7 @@ package org.usfirst.frc.team3946.robot;
 
 import libraries.XboxController;
 
+import org.usfirst.frc.team3946.robot.commands.DriveToCrate;
 import org.usfirst.frc.team3946.robot.commands.drive.*;
 import org.usfirst.frc.team3946.robot.commands.lift.*;
 
@@ -16,56 +17,42 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
 
 	public XboxController driveController = new XboxController(0);
+	public XboxController liftController = new XboxController(1);
 		
     public OI() {
    		driveController.setDeadband(0.2);
+   		liftController.setDeadband(0.2);
     	
     	// Drive Control Buttons
-    	Button enableSlideControl = new JoystickButton(driveController, XboxController.Start);
-    	Button enableArcadeControl = new JoystickButton(driveController, XboxController.Back);
-    	Button resetGyro = new JoystickButton(driveController, XboxController.B);
-    	//driveToCrate = new JoystickButton(driveController, XboxController.A);
-    		enableSlideControl.whenPressed(new SlideDrivingCommand());
-			enableArcadeControl.whenPressed(new ArcadeDrivingCommand());
-	    	resetGyro.whenPressed(new ResetGyro());
-	    	//driveToCrate.whenPressed(new DriveToCrate());    	
-//	    Button alignToStack = new JoystickButton(driveController, XboxController.Y);
-//	    	alignToStack.whenPressed(new AlignToStack());
-    	
-//    	strafeLeft = new JoystickButton(driveController, XboxController.LeftTrigger);
-//    	strafeRight = new JoystickButton(driveController, XboxController.RightTrigger);
-//    		strafeLeft.whileActive(new ManualStrafeLeft());
-//    		strafeRight.whileActive(new ManualStrafeRight());
+    	Button slowGear = new JoystickButton(driveController, XboxController.RightBumper);
+	    	slowGear.whileActive(new SlowGear());
     	
     	// Lift Control Buttons
-	    Button lowerLift = new JoystickButton(driveController, XboxController.LeftTrigger);
-	    Button raiseLift = new JoystickButton(driveController, XboxController.RightTrigger);
-			lowerLift.whileActive(new ElevateWithTriggers());
+	    Button lowerLift = new JoystickButton(liftController, XboxController.LeftTrigger);
+	    Button raiseLift = new JoystickButton(liftController, XboxController.RightTrigger);
+	    Button switchOverride = new JoystickButton(liftController, XboxController.LeftBumper);
+			lowerLift.whileActive(new ElevateWithTriggers());                      
 			raiseLift.whileActive(new ElevateWithTriggers());
-    	
-		Button incLiftSetpoint = new JoystickButton(driveController, XboxController.RightBumper);
-		Button decLiftSetpoint = new JoystickButton(driveController, XboxController.LeftBumper);
-			incLiftSetpoint.whenPressed(new IncLiftSetpoint());
-			decLiftSetpoint.whenPressed(new DecLiftSetpoint());
-
-		Button switchOverride = new JoystickButton(driveController, XboxController.B);
 			switchOverride.whenPressed(new SwitchOverride());
+		
+			
+		// Autonomous Buttons
+	    Button driveToCrate = new JoystickButton(driveController, XboxController.A);
+	    	driveToCrate.whenPressed(new DriveToCrate());
+//	    Button alignToStack = new JoystickButton(driveController, XboxController.Y);
+//	    	alignToStack.whenPressed(new AlignToStack());
 			
         // SmartDashboard Buttons			
-        SmartDashboard.putData("Reset Gyro", new ResetGyro());
         SmartDashboard.putData("Enable Slide", new SlideDrivingCommand());
         SmartDashboard.putData("Enable Arcade", new ArcadeDrivingCommand());
-       
-        SmartDashboard.putData("Switch Override", new SwitchOverride());
-//        SmartDashboard.putData("Raise Elevator", new IncLiftSetpoint());
-//        SmartDashboard.putData("Lower Elevator", new DecLiftSetpoint());
-//        SmartDashboard.putData("Floor", new SetElevatorSetpoint(0));
-//        SmartDashboard.putData("Platform", new SetElevatorSetpoint(1));
-//        SmartDashboard.putData("Step", new SetElevatorSetpoint(2));
-       
+        SmartDashboard.putData("Reset Gyro", new ResetGyro());       
     }
     
     public XboxController getDriveController() {
     	return driveController;
+    }
+    
+    public XboxController getLiftController() {
+    	return liftController;
     }
 }

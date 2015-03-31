@@ -1,32 +1,34 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
+import org.usfirst.frc.team3946.robot.RobotMap;
 import org.usfirst.frc.team3946.robot.commands.drive.SlideDrivingCommand;
 
 import libraries.*;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import static org.usfirst.frc.team3946.robot.RobotMap.*;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drivetrain extends Subsystem {
 	
 	public static final double DRIVE_SPEED = 0.4;
     public static final double STRAFE_SPEED = 0.4;
+    public boolean slow = false;
+    
+    public Talon left = new Talon(RobotMap.driveLeftTalon);
+    public Talon right = new Talon(RobotMap.driveRightTalon);
+    public Talon strafe = new Talon(RobotMap.driveStrafeTalon);
+    public BetterGyro gyro = new BetterGyro(RobotMap.driveGyro);
+    public Encoder leftEncoder = RobotMap.leftEncoder;
+    public Encoder rightEncoder = RobotMap.rightEncoder;
 
-    public Talon left = new Talon(driveLeftTalon);
-    public Talon right = new Talon(driveRightTalon);
-    public Talon strafe = new Talon(driveStrafeTalon);
-    public BetterGyro gyro = new BetterGyro(driveGyro);
-
-    private final WheelController leftWheel = new WheelController(left);
-    private final WheelController rightWheel = new WheelController(right);
-    private final WheelController strafeWheel = new WheelController(strafe);
-    private final ThreeWheelController driveController = new ThreeWheelController(
+    private final MotorController leftWheel = new MotorController(left);
+    private final MotorController rightWheel = new MotorController(right);
+    private final MotorController strafeWheel = new MotorController(strafe);
+    private final ThreeMotorController driveController = new ThreeMotorController(
             leftWheel, 
             rightWheel, 
             strafeWheel
     );
-
 
     private final SlideDrive slideDrive = new SlideDrive(driveController, gyro);
     private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveController);
@@ -38,6 +40,13 @@ public class Drivetrain extends Subsystem {
     public void initDefaultCommand() {
         setDefaultCommand(new SlideDrivingCommand());
         gyro.setPIDSourceParameter(PIDSource.PIDSourceParameter.kAngle);
+        leftEncoder.setPIDSourceParameter(PIDSource.PIDSourceParameter.kDistance);
+        rightEncoder.setPIDSourceParameter(PIDSource.PIDSourceParameter.kDistance);
+    }
+    
+    public void SlowGear() {
+    	slow = !slow;
+    	SmartDashboard.putBoolean("Low Gear?", slow);
     }
     
     public SlideDrive getSlideDrive() {
@@ -74,12 +83,21 @@ public class Drivetrain extends Subsystem {
     	strafe.set(strafeSpeed);
     }
     
-    public BetterGyro getGyro() {
-    	return gyro;
-    }
     public void setMotor(double leftSpeed, double rightSpeed, double strafeSpeed){
     	left.set(leftSpeed);
     	right.set(rightSpeed);
     	strafe.set(strafeSpeed);
+    }
+    
+    public BetterGyro getGyro() {
+    	return gyro;
+    }
+    
+    public Encoder getLeftEncoder() {
+    	return leftEncoder;
+    }
+    
+    public Encoder getRightEncoder() {
+    	return rightEncoder;
     }
 }

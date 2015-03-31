@@ -1,15 +1,15 @@
-package org.usfirst.frc.team3946.robot.commands.lift;
+package org.usfirst.frc.team3946.robot.commands.drive;
 
-import static org.usfirst.frc.team3946.robot.Robot.elevator;
+import static org.usfirst.frc.team3946.robot.Robot.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class SwitchOverride extends Command {
+public class SlowGear extends Command {
 
-    public SwitchOverride() {
+    public SlowGear() {
     }
 
     // Called just before this Command runs the first time
@@ -18,7 +18,7 @@ public class SwitchOverride extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	elevator.switchOverride();
+    	drivetrain.SlowGear();
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -1,6 +1,9 @@
 package libraries;
 
 import static java.lang.Math.*;
+
+import org.usfirst.frc.team3946.robot.Robot;
+
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -9,21 +12,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Heart of the slide drive code. All calculations are done here.
  * 
- * A {@link DriveMethod} that uses a {@link ThreeWheelController} (which
+ * A {@link DriveMethod} that uses a {@link ThreeMotorController} (which
  * controls three speed controllers to drive using a gyro to maintain orientation
  * and drive relative to the field.
  *
- * @see ThreeWheelController
+ * @see ThreeMotorController
  * @see DriveMethod
  */
 public class SlideDrive extends DriveMethod {
 
     /**
      * The {@link SlideDrive} requires a
-     * {@link ThreeWheelController} so the normal
+     * {@link ThreeMotorController} so the normal
      * {@link DriveMethod#controller} is hidden.
      */
-    protected final ThreeWheelController controller;
+    protected final ThreeMotorController controller;
     
     /**
      * The {@link Gyro} that the {@link SlideDrive} uses for
@@ -38,18 +41,20 @@ public class SlideDrive extends DriveMethod {
     public static final double ROTATION_F = 0.0;
     private double rotationSpeedPID = 0.0;
     private double gyroOffset = 0.0;
+    double leftCurrentMotorSpeed = 0;
+    double rightCurrentMotorSpeed = 0;
 
     private final PIDController rotationPIDController;
 
     /**
      * Creates a new {@link SlideDrive} that controls the specified
-     * {@link ThreeWheelController}.
+     * {@link ThreeMotorController}.
      *
-     * @param controller the {@link ThreeWheelController} to control
+     * @param controller the {@link ThreeMotorController} to control
      * @param gyro the {@link Gyro} to use for orientation correction and
      * field-oriented driving
      */
-	public SlideDrive(ThreeWheelController controller, Gyro gyro) {
+	public SlideDrive(ThreeMotorController controller, Gyro gyro) {
         super(controller);
         
         this.controller = controller;
@@ -80,9 +85,9 @@ public class SlideDrive extends DriveMethod {
      * clockwise, positive = counterclockwise)
      * @param gyroAngle the current angle reading from the gyro
      */
-    public void drive(double x, double y, double rotation, double gyroAngle) {
+    public void drive(/*strafe wheel*/ double x,  /*speed*/ double y, double rotation, double gyroAngle) {
         //rotation = getRotationPID(rotation);
-        drive0(x, y, rotation, gyroAngle);
+        drive0(/*strafe wheel*/ x,  /*speed*/ y, rotation, gyroAngle);
     }
 
     /**
@@ -145,6 +150,14 @@ public class SlideDrive extends DriveMethod {
         wheelSpeeds[1] = y - rotation; // Right speed
         wheelSpeeds[2] = x; // Strafe speed
 
+    double leftError = wheelSpeeds[0] - Robot.drivetrain.getLeftEncoder().getRate();
+        double rightError = wheelSpeeds[1] - Robot.drivetrain.getRightEncoder().getRate();
+        double p = .007;
+        
+        leftCurrentMotorSpeed += leftError * p;
+        rightCurrentMotorSpeed += rightError * p;
+
+        
         DriveUtils.normalize(wheelSpeeds);
 
         controller.drive(wheelSpeeds[0], wheelSpeeds[1], wheelSpeeds[2]);
@@ -184,8 +197,6 @@ public class SlideDrive extends DriveMethod {
         // Unless told otherwise, return the rate that was passed in.
         return rotationSpeed;
     }
-    
-    
 
     /**
      * Resets the robot's gyro value to zero and resets the PID controller

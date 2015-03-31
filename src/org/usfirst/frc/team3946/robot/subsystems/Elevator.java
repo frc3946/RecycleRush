@@ -1,25 +1,22 @@
 package org.usfirst.frc.team3946.robot.subsystems;
 
-import static org.usfirst.frc.team3946.robot.RobotMap.*;
-
+import org.usfirst.frc.team3946.robot.Robot;
+import org.usfirst.frc.team3946.robot.RobotMap;
 import org.usfirst.frc.team3946.robot.commands.lift.ElevateWithTriggers;
 import org.usfirst.frc.team3946.robot.commands.misc.SetLEDColors;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-//import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator extends PIDSubsystem {
-    public Talon motor1 = new Talon(liftTalon1);
-    public Talon motor2 = new Talon(liftTalon2);
-    public Encoder encode = new Encoder(encoderA, encoderB, true, EncodingType.k4X);
-//    public DigitalInput top = new DigitalInput(topLS);
-//    public DigitalInput upper = new DigitalInput(upperLS);
-    public DigitalInput lower = new DigitalInput(lowerLS);
-    public DigitalInput bottom = new DigitalInput(bottomLS);
+    
+	public Talon motor1 = new Talon(RobotMap.liftTalon1);
+    public Talon motor2 = new Talon(RobotMap.liftTalon2);
+    public Encoder encode = RobotMap.liftEncoder;
+    public DigitalInput bottom = new DigitalInput(RobotMap.bottomSwitch);
     
 	static double p = 0.01;
 	static double i = 0.0;
@@ -29,15 +26,9 @@ public class Elevator extends PIDSubsystem {
     int setMotorDirection;
     boolean override = false;
     
-    public double[] potVolts = {
-    		0,
-    		.167,
-    		.334,
-    		.501,
-    		.635,
-    		.881,
-    		1
-    };
+//    public double[] potVolts = {
+//    		0, .167, .334, .501, .635, .881, 1
+//    };
     
     public double[] setPoints = {
     		 0,
@@ -49,23 +40,38 @@ public class Elevator extends PIDSubsystem {
       		(72.6 / 12)
     };
     
-    public int[] feet = {0, 1, 2, 3, 4, 5, 6};
+    public int[] feet = {
+    		0, 1, 2, 3, 4, 5, 6
+    };
 
     public Elevator() {
     	super("Elevator", p, i, d);
         setAbsoluteTolerance(0.005);     
         getPIDController().setContinuous(true);
-        encode.setDistancePerPulse(500);
-//        LiveWindow.addActuator("M1", "Motor1", (Talon) motor1);
-//        LiveWindow.addActuator("M2", "Motor2", (Talon) motor2);
-//        LiveWindow.addActuator("Elevator", "PID", getPIDController());
+        if (Robot.isReal()) {
+        	encode.setDistancePerPulse(0.1272345);
+	    } else {
+	    	encode.setDistancePerPulse((4.0/*in*/*Math.PI)/(360.0*12.0/*in/ft*/));
+	    }
+	    // 0.01060287527213352263064593786011 inches per pulse
+	    // 94.314039761290039374540986558176  pulses per inch
+        
+	    // 0.12723450326560227156775125432132 feet per pulse
+	    // 1131.7684771354804724944918386981 pulses per foot
     }
  
     public void initDefaultCommand() {
     	setDefaultCommand(new ElevateWithTriggers());
+    	//encode.setPIDSourceParameter(PIDSourceParameter.kDistance);
+    }
+    
+    public void switchOverride () {
+    	override = !override;
+    	SmartDashboard.putBoolean("Override?", override);
     }
     
     public void elevate(double input) {
+	    
 
     	double encoder = encode.getDistance();
     	Command command;
@@ -112,10 +118,14 @@ public class Elevator extends PIDSubsystem {
 //			return;
 //		} 
 //		// Take the raw input if no switches are engaged.
-//		else {
+    	if (override == true || bottom.get() == false) {		
 	    	motor1.set(input);
-	    	motor2.set(input);
-//		}
+			motor2.set(input);
+			return;
+	    } else if (bottom.get() == true && input < 0) {
+			stop();
+			return;
+		}
     }
     
     public void stop() {
@@ -123,19 +133,15 @@ public class Elevator extends PIDSubsystem {
     	motor2.set(0);
     }
     
-    public void log() {
-//    	SmartDashboard.putData("At Top", top);
-//    	SmartDashboard.putData("Near Top", upper);
-    	SmartDashboard.putData("Near Bottom", lower);
-    	SmartDashboard.putData("At Bottom", bottom);
-    	SmartDashboard.putNumber("Lift Distance", encode.getDistance());
-    }
-      
+    //---------------------------------------//
+    
     /**
      * Use the potentiometer as the PID sensor. This method is automatically
      * called by the subsystem.
      */
     protected double returnPIDInput() {
+    	height = encode.getDistance();
+    	return height;
 //    	int firstPoint = 0;
 //		int secondPoint = 1;
 //    	double volts = pot.get();
@@ -167,27 +173,15 @@ public class Elevator extends PIDSubsystem {
      * the subsystem.
      */
     protected void usePIDOutput(double output) {
-        // Disables motors when absolute limit switches are engaged.
+        // Prevents lift from smacking the floor.
     	if (bottom.get() == true && output < 0) {
-    		motor1.set(0);
-    		motor2.set(0);
-    		return;
-    	}
-    	// Slows motors down when secondary switches are engaged.
-    	if (lower.get() == true && output < 0) {
-    		motor1.set(output * 0.5 * setMotorDirection);
-    		motor2.set(output * 0.5 * setMotorDirection);
+    		stop();
     		return;
         } else {
         	motor1.set(output * setMotorDirection);
         	motor2.set(output * setMotorDirection);
         	return;
         }
-    }
-    
-    public void switchOverride () {
-    	override = !override;
-    	SmartDashboard.putBoolean("Override?", override);
     }
     
     // Set maximum
@@ -206,4 +200,10 @@ public class Elevator extends PIDSubsystem {
     	this.setSetpoint(setPoints[level]);
     }
     
+    //---------------------------------------//
+    
+    public void log() {
+    	SmartDashboard.putData("At Bottom?", bottom);
+    	SmartDashboard.putNumber("Tote Height", encode.getDistance());
+    }
 }

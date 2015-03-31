@@ -1,12 +1,8 @@
 package org.usfirst.frc.team3946.robot.commands.drive;
 
 import libraries.XboxController;
-
 import static org.usfirst.frc.team3946.robot.Robot.*;
-
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import static java.lang.Math.abs;
 
 /**
@@ -26,9 +22,6 @@ public class SlideDrivingCommand extends Command {
         requires(drivetrain);
     }
 
-    /**
-     * Does nothing.
-     */
     protected void initialize() {
     	drivetrain.getSlideDrive().resetGyro();
     }
@@ -39,25 +32,29 @@ public class SlideDrivingCommand extends Command {
     protected void execute() {
         XboxController xbox = oi.getDriveController();
         // Store the axis values.
-        double x = xbox.getLeftStickX();
+        double x = xbox.getLeftStickX(); /*strafe wheel*/
         double y = -xbox.getLeftStickY();
         double z = xbox.getRightStickX();
         double angle = drivetrain.gyro.getAngle(); 
         
         double scaledX = x;
-        if (abs(x) > MAX_STRAFE) scaledX += x < 0 ? -MAX_STRAFE : MAX_STRAFE;
+        if (abs(x) > MAX_STRAFE) {
+        	scaledX += x < 0 ? -MAX_STRAFE : MAX_STRAFE;
+        }
         
         double scaledZ = z;
         // Scale z down so it is never greater than MAX_ROTATION.
-        if (abs(z) > MAX_ROTATION) scaledZ += z < 0 ? -MAX_ROTATION : MAX_ROTATION;
+        if (abs(z) > MAX_ROTATION) {
+        	scaledZ += z < 0 ? -MAX_ROTATION : MAX_ROTATION;
+        }
+                
+        if (drivetrain.slow == true) {
+        	scaledX *= 0.5;
+        	y *= 0.5;
+        	scaledZ *= 0.5;
+        }
         
-        // Send debugging values.
-//        SmartDashboard.putNumber("X", scaledX);
-//        SmartDashboard.putNumber("Y", y);
-//        SmartDashboard.putNumber("Rotation", scaledZ);
-//        SmartDashboard.putNumber("Gyro", angle);
-        
-        drivetrain.getSlideDrive().drive(scaledX, y, scaledZ, angle);
+        drivetrain.getSlideDrive().drive(/*strafe wheel*/ scaledX, /*speed*/ y, /*rotation*/scaledZ , angle);
     }
 
     /**
