@@ -5,6 +5,7 @@ import libraries.XboxController;
 import org.usfirst.frc.team3946.robot.commands.DriveToCrate;
 import org.usfirst.frc.team3946.robot.commands.drive.*;
 import org.usfirst.frc.team3946.robot.commands.lift.*;
+import org.usfirst.frc.team3946.robot.triggers.DoubleButton;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -24,17 +25,23 @@ public class OI {
    		liftController.setDeadband(0.2);
     	
     	// Drive Control Buttons
-    	Button slowGear = new JoystickButton(driveController, XboxController.RightBumper);
-	    	slowGear.whileActive(new SlowGear());
+    	Button slowGear = new JoystickButton(driveController, XboxController.LeftBumper);
+	    	slowGear.whenPressed(new SlowGear());
     	
     	// Lift Control Buttons
-	    Button lowerLift = new JoystickButton(liftController, XboxController.LeftTrigger);
-	    Button raiseLift = new JoystickButton(liftController, XboxController.RightTrigger);
-	    Button switchOverride = new JoystickButton(liftController, XboxController.LeftBumper);
+	    Button lowerLift = new JoystickButton(driveController, XboxController.LeftTrigger);
+	    Button raiseLift = new JoystickButton(driveController, XboxController.RightTrigger);
+	    Button switchOverride = new JoystickButton(driveController, XboxController.X);
 			lowerLift.whileActive(new ElevateWithTriggers());                      
 			raiseLift.whileActive(new ElevateWithTriggers());
 			switchOverride.whenPressed(new SwitchOverride());
 		
+		// Wing Control Buttons
+		DoubleButton openWings = new DoubleButton(driveController, XboxController.RightBumper, XboxController.LeftTrigger);
+		DoubleButton closeWings = new DoubleButton(driveController, XboxController.RightBumper, XboxController.RightTrigger);
+			openWings.whileActive(new FlapWings());
+			closeWings.whileActive(new FlapWings());
+
 			
 		// Autonomous Buttons
 	    Button driveToCrate = new JoystickButton(driveController, XboxController.A);
@@ -45,7 +52,7 @@ public class OI {
         // SmartDashboard Buttons			
         SmartDashboard.putData("Enable Slide", new SlideDrivingCommand());
         SmartDashboard.putData("Enable Arcade", new ArcadeDrivingCommand());
-        SmartDashboard.putData("Reset Gyro", new ResetGyro());       
+        SmartDashboard.putData("Reset Gyro", new ResetGyro()); 
     }
     
     public XboxController getDriveController() {

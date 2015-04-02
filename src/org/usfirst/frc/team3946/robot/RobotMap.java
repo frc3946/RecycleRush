@@ -15,9 +15,9 @@ public interface RobotMap {
 	int driveLeftTalon = 1;				//T1
 	int driveRightTalon = 2;			//T2
 	int driveStrafeTalon = 6;			//T6
-	int liftTalon1 = 4;					//T4
-	int liftTalon2 = 5;					//T5
-	int spare = 3;						//T3
+	int liftTalon = 4;					//T4
+	int wingLeftTalon = 3;				//T3
+	int wingRightTalon = 5;				//T5
 	
 	// Relays
 	int spike1 = 1;					//SPK1
@@ -28,10 +28,10 @@ public interface RobotMap {
 	Encoder liftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
 	Encoder leftEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 	Encoder rightEncoder = new Encoder(4, 5, true, EncodingType.k4X);
-	int lCurbFeeler = 2;
-	int rCurbFeeler = 3;
-	int bottomSwitch = 6;
-	int touchSensor = 8;
+	int lCurbFeeler = 6;
+	int rCurbFeeler = 7;
+	int bottomSwitch = 8;
+	int touchSensor = 9;
 	
 	// Analog IOs
 	int driveGyro = 0;				//disabled

@@ -71,7 +71,7 @@ public class SlideDrive extends DriveMethod {
                     }
                 }
         );
-        SmartDashboard.putData("Rotation PID Controller", rotationPIDController);
+        //SmartDashboard.putData("Rotation PID Controller", rotationPIDController);
     }
 
     /**
@@ -146,17 +146,18 @@ public class SlideDrive extends DriveMethod {
      */
     private void drive0(double x, double y, double rotation, double gyroAngle) {
         double wheelSpeeds[] = new double[3];
-        wheelSpeeds[0] = y + rotation; // Left speed
-        wheelSpeeds[1] = y - rotation; // Right speed
-        wheelSpeeds[2] = x; // Strafe speed
 
-    double leftError = wheelSpeeds[0] - Robot.drivetrain.getLeftEncoder().getRate();
-        double rightError = wheelSpeeds[1] - Robot.drivetrain.getRightEncoder().getRate();
+        double leftError = y + rotation - Robot.drivetrain.getLeftEncoder().getRate();
+        double rightError = y - rotation - Robot.drivetrain.getRightEncoder().getRate();
+        SmartDashboard.putNumber("ft/s", Robot.drivetrain.getAverageSpeed());
         double p = .007;
         
         leftCurrentMotorSpeed += leftError * p;
         rightCurrentMotorSpeed += rightError * p;
 
+        wheelSpeeds[0] = y + rotation; // Left speed
+        wheelSpeeds[1] = y - rotation; // Right speed
+        wheelSpeeds[2] = x; // Strafe speed
         
         DriveUtils.normalize(wheelSpeeds);
 

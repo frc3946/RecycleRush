@@ -2,19 +2,15 @@ package org.usfirst.frc.team3946.robot.subsystems;
 
 import org.usfirst.frc.team3946.robot.Robot;
 import org.usfirst.frc.team3946.robot.RobotMap;
-import org.usfirst.frc.team3946.robot.commands.lift.ElevateWithTriggers;
-import org.usfirst.frc.team3946.robot.commands.misc.SetLEDColors;
+//import org.usfirst.frc.team3946.robot.commands.lift.ElevateWithTriggers;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator extends PIDSubsystem {
     
-	public Talon motor1 = new Talon(RobotMap.liftTalon1);
-    public Talon motor2 = new Talon(RobotMap.liftTalon2);
+	public Talon motor = new Talon(RobotMap.liftTalon);
     public Encoder encode = RobotMap.liftEncoder;
     public DigitalInput bottom = new DigitalInput(RobotMap.bottomSwitch);
     
@@ -61,7 +57,7 @@ public class Elevator extends PIDSubsystem {
     }
  
     public void initDefaultCommand() {
-    	setDefaultCommand(new ElevateWithTriggers());
+    	//setDefaultCommand(new ElevateWithTriggers());
     	//encode.setPIDSourceParameter(PIDSourceParameter.kDistance);
     }
     
@@ -72,65 +68,36 @@ public class Elevator extends PIDSubsystem {
     
     public void elevate(double input) {
 	    
-
-    	double encoder = encode.getDistance();
-    	Command command;
-    	if(encoder > 10){
-    		command = new SetLEDColors(2);
-    		command.start();
-    	}else if(encoder > 20){
-    		command = new SetLEDColors(3);
-    		command.start();
-    	}else if(encoder < 10){
-    		command = new SetLEDColors(1);
-    		command.start();
-    	}else if(encoder >30){
-    		command = new SetLEDColors(4);
-    		command.start();
-    	}
+//    	double height = encode.getDistance();
+//    	Command command;
+//    	if(height > 10){
+//    		command = new SetLEDColors(2);
+//    		command.start();
+//    	} else if(height > 20) {
+//    		command = new SetLEDColors(3);
+//    		command.start();
+//    	} else if(height < 10) {
+//    		command = new SetLEDColors(1);
+//    		command.start();
+//    	} else if(height > 30) {
+//    		command = new SetLEDColors(4);
+//    		command.start();
+//    	}
     	
-    	
-//		ledChooser.addObject("White", new SetLEDColors(1));
-//		ledChooser.addObject("Red", new SetLEDColors(2));
-//		ledChooser.addObject("Blue", new SetLEDColors(3));
-//		ledChooser.addDefault("Green", new SetLEDColors(4));
-//		ledChooser.addObject("Yellow", new SetLEDColors(5));
-//		ledChooser.addObject("Cyan", new SetLEDColors(6));
-//		ledChooser.addObject("Magenta", new SetLEDColors(7));
-    	
-    	
-//	    if (override == true) {
-//	    	motor1.set(input);
-//			motor2.set(input);
-//			return;
-//	    }
-//	    
-//	    // Turns motors off when limit switches are engaged.
-//		if (bottom.get() == true && input < 0) {
-//			motor1.set(0);
-//			motor2.set(0);
-//			return;
-//		}
-//		// Slow motors down when secondary switches are engaged.
-//		else if (lower.get() == true && input < 0) {
-//			motor1.set(input * 0.5);
-//			motor2.set(input * 0.5);
-//			return;
-//		} 
-//		// Take the raw input if no switches are engaged.
-    	if (override == true || bottom.get() == false) {		
-	    	motor1.set(input);
-			motor2.set(input);
+		// Take the raw input if no switches are engaged.
+    	if (override == true /*|| bottom.get() == false*/) {		
+	    	motor.set(input);
 			return;
 	    } else if (bottom.get() == true && input < 0) {
 			stop();
 			return;
+		} else {
+			motor.set(input);
 		}
     }
     
     public void stop() {
-    	motor1.set(0);
-    	motor2.set(0);
+    	motor.set(0);
     }
     
     //---------------------------------------//
@@ -142,30 +109,6 @@ public class Elevator extends PIDSubsystem {
     protected double returnPIDInput() {
     	height = encode.getDistance();
     	return height;
-//    	int firstPoint = 0;
-//		int secondPoint = 1;
-//    	double volts = pot.get();
-//    	while(secondPoint < feet.length){
-//    		if(volts >= potVolts[firstPoint] ||
-//				(volts <= potVolts[secondPoint])){
-//    			double slope = potVolts[secondPoint] - potVolts[firstPoint];
-//    			slope = slope / (feet[secondPoint] - feet[firstPoint]);
-//    			double intercept = potVolts[firstPoint] - feet[firstPoint] * slope;
-//    			double distance = (volts - intercept) / slope;
-//    			SmartDashboard.putNumber("Elevator Height: ", distance);
-//    			return distance;
-//    		}
-//    		else{
-//    			firstPoint++;
-//    			secondPoint++;
-//    		}
-//		 
-//    		if(secondPoint >= potVolts.length){
-//    			return 0.0;
-//    		}
-//    	}
-    	
-    	return encode.getDistance();
     }
     
     /**
@@ -178,8 +121,7 @@ public class Elevator extends PIDSubsystem {
     		stop();
     		return;
         } else {
-        	motor1.set(output * setMotorDirection);
-        	motor2.set(output * setMotorDirection);
+        	motor.set(output * setMotorDirection);
         	return;
         }
     }

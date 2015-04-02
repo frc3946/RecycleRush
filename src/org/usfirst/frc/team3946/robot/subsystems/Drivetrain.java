@@ -100,4 +100,9 @@ public class Drivetrain extends Subsystem {
     public Encoder getRightEncoder() {
     	return rightEncoder;
     }
+    
+    public double getAverageSpeed() {
+    	double speed = ((leftEncoder.getRate() + rightEncoder.getRate()) / 2);
+    	return speed;
+    }
 }
