@@ -1,6 +1,10 @@
 package libraries;
 
 import static java.lang.Math.*;
+import static org.usfirst.frc.team3946.robot.Robot.drivetrain;
+
+import org.usfirst.frc.team3946.robot.Robot;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -29,14 +33,14 @@ public class SlideDrive extends DriveMethod {
     protected final Encoder rightEncoder;
     
     public final double SPEED_DEADBAND = 0.9;
-    public static final double SPEED_P = 0.07;
+    public static final double SPEED_P = 0.007;
     public static final double SPEED_I = 0.0;
     public static final double SPEED_D = 0.0;
     public static final double SPEED_F = 0.0;
     private double speedPID = 0.0;
     private double encoderOffset = 0.0;
-//    private double leftCurrentMotorSpeed = 0.0;
-//    private double rightCurrentMotorSpeed = 0.0;
+    private double leftCurrentMotorSpeed = 0.0;
+    private double rightCurrentMotorSpeed = 0.0;
 
     private final PIDController speedPIDController;
 
@@ -121,23 +125,22 @@ public class SlideDrive extends DriveMethod {
      * @param gyroAngle the current angle reading from the gyro
      */
     private void drive0(double x, double y, double rotation) {
-        double wheelSpeeds[] = new double[3];
-
-        double leftError = y + rotation - Robot.drivetrain.getLeftEncoder().getRate();
-        double rightError = y - rotation - Robot.drivetrain.getRightEncoder().getRate();
-        SmartDashboard.putNumber("ft/s", Robot.drivetrain.getAverageSpeed());
-        double p = .007;
-        
-        leftCurrentMotorSpeed += leftError * p;
-        rightCurrentMotorSpeed += rightError * p;
-
+        double wheelSpeeds[] = new double[2];
         wheelSpeeds[0] = y + rotation; // Left speed
         wheelSpeeds[1] = y - rotation; // Right speed
-        wheelSpeeds[2] = x; // Strafe speed
+                
+        double error[] = new double[2];
+        error[0] = y + rotation - drivetrain.getLeftEncoder().getRate();
+        error[1] = y - rotation - drivetrain.getRightEncoder().getRate();
+//		if (y * SPEED_P * error >= y) {
+//			controller.drive(0, y, 0);
+//		} else {
+//			controller.drive(0, y * SPEED_P * error, 0);
+//		}
         
         DriveUtils.normalize(wheelSpeeds);
 
-        controller.drive(wheelSpeeds[0], wheelSpeeds[1], wheelSpeeds[2]);
+        controller.drive(wheelSpeeds[0], wheelSpeeds[1], x);
     }
 
     /**
@@ -160,8 +163,8 @@ public class SlideDrive extends DriveMethod {
                 return speedPID;
             }
         } else {
-            // If the rotation rate is less than the deadband, turn on the PID
-            // controller and set its setpoint to the current angle.
+            // If the wheel rotation rate is less than the deadband, turn on the PID
+            // controller and set its setpoint to the desired speed.
         	encoderOffset = leftEncoder.getRate();
         	encoderOffset -= rightEncoder.getRate();
         	speedPIDController.setSetpoint(encoderOffset);

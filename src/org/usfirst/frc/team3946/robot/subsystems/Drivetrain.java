@@ -35,6 +35,8 @@ public class Drivetrain extends Subsystem {
 
 	public Drivetrain() {
         rightWheel.setInverted(true);
+        leftEncoder.setDistancePerPulse(0.00008606);
+        rightEncoder.setDistancePerPulse(0.00008606);	//.00008606160019695905 correct number
     }
     
     public void initDefaultCommand() {
@@ -45,7 +47,6 @@ public class Drivetrain extends Subsystem {
     
     public void SlowGear() {
     	slow = !slow;
-    	SmartDashboard.putBoolean("Low Gear?", slow);
     }
     
     public SlideDrive getSlideDrive() {
@@ -104,4 +105,12 @@ public class Drivetrain extends Subsystem {
     	double speed = ((leftEncoder.getRate() + rightEncoder.getRate()) / 2);
     	return speed;
     }
-}
+    
+    public void log() {
+    	SmartDashboard.putBoolean("Low Gear?", slow);
+    	SmartDashboard.putData("Raw Left Encoder", leftEncoder);
+    	SmartDashboard.putData("Raw Right Encoder", rightEncoder);
+    	SmartDashboard.putNumber("Actual Left Speed", leftEncoder.getRate());
+    	SmartDashboard.putNumber("Actual Right Speed", rightEncoder.getRate());
+    }
+} 

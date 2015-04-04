@@ -9,6 +9,6 @@ public class ContactSwitch extends DigitalInput {
 	}
 	
 	public boolean get() {
-		return !super.get();
+		return super.get();
 	}
 }

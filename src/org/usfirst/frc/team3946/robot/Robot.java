@@ -155,6 +155,7 @@ public class Robot extends IterativeRobot {
     
     public void log() {
     	pdp.log();
+    	drivetrain.log();
     	elevator.log();
     	toteContact.log();
     }

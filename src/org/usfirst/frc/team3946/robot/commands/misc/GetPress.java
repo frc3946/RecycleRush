@@ -20,8 +20,7 @@ public class GetPress extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.toteContact.curbPressed();
-    	Robot.toteContact.carryingStack();
+    	Robot.toteContact.contact();
     }
 
     // Make this return true when this Command no longer needs to run execute()

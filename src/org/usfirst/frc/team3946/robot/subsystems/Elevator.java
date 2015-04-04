@@ -4,15 +4,20 @@ import org.usfirst.frc.team3946.robot.Robot;
 import org.usfirst.frc.team3946.robot.RobotMap;
 //import org.usfirst.frc.team3946.robot.commands.lift.ElevateWithTriggers;
 
+
+import org.usfirst.frc.team3946.robot.commands.lift.ElevateWithTriggers;
+import org.usfirst.frc.team3946.robot.sensors.LimitSwitch;
+
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator extends PIDSubsystem {
     
-	public Talon motor = new Talon(RobotMap.liftTalon);
-    public Encoder encode = RobotMap.liftEncoder;
-    public DigitalInput bottom = new DigitalInput(RobotMap.bottomSwitch);
+	public Talon liftMotor = new Talon(RobotMap.liftTalon);
+    public Encoder liftEncoder = RobotMap.liftEncoder;
+    public LimitSwitch bottom = new LimitSwitch(RobotMap.bottomSwitch);
     
 	static double p = 0.01;
 	static double i = 0.0;
@@ -45,20 +50,20 @@ public class Elevator extends PIDSubsystem {
         setAbsoluteTolerance(0.005);     
         getPIDController().setContinuous(true);
         if (Robot.isReal()) {
-        	encode.setDistancePerPulse(0.1272345);
+        	liftEncoder.setDistancePerPulse(.00000579);
 	    } else {
-	    	encode.setDistancePerPulse((4.0/*in*/*Math.PI)/(360.0*12.0/*in/ft*/));
+	    	liftEncoder.setDistancePerPulse((4.0/*in*/*Math.PI)/(360.0*12.0/*in/ft*/));
 	    }
 	    // 0.01060287527213352263064593786011 inches per pulse
 	    // 94.314039761290039374540986558176  pulses per inch
-        
+        // .000005794527654503616 corrected number
 	    // 0.12723450326560227156775125432132 feet per pulse
 	    // 1131.7684771354804724944918386981 pulses per foot
     }
  
     public void initDefaultCommand() {
-    	//setDefaultCommand(new ElevateWithTriggers());
-    	encode.setPIDSourceParameter(PIDSourceParameter.kDistance);
+    	setDefaultCommand(new ElevateWithTriggers());
+    	liftEncoder.setPIDSourceParameter(PIDSourceParameter.kDistance);
     }
     
     public void switchOverride () {
@@ -68,7 +73,7 @@ public class Elevator extends PIDSubsystem {
     
     public void elevate(double input) {
 	    
-//    	double height = encode.getDistance();
+//    	double height = liftEncoder.getDistance();
 //    	Command command;
 //    	if(height > 10){
 //    		command = new SetLEDColors(2);
@@ -85,19 +90,19 @@ public class Elevator extends PIDSubsystem {
 //    	}
     	
 		// Take the raw input if no switches are engaged.
-    	if (override == true /*|| bottom.get() == false*/) {		
-	    	motor.set(input);
+    	if (override == true) {		
+	    	liftMotor.set(input);
 			return;
 	    } else if (bottom.get() == true && input < 0) {
 			stop();
 			return;
 		} else {
-			motor.set(input);
+			liftMotor.set(input);
 		}
     }
     
     public void stop() {
-    	motor.set(0);
+    	liftMotor.set(0);
     }
     
     //---------------------------------------//
@@ -107,7 +112,7 @@ public class Elevator extends PIDSubsystem {
      * called by the subsystem.
      */
     protected double returnPIDInput() {
-    	height = encode.getDistance();
+    	height = liftEncoder.getDistance();
     	return height;
     }
     
@@ -121,7 +126,7 @@ public class Elevator extends PIDSubsystem {
     		stop();
     		return;
         } else {
-        	motor.set(output * setMotorDirection);
+        	liftMotor.set(output * setMotorDirection);
         	return;
         }
     }
@@ -144,8 +149,13 @@ public class Elevator extends PIDSubsystem {
     
     //---------------------------------------//
     
+    public Encoder getLiftEncoder() {
+    	return liftEncoder;
+    }
+    
     public void log() {
-    	SmartDashboard.putData("At Bottom?", bottom);
-    	SmartDashboard.putNumber("Tote Height", encode.getDistance());
+    	SmartDashboard.putData("Raw Lift Encoder", liftEncoder);
+    	SmartDashboard.putNumber("Lift Distance", liftEncoder.getDistance());
+    	SmartDashboard.putBoolean("At Bottom?", bottom.get());
     }
 }

@@ -48,11 +48,11 @@ public class SlideDrivingCommand extends Command {
         	scaledZ += z < 0 ? -MAX_ROTATION : MAX_ROTATION;
         }
         
-        if (toteContact.carryingStack() == true) {
-        	drivetrain.slow = true;
-        } else if (toteContact.carryingStack() == false) {
-        	drivetrain.slow = false;
-        }
+//        if (toteContact.contact() == true) {
+//        	drivetrain.slow = true;
+//        } else if (toteContact.contact() == false) {
+//        	drivetrain.slow = false;
+//        }
         
          if (drivetrain.slow == true) {
         	scaledX *= 0.5;
