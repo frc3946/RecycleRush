@@ -36,7 +36,6 @@ public class Robot extends IterativeRobot {
 	public static FunLights lights;
 	public static VisionLights vl;
 	public static Camera camera;
-	public static Wings wings;
 	public static OI oi;
 	
     private final SendableChooser autonomousChooser = new SendableChooser();
@@ -54,7 +53,6 @@ public class Robot extends IterativeRobot {
     	toteContact = new ToteContactSensor();
     	lights = new FunLights();
     	vl = new VisionLights();
-    	wings = new Wings();
     	
     	camera = new Camera();
     	new Thread(camera).start();

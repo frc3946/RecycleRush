@@ -23,7 +23,7 @@ public class SlideDrivingCommand extends Command {
     }
 
     protected void initialize() {
-    	drivetrain.getSlideDrive().resetGyro();
+    	drivetrain.getSlideDrive().resetEncoder();
     }
 
     /**
@@ -32,10 +32,10 @@ public class SlideDrivingCommand extends Command {
     protected void execute() {
         XboxController xbox = oi.getDriveController();
         // Store the axis values.
-        double x = xbox.getLeftStickX(); /*strafe wheel*/
+        double x = xbox.getLeftStickX();
         double y = -xbox.getLeftStickY();
         double z = xbox.getRightStickX();
-        double angle = drivetrain.gyro.getAngle(); 
+        double rate = ((drivetrain.leftEncoder.getRate() + drivetrain.rightEncoder.getRate()) / 2); 
         
         double scaledX = x;
         if (abs(x) > MAX_STRAFE) {
@@ -47,14 +47,20 @@ public class SlideDrivingCommand extends Command {
         if (abs(z) > MAX_ROTATION) {
         	scaledZ += z < 0 ? -MAX_ROTATION : MAX_ROTATION;
         }
-                
-        if (drivetrain.slow == true) {
+        
+        if (toteContact.carryingStack() == true) {
+        	drivetrain.slow = true;
+        } else if (toteContact.carryingStack() == false) {
+        	drivetrain.slow = false;
+        }
+        
+         if (drivetrain.slow == true) {
         	scaledX *= 0.5;
         	y *= 0.5;
         	scaledZ *= 0.5;
         }
         
-        drivetrain.getSlideDrive().drive(/*strafe wheel*/ scaledX, /*speed*/ y, /*rotation*/scaledZ , angle);
+        drivetrain.getSlideDrive().drive(scaledX, y, scaledZ);
     }
 
     /**

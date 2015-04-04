@@ -58,7 +58,7 @@ public class Elevator extends PIDSubsystem {
  
     public void initDefaultCommand() {
     	//setDefaultCommand(new ElevateWithTriggers());
-    	//encode.setPIDSourceParameter(PIDSourceParameter.kDistance);
+    	encode.setPIDSourceParameter(PIDSourceParameter.kDistance);
     }
     
     public void switchOverride () {

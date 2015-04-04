@@ -52,7 +52,6 @@ public class OI {
         // SmartDashboard Buttons			
         SmartDashboard.putData("Enable Slide", new SlideDrivingCommand());
         SmartDashboard.putData("Enable Arcade", new ArcadeDrivingCommand());
-        SmartDashboard.putData("Reset Gyro", new ResetGyro()); 
     }
     
     public XboxController getDriveController() {

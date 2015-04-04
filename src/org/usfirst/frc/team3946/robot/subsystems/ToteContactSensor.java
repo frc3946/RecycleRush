@@ -18,10 +18,14 @@ public class ToteContactSensor extends Subsystem {
 
 
 	
-	public boolean isPressed() {
+	public boolean curbPressed() {
 		return lCurb.get()
 			|| rCurb.get()
 			|| front.get(); 
+	}
+	
+	public boolean carryingStack() {
+		return front.get();
 	}
 	
 	public void log() {

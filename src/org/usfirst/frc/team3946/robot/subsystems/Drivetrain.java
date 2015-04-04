@@ -30,7 +30,7 @@ public class Drivetrain extends Subsystem {
             strafeWheel
     );
 
-    private final SlideDrive slideDrive = new SlideDrive(driveController, gyro);
+    private final SlideDrive slideDrive = new SlideDrive(driveController, leftEncoder, rightEncoder);
     private final ArcadeDrive arcadeDrive = new ArcadeDrive(driveController);
 
 	public Drivetrain() {
@@ -39,7 +39,6 @@ public class Drivetrain extends Subsystem {
     
     public void initDefaultCommand() {
         setDefaultCommand(new SlideDrivingCommand());
-        gyro.setPIDSourceParameter(PIDSource.PIDSourceParameter.kAngle);
         leftEncoder.setPIDSourceParameter(PIDSource.PIDSourceParameter.kDistance);
         rightEncoder.setPIDSourceParameter(PIDSource.PIDSourceParameter.kDistance);
     }

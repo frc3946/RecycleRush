@@ -1,10 +1,7 @@
 package libraries;
 
 import static java.lang.Math.*;
-
-import org.usfirst.frc.team3946.robot.Robot;
-
-import edu.wpi.first.wpilibj.Gyro;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,47 +24,41 @@ public class SlideDrive extends DriveMethod {
      * {@link DriveMethod#controller} is hidden.
      */
     protected final ThreeMotorController controller;
+
+    protected final Encoder leftEncoder;
+    protected final Encoder rightEncoder;
     
-    /**
-     * The {@link Gyro} that the {@link SlideDrive} uses for
-     * field-oriented driving and keeping the correct orientation.
-     */
-    protected final Gyro gyro;
+    public final double SPEED_DEADBAND = 0.9;
+    public static final double SPEED_P = 0.07;
+    public static final double SPEED_I = 0.0;
+    public static final double SPEED_D = 0.0;
+    public static final double SPEED_F = 0.0;
+    private double speedPID = 0.0;
+    private double encoderOffset = 0.0;
+//    private double leftCurrentMotorSpeed = 0.0;
+//    private double rightCurrentMotorSpeed = 0.0;
 
-    public final double ROTATION_DEADBAND = 0.05;
-    public static final double ROTATION_P = 0.01;
-    public static final double ROTATION_I = 0.0;
-    public static final double ROTATION_D = 0.0;
-    public static final double ROTATION_F = 0.0;
-    private double rotationSpeedPID = 0.0;
-    private double gyroOffset = 0.0;
-    double leftCurrentMotorSpeed = 0;
-    double rightCurrentMotorSpeed = 0;
-
-    private final PIDController rotationPIDController;
+    private final PIDController speedPIDController;
 
     /**
      * Creates a new {@link SlideDrive} that controls the specified
      * {@link ThreeMotorController}.
-     *
-     * @param controller the {@link ThreeMotorController} to control
-     * @param gyro the {@link Gyro} to use for orientation correction and
-     * field-oriented driving
      */
-	public SlideDrive(ThreeMotorController controller, Gyro gyro) {
+	public SlideDrive(ThreeMotorController controller, Encoder leftEncoder, Encoder rightEncoder) {
         super(controller);
         
         this.controller = controller;
-        this.gyro = gyro;
-        rotationPIDController = new PIDController(
-                ROTATION_P,
-                ROTATION_I,
-                ROTATION_D,
-                ROTATION_F,
-                gyro,
+        this.leftEncoder = leftEncoder;
+        this.rightEncoder = rightEncoder;
+        speedPIDController = new PIDController(
+        		SPEED_P,
+        		SPEED_I,
+        		SPEED_D,
+        		SPEED_F,
+                leftEncoder, 
                 new PIDOutput() {
                     public void pidWrite(double output) {
-                        rotationSpeedPID = output;
+                        speedPID = output;
                     }
                 }
         );
@@ -83,25 +74,10 @@ public class SlideDrive extends DriveMethod {
      * @param y The forward speed (negative = backward, positive = forward)
      * @param rotation The speed to rotate at while moving (negative =
      * clockwise, positive = counterclockwise)
-     * @param gyroAngle the current angle reading from the gyro
-     */
-    public void drive(/*strafe wheel*/ double x,  /*speed*/ double y, double rotation, double gyroAngle) {
-        //rotation = getRotationPID(rotation);
-        drive0(/*strafe wheel*/ x,  /*speed*/ y, rotation, gyroAngle);
-    }
-
-    /**
-     * Moves the robot forward and sideways while rotating at the specified
-     * speeds. This moves the robot relative to the robot's current orientation.
-     *
-     * @param x The sideways (strafe) speed (negative = left, positive = right)
-     * @param y The forward speed (negative = backward, positive = forward)
-     * @param rotation The speed to rotate at while moving (negative =
-     * clockwise, positive = counterclockwise)
      */
     public void drive(double x, double y, double rotation) {
-        drive(x, y, rotation, gyro.getAngle() - gyroOffset);
-        
+        //y = getSpeedPID(y);
+        drive0(x, y, rotation);    
     }
     
     /**
@@ -125,12 +101,12 @@ public class SlideDrive extends DriveMethod {
         drive(speed, 0);
     }
     
-    public void driveOrientation(double x, double y, double angle) {
-        if (!rotationPIDController.isEnable() || rotationPIDController.getSetpoint() != angle) {
-            rotationPIDController.setSetpoint(angle);
-            rotationPIDController.enable();
+    public void driveSetSpeed(double x, double y, double rotation) {
+        if (!speedPIDController.isEnable() || speedPIDController.getSetpoint() != y) {
+            speedPIDController.setSetpoint(y);
+            speedPIDController.enable();
         }
-        drive0(x, y, rotationSpeedPID, angle);
+        drive0(x, y, rotation);
     }
 
     /**
@@ -144,7 +120,7 @@ public class SlideDrive extends DriveMethod {
      * clockwise, negative = counterclockwise)
      * @param gyroAngle the current angle reading from the gyro
      */
-    private void drive0(double x, double y, double rotation, double gyroAngle) {
+    private void drive0(double x, double y, double rotation) {
         double wheelSpeeds[] = new double[3];
 
         double leftError = y + rotation - Robot.drivetrain.getLeftEncoder().getRate();
@@ -165,38 +141,34 @@ public class SlideDrive extends DriveMethod {
     }
 
     /**
-     * Gets the corrected rotation speed based on the gyro heading and the
-     * expected rate of rotation. If the rotation rate is above a threshold, the
-     * gyro correction is turned off.
+     * Gets the corrected drive speed based on the encoder reading and the
+     * expected rate of wheel rotation.
      *
-     * @param rotationSpeed
+     * @param driveSpeed
      */
-    private double getRotationPID(double rotationSpeed) {
+    private double getSpeedPID(double driveSpeed) {
         // If the controller is already enabled, check to see if it should be 
         // disabled  or kept running. Otherwise check to see if it needs to be 
         // enabled.
-        if (rotationPIDController.isEnable()) {
+        if (speedPIDController.isEnable()) {
             // If the rotation rate is greater than the deadband disable the PID
             // controller. Otherwise, return the latest value from the
             // controller.
-            if (abs(rotationSpeed) >= ROTATION_DEADBAND) {
-                rotationPIDController.disable();
+            if (abs(driveSpeed) >= SPEED_DEADBAND) {
+                speedPIDController.disable();
             } else {
-                return rotationSpeedPID;
+                return speedPID;
             }
         } else {
             // If the rotation rate is less than the deadband, turn on the PID
             // controller and set its setpoint to the current angle.
-            if (abs(rotationSpeed) < ROTATION_DEADBAND) {
-                gyroOffset = gyro.getAngle();
-                gyroOffset -= gyro.getAngle();
-                gyroOffset -= 360 * floor(0.5 + (gyroOffset/360));
-                rotationPIDController.setSetpoint(gyroOffset);
-                rotationPIDController.enable();
-            }
+        	encoderOffset = leftEncoder.getRate();
+        	encoderOffset -= rightEncoder.getRate();
+        	speedPIDController.setSetpoint(encoderOffset);
+        	speedPIDController.enable();
         }
         // Unless told otherwise, return the rate that was passed in.
-        return rotationSpeed;
+        return driveSpeed;
     }
 
     /**
@@ -204,22 +176,22 @@ public class SlideDrive extends DriveMethod {
      * error. This is usually called on command, or after the robot has been
      * disabled to get rid of drift.
      */
-    public void resetGyro() {
-        // Reset the gyro value to zero
-        gyro.reset();
+    public void resetEncoder() {
+        // Reset the encoder values to zero.
+        leftEncoder.reset();
+        rightEncoder.reset();
         // Reset the integral component to zero (which also disables the 
         // controller). This is very important because the integral value will
         // have gotten really big and will cause the robot to spin in circles
         // unless it is reset.
-        rotationPIDController.reset();
-        // Since the gyro value is now zero, the robot should also try to point 
-        // in that direction.
-        rotationPIDController.setSetpoint(0);
+        speedPIDController.reset();
+        // Since the encoder values are now zero, the robot should stop.
+        speedPIDController.setSetpoint(0);
         // Re-enable the controller because it was disabled by calling reset().
-        rotationPIDController.enable();
+        speedPIDController.enable();
     }
     
     public void disablePID() {
-    	rotationPIDController.disable();
+    	speedPIDController.disable();
     }
 }
