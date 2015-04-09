@@ -73,6 +73,7 @@ public class Robot extends IterativeRobot {
 		ledChooser.addObject("Yellow", new SetLEDColors(5));
 		ledChooser.addObject("Cyan", new SetLEDColors(6));
 		ledChooser.addObject("Magenta", new SetLEDColors(7));
+		ledChooser.addObject("Elevator", null);
 		
 		SmartDashboard.putData("LED Color", ledChooser);
         

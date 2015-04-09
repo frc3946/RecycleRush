@@ -39,7 +39,7 @@ public class OI {
 			
 		// Autonomous Buttons
 	    Button driveToCrate = new JoystickButton(driveController, XboxController.A);
-	    	driveToCrate.whenPressed(new DriveToCrate());
+	    	driveToCrate.whileHeld(new DriveToCrate());
 //	    Button alignToStack = new JoystickButton(driveController, XboxController.Y);
 //	    	alignToStack.whenPressed(new AlignToStack());
 			

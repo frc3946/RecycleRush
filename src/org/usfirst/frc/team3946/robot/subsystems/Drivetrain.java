@@ -35,8 +35,10 @@ public class Drivetrain extends Subsystem {
 
 	public Drivetrain() {
         rightWheel.setInverted(true);
-        leftEncoder.setDistancePerPulse(0.00008606);
-        rightEncoder.setDistancePerPulse(0.00008606);	//.00008606160019695905 correct number
+        //leftEncoder.setDistancePerPulse(01.00008606);
+        //rightEncoder.setDistancePerPulse(01.00008606);	//.00008606160019695905 correct number
+        leftEncoder.setDistancePerPulse(0.001);
+        rightEncoder.setDistancePerPulse(0.001);	//.00008606160019695905 correct number
     }
     
     public void initDefaultCommand() {

@@ -6,10 +6,12 @@ import org.usfirst.frc.team3946.robot.RobotMap;
 
 
 import org.usfirst.frc.team3946.robot.commands.lift.ElevateWithTriggers;
+import org.usfirst.frc.team3946.robot.commands.misc.SetLEDColors;
 import org.usfirst.frc.team3946.robot.sensors.LimitSwitch;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -54,6 +56,7 @@ public class Elevator extends PIDSubsystem {
 	    } else {
 	    	liftEncoder.setDistancePerPulse((4.0/*in*/*Math.PI)/(360.0*12.0/*in/ft*/));
 	    }
+        liftEncoder.setDistancePerPulse(0.01);
 	    // 0.01060287527213352263064593786011 inches per pulse
 	    // 94.314039761290039374540986558176  pulses per inch
         // .000005794527654503616 corrected number
@@ -73,27 +76,32 @@ public class Elevator extends PIDSubsystem {
     
     public void elevate(double input) {
 	    
-//    	double height = liftEncoder.getDistance();
-//    	Command command;
-//    	if(height > 10){
-//    		command = new SetLEDColors(2);
-//    		command.start();
-//    	} else if(height > 20) {
-//    		command = new SetLEDColors(3);
-//    		command.start();
-//    	} else if(height < 10) {
-//    		command = new SetLEDColors(1);
-//    		command.start();
-//    	} else if(height > 30) {
-//    		command = new SetLEDColors(4);
-//    		command.start();
-//    	}
+    	double height = liftEncoder.getDistance();
+    	Command command;
+    	if(height > 26.2){
+    		command = new SetLEDColors(0);
+    		command.start();
+    	} else if(height > 19.3) {
+    		command = new SetLEDColors(2);
+    		command.start();
+    	} else if(height > 11.33) {
+    		command = new SetLEDColors(5);
+    		command.start();
+    	} else if(height > 0.01){
+    		command = new SetLEDColors(6);
+    		command.start();
+    	} else {
+    		command = new SetLEDColors(0);
+    		command.start();
+    	}
+    	
     	
 		// Take the raw input if no switches are engaged.
     	if (override == true) {		
 	    	liftMotor.set(input);
 			return;
 	    } else if (bottom.get() == true && input < 0) {
+	    	Robot.elevator.getLiftEncoder().reset();  
 			stop();
 			return;
 		} else {
@@ -123,6 +131,7 @@ public class Elevator extends PIDSubsystem {
     protected void usePIDOutput(double output) {
         // Prevents lift from smacking the floor.
     	if (bottom.get() == true && output < 0) {
+    		Robot.elevator.getLiftEncoder().reset();        	
     		stop();
     		return;
         } else {
